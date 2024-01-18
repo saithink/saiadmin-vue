@@ -3,21 +3,21 @@
 </p>
 <p align="center">
   <img src="https://svg.hamm.cn/badge.svg?key=License&value=MIT" />
-  <img src="https://svg.hamm.cn/badge.svg?key=Version&value=1.3.3" />
+  <img src="https://svg.hamm.cn/badge.svg?key=Version&value=1.0.0" />
 </p>
 
 ## 简介
 
-`Saidmin Vue` 是一个开源免费专门适配于 `Saidmin` 后台权限管理系统的前端中后台模板，使用了 `vue3`, `vite4`, `pinia`, `arco design`, `javascript` 等主流开发技术，未使用`Typescript`，我们选择了简单。
+`Saidmin Vue` 是一个开源免费专门适配于 [SaiAdmin](https://saithink.top) 后台权限管理系统的前端中后台模板，使用了 `vue3`, `vite4`, `pinia`, `arco design`, `javascript` 等主流开发技术，未使用`Typescript`，我们选择了简单。
 
-本项目前端使用的是[MineAdmin](https://doc.mineadmin.com/further/front/route.html)
+本项目前端主要使用的是 [MineAdmin](https://www.mineadmin.com) 开源的框架
 
 ## 特性
 
 - 最新技术栈：vue3, vite4, pinia
 - UI 库：arco design
 - 国际化：完善的多语言解决方案
-- 权限：由于适配 `SaiAdmin` 系统，内置完善的权限、动/静态路由解决方案
+- 权限：由于适配 [SaiAdmin](https://saithink.top) 系统，内置完善的权限、动/静态路由解决方案
 - 主题：可扩展主题
 - 布局：支持三种布局方式
 - 组件：内置大量基于日常开发锤炼出的组件。
