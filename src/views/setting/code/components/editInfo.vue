@@ -324,7 +324,7 @@
 						</a-table>
 					</a-tab-pane>
 					<a-tab-pane title="菜单配置" key="menu_config">
-						<a-alert title="提示">未选择的菜单，后端也对应不生成方法。注意：列表按钮菜单是默认的</a-alert>
+						<a-alert title="提示">sql语句会生成所有接口。注意：前端页面根据选择进行按钮生成</a-alert>
 						<a-checkbox-group direction="vertical" v-model="form.generate_menus" class="mt-3" :default-value="form.generate_menus">
 							<a-checkbox :value="menu.value" v-for="(menu, index) in vars.menuList" :key="index">
 								{{ menu.name + '　-　' + menu.comment }}

@@ -91,10 +91,6 @@
       title: '任务参数', dataIndex: 'parameter', formType: 'textarea', width: 200, hide: true,
     },
     {
-      title: '单次执行', dataIndex: 'singleton', formType: 'radio', addDefaultValue: 2,
-      dict: { data: [{ label: '是', value: 1 }, { label: '否', value: 2 }]}, hide: true
-    },
-    {
       title: '状态', dataIndex: 'status', search: true, formType: 'radio',
       dict: { name: 'data_status', props: { label: 'label', value: 'value' } },
       addDefaultValue: 1, width: 120

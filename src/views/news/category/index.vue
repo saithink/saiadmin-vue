@@ -22,8 +22,6 @@
 
   const crudRef = ref()
 
-  let isRecovery = computed(() => crudRef.value ? crudRef.value.isRecovery : false )
-
   const changeStatus = async (status, id) => {
     const response = await api.changeStatus({ id, status })
     if (response.code === 200) {
