@@ -60,6 +60,10 @@ const crud = reactive({
 	recovery: { show: true, api: menu.recoverys, auth: ['/core/menu/recovery'] },
 	formOption: { viewType: 'drawer', width: 600 },
 	isExpand: true,
+	beforeSearch: (requestParams) => {
+		requestParams.orderBy = 'sort'
+		requestParams.orderType = 'desc'
+	},
 	beforeOpenAdd: () => {
 		columns[1].addDefaultValue = 0
 		return true
