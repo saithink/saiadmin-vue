@@ -20,6 +20,7 @@
       <template #operationBeforeExtend="{ record }">
         <a-space size="mini" v-if="record.code !== 'superAdmin'">
             <a-link @click="openMenuList(record)"><icon-menu /> 菜单权限</a-link>
+            <a-link @click="openDataScopeList(record)"><icon-layers /> 数据权限</a-link>
         </a-space>
       </template>
     </ma-crud>
@@ -35,12 +36,18 @@
   import role from '@/api/system/role'
   import { Message } from '@arco-design/web-vue'
   import MenuPermission from './components/menuPermission.vue'
+  import DataPermission from './components/dataPermission.vue'
 
   const crudRef = ref()
   const mpRef = ref()
+  const dpRef = ref()
 
   const openMenuList = (record) => {
     mpRef.value.open(record)
+  }
+
+  const openDataScopeList = (record) => {
+    dpRef.value.open(record)
   }
 
   const changeStatus = async (status, record) => {
