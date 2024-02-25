@@ -420,7 +420,7 @@ const visible = ref(false)
 const activeTab = ref('base_config')
 const settingComponentRef = ref()
 
-const notNeedSettingComponents = ref(['text', 'password', 'textarea', 'formGroup', 'inputTag', 'mention', 'rate', 'userInfo'])
+const notNeedSettingComponents = ref(['input', 'password', 'textarea', 'formGroup', 'inputTag', 'mention', 'rate', 'userInfo'])
 
 const form = ref({
 	generate_menus: ['save', 'update', 'read', 'delete', 'recycle', 'changeStatus', 'numberOperation', 'import', 'export'],
