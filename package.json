@@ -1,7 +1,7 @@
 {
 	"name": "saiadmin-vue",
 	"admin_name": "saiadmin-vue",
-	"version": "1.0.2",
+	"version": "1.0.5",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite serve --mode development",
