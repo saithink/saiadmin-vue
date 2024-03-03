@@ -143,7 +143,7 @@
           label="返回数据"
           field="returnType"
           label-col-flex="auto"
-          :label-col-style="{ width: '120px' }"
+          :label-col-style="{ width: '100px' }"
           :extra="`支持 uploadfile 数据表所有字段，这里仅列常用部分`"
         >
           <a-select v-model="form.returnType" placeholder="请选择上传返回数据类型">
@@ -156,7 +156,7 @@
           label="是否可多选"
           field="multiple"
           label-col-flex="auto"
-          :label-col-style="{ width: '120px' }"
+          :label-col-style="{ width: '100px' }"
         >
           <a-radio-group v-model="form.multiple">
             <a-radio :value="true">是</a-radio>
@@ -284,7 +284,11 @@ const form = ref({
 
 const open = (record) => {
   row.value = record
-  form.value = record.options ? record.options : { collection: [] }
+  if (record.view_type == 'upload') {
+    form.value = record.options ? record.options : { type: 'image', returnType: 'url', multiple: false }
+  } else {
+    form.value = record.options ? record.options : { collection: [] }
+  }
   visible.value = true
 }
 
