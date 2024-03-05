@@ -38,7 +38,12 @@
 									<a-input v-model="form.business_name" />
 								</a-form-item>
 							</a-col>
-							<a-col :xs="24" :md="24" :xl="24">
+							<a-col :xs="24" :md="12" :xl="12">
+								<a-form-item label="数据源" field="remark" label-col-flex="auto" :label-col-style="{ width: '94px' }">
+									<a-select placeholder="请选择数据源" v-model="form.source" :options="dataSourceList" />
+								</a-form-item>
+							</a-col>
+							<a-col :xs="24" :md="12" :xl="12">
 								<a-form-item label="备注信息" field="remark" label-col-flex="auto" :label-col-style="{ width: '94px' }">
 									<a-textarea v-model="form.remark" />
 								</a-form-item>
@@ -447,9 +452,15 @@ const models = ref([])
 const tables = ref([])
 // 模块信息
 const modules = ref([])
+// 数据源
+const dataSourceList = ref([])
 
 const open = async (id) => {
 	visible.value = true
+	const source = await dataMaintain.getDataSource()
+	dataSourceList.value = source.data.map(item => {
+		return { label: item, value: item }
+	})
 	const response = await generate.readTable(id)
 	record.value = response.data
 	init()

@@ -78,7 +78,7 @@ const loadMenu = (bigMenu) => {
 		window.open(bigMenu.path)
 		return
 	}
-	if (bigMenu.children.length > 0) {
+	if (bigMenu.children && bigMenu.children.length > 0) {
 		MaMenuRef.value.loadChildMenu(bigMenu)
 		showMenu.value = true
 	} else {

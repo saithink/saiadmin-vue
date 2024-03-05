@@ -98,6 +98,10 @@
 
   const crud = reactive({
     api: generate.getPageList,
+	beforeRequest: params => {
+        params.orderBy = 'create_time'
+        params.orderType = 'desc'
+    },
     showIndex: false,
     searchColNumber: 3,
     searchLabelWidth: '75px',
