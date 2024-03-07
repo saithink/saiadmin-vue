@@ -458,7 +458,7 @@ const dataSourceList = ref([])
 const open = async (id) => {
 	visible.value = true
 	const source = await dataMaintain.getDataSource()
-	dataSourceList.value = source.data.map(item => {
+	dataSourceList.value = source.data.map((item) => {
 		return { label: item, value: item }
 	})
 	const response = await generate.readTable(id)
@@ -486,9 +486,13 @@ const save = async (done) => {
 	}
 	form.value.options = formOptions.value
 	const response = await generate.update(form.value.id, form.value)
-	response.code === 200 && Message.success(response.message)
-	emit('success', true)
-	done(true)
+	if (response.code == 200) {
+		Message.success(response.message)
+		emit('success', true)
+		done(true)
+	} else {
+		return false
+	}
 }
 
 // 全选 / 全不选
