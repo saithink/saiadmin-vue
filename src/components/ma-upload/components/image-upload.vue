@@ -70,8 +70,12 @@ const uploadImageHandler = async (options) => {
 		currentItem.value = {}
 		return
 	}
+	const requestData = {
+		...config.requestData,
+		mode: config.uploadMode,
+	}
 
-	const result = await uploadRequest(file, 'image', 'uploadImage', config.requestData)
+	const result = await uploadRequest(file, 'image', 'uploadImage', requestData)
 
 	if (result) {
 		// result.url = tool.attachUrl(result.url, storageMode[result.storage_mode])

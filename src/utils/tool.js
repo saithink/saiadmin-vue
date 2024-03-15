@@ -356,7 +356,7 @@ tool.getRequestParams = (url) => {
 }
 
 tool.attachUrl = (path, defaultStorage = 'LOCAL') => {
-	return uploadConfig.storage[defaultStorage] + path
+	return path
 }
 
 /**

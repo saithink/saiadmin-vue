@@ -122,7 +122,7 @@
 						<template v-else-if="row.dataIndex && row.dataIndex.indexOf('.') !== -1">
 							{{ get(record, row.dataIndex) }}
 						</template>
-						<template v-else-if="row.formType === 'upload'">
+						<template v-else-if="row.formType === 'upload' && row.type === 'image'">
 							<a-link @click="imageSee(row, record, row.dataIndex)"><icon-image /> 查看图片</a-link>
 						</template>
 						<template v-else>{{ record[row.dataIndex] }}</template>

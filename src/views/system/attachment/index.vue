@@ -128,8 +128,7 @@ const download = async (record) => {
 
 	if (storeMode !== 'LOCAL') {
 		Message.info('处理中...')
-		const domain = upload.storage[storeMode]
-		url = domain + record.url
+		url = record.url
 	} else {
 		//文件上传在本地则请求后端下载
 		Message.info('请求服务器下载文件中...')
