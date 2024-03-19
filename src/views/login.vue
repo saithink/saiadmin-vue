@@ -18,7 +18,13 @@ const form = reactive(odata)
 
 const refreshCaptcha = () => {
 	form.code = ''
-	captcha.value = loginApi.getCaptch()
+	form.uuid = ''
+	loginApi.getCaptch().then((res) => {
+		if (res.code === 200) {
+			captcha.value = 'data:image/jpeg;base64,' + res.img
+			form.uuid = res.uuid
+		}
+	})
 }
 
 refreshCaptcha()

@@ -6,7 +6,11 @@ export default {
 	 * @returns
 	 */
 	getCaptch() {
-		return import.meta.env.VITE_APP_PROXY_PREFIX + '/core/captcha?' + Date.parse(new Date().toString())
+		// return import.meta.env.VITE_APP_PROXY_PREFIX + '/core/captcha?' + Date.parse(new Date().toString())
+		return request({
+			url: '/core/captcha',
+			method: 'get',
+		})
 	},
 
 	/**
