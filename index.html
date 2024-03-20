@@ -1,138 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>%VITE_APP_TITLE%</title>
 		<meta charset="UTF-8" />
-		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 		<meta name="renderer" content="webkit" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>SaiAdmin</title>
-	</head>
-
-	<body>
-		<noscript>
-			<strong>你的浏览器未开启javascript支持，请开启后刷新页面访问！</strong>
-		</noscript>
-		<div id="app" class="ma-ui">
-			<div class="app-loading">
-				<div class="app-loading__logo"><img src="/logo.png" /></div>
-				<div class="app-loading-text">
-					<span class="app-loading-preloader">S</span>
-					<span class="app-loading-preloader">a</span>
-					<span class="app-loading-preloader">i</span>
-					<span class="app-loading-preloader">A</span>
-					<span class="app-loading-preloader">d</span>
-					<span class="app-loading-preloader">m</span>
-					<span class="app-loading-preloader">i</span>
-					<span class="app-loading-preloader">n</span>
-					<div class="app-loading-viewtext-container">
-						<span class="app-loading-viewtext">S</span>
-						<span class="app-loading-viewtext">a</span>
-						<span class="app-loading-viewtext">i</span>
-						<span class="app-loading-viewtext">A</span>
-						<span class="app-loading-viewtext">d</span>
-						<span class="app-loading-viewtext">m</span>
-						<span class="app-loading-viewtext">i</span>
-						<span class="app-loading-viewtext">n</span>
-					</div>
-				</div>
-			</div>
-		</div>
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 		<style>
 			html,
 			body,
 			#app {
 				height: 100%;
-				overflow: hidden;
-				transition-property: filter;
-				transition-duration: 1s;
 			}
-			.app-loading {
-				position: absolute;
-				top: 0px;
-				left: 0px;
-				right: 0px;
-				bottom: 0px;
+
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+			}
+
+			.preload__wrap {
+				display: flex;
+				flex-direction: column;
+				letter-spacing: 1px;
+				background-color: #2f3447;
+				position: fixed;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 100%;
+				z-index: 9999;
+				transition: all 0.3s ease-in;
+				opacity: 1;
+				pointer-events: none;
+			}
+
+			.preload__wrap.is-hide {
+				opacity: 0;
+			}
+
+			.preload__container {
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				flex-direction: column;
+				width: 100%;
+				user-select: none;
+				-webkit-user-select: none;
+				flex-grow: 1;
 			}
 
-			.app-loading__logo {
-				width: 170px;
-				padding-left: 5px;
-				margin-top: -5%;
-			}
-
-			.app-loading-text {
-				position: relative;
-				margin-top: 1rem;
-			}
-
-			.app-loading-preloader,
-			.app-loading-viewtext {
-				font-size: 3.5rem;
-				color: #ddd;
+			.preload__name {
+				font-size: 30px;
+				color: #fff;
+				letter-spacing: 5px;
 				font-weight: bold;
+				margin-bottom: 30px;
 			}
 
-			.app-loading-viewtext-container {
-				display: flex;
-				flex-direction: row;
-				position: absolute;
-				letter-spacing: 4.3px;
-				top: -5px;
+			.preload__title {
+				color: #fff;
+				font-size: 14px;
+				margin: 30px 0 20px 0;
 			}
 
-			.app-loading-viewtext {
-				color: #333;
-				animation: loader 4s infinite;
-				transform: rotateY(-90deg);
+			.preload__sub-title {
+				color: #ababab;
+				font-size: 12px;
 			}
 
-			.app-loading-viewtext-container span:nth-child(1) {
-				animation-delay: 0.2s;
-			}
-			.app-loading-viewtext-container span:nth-child(2) {
-				animation-delay: 0.4s;
-			}
-			.app-loading-viewtext-container span:nth-child(3) {
-				animation-delay: 0.6s;
-			}
-			.app-loading-viewtext-container span:nth-child(4) {
-				animation-delay: 0.8s;
-			}
-			.app-loading-viewtext-container span:nth-child(5) {
-				animation-delay: 1s;
-			}
-			.app-loading-viewtext-container span:nth-child(6) {
-				animation-delay: 1.2s;
-			}
-			.app-loading-viewtext-container span:nth-child(7) {
-				animation-delay: 1.4s;
-			}
-			.app-loading-viewtext-container span:nth-child(8) {
-				animation-delay: 1.6s;
-			}
-			.app-loading-viewtext-container span:nth-child(9) {
-				animation-delay: 1.8s;
+			.preload__footer {
+				text-align: center;
+				padding: 10px 0 20px 0;
 			}
 
-			@keyframes loader {
-				0%,
-				75%,
-				100% {
-					opacity: 0;
-					transform: rotateY(-90deg);
+			.preload__footer a {
+				font-size: 12px;
+				color: #ababab;
+				text-decoration: none;
+			}
+
+			.preload__loading {
+				height: 30px;
+				width: 30px;
+				border-radius: 30px;
+				border: 7px solid currentColor;
+				border-bottom-color: #2f3447 !important;
+				position: relative;
+				animation: r 1s infinite cubic-bezier(0.17, 0.67, 0.83, 0.67), bc 2s infinite ease-in;
+				transform: rotate(0deg);
+			}
+
+			@keyframes r {
+				from {
+					transform: rotate(0deg);
 				}
 
-				25%,
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			.preload__loading::after,
+			.preload__loading::before {
+				content: '';
+				display: inline-block;
+				position: absolute;
+				bottom: -2px;
+				height: 7px;
+				width: 7px;
+				border-radius: 10px;
+				background-color: currentColor;
+			}
+
+			.preload__loading::after {
+				left: -1px;
+			}
+
+			.preload__loading::before {
+				right: -1px;
+			}
+
+			@keyframes bc {
+				0% {
+					color: #689cc5;
+				}
+
+				25% {
+					color: #b3b7e2;
+				}
+
 				50% {
-					opacity: 1;
-					transform: rotateY(0deg);
+					color: #93dbe9;
+				}
+
+				75% {
+					color: #abbd81;
+				}
+
+				100% {
+					color: #689cc5;
 				}
 			}
 		</style>
+	</head>
+	<body>
+		<noscript>
+			<strong>你的浏览器未开启javascript支持，请开启后刷新页面访问！</strong>
+		</noscript>
+		<div id="app">
+			<div class="preload__wrap" id="Loading">
+				<div class="preload__container">
+					<p class="preload__name">%VITE_APP_TITLE%</p>
+					<div class="preload__loading"></div>
+					<p class="preload__title">正在加载资源...</p>
+					<p class="preload__sub-title">初次加载资源可能需要较多时间 请耐心等待</p>
+				</div>
+				<div class="preload__footer">
+					<a href="https://saithink.top" target="_blank">https://saithink.top</a>
+				</div>
+			</div>
+		</div>
 		<script type="module" src="/src/main.js"></script>
 	</body>
 </html>
