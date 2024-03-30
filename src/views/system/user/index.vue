@@ -155,7 +155,7 @@ const crud = reactive({
 				formType: 'grid',
 				cols: [
 					{ span: 12, formList: [{ dataIndex: 'username' }] },
-					{ span: 12, formList: [{ dataIndex: 'dept_ids' }] },
+					{ span: 12, formList: [{ dataIndex: 'dept_id' }] },
 				],
 			},
 			{
@@ -223,7 +223,7 @@ const columns = reactive([
 	},
 	{
 		title: '所属部门',
-		dataIndex: 'dept_ids',
+		dataIndex: 'dept_id',
 		hide: true,
 		formType: 'tree-select',
 		multiple: false,
@@ -231,9 +231,9 @@ const columns = reactive([
 		treeCheckStrictly: true,
 		dict: { url: '/core/dept/index?tree=true' },
 		commonRules: [{ required: true, message: '所属部门必选' }],
-		editDefaultValue: async (record) => {
-			const response = await user.read(record.id)
-			return response.data.deptList.map((item) => item.id)
+		validateTrigger: 'focus',
+		editDefaultValue: (record) => {
+			return record.dept_id == 0 ? undefined : record.dept_id
 		},
 	},
 	{

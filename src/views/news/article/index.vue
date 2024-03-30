@@ -62,6 +62,7 @@ const columns = reactive([
 		hide: true,
 		formType: 'treeSelect',
 		dict: { url: '/news/category/index?tree=true' },
+		validateTrigger: 'focus',
 		commonRules: [{ required: true, message: '文章分类必填' }],
 	},
 	{
