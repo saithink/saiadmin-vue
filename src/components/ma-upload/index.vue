@@ -31,7 +31,7 @@ const props = defineProps({
 	tip: { type: String, default: undefined },
 	type: { type: String, default: 'image' },
 	accept: { type: String, default: '*' },
-	returnType: { type: String, default: 'hash' },
+	returnType: { type: String, default: 'url' },
 	uploadMode: { type: String, default: 'system' },
 	fileType: { type: String, default: 'button' },
 	showList: { type: Boolean, default: true },
