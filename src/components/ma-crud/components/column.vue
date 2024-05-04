@@ -95,7 +95,22 @@
 											:disabled="isFunction(options.delete.disabled) ? options.delete.disabled(record) : options.delete.disabled"
 										>
 											<icon-delete />
-											{{ props.isRecovery ? options.delete.realText || '删除' : options.delete.text || '删除' }}
+											{{ options.delete.text || '删除' }}
+										</a-link>
+									</a-popconfirm>
+									<a-popconfirm
+										content="确定要销毁该数据吗?"
+										position="bottom"
+										@ok="deleteAction(record)"
+										v-if="(isFunction(options.delete.show) ? options.delete.show(record) : options.delete.show) && props.isRecovery"
+									>
+										<a-link
+											type="primary"
+											v-auth="options.delete.realAuth || []"
+											:disabled="isFunction(options.delete.disabled) ? options.delete.disabled(record) : options.delete.disabled"
+										>
+											<icon-delete />
+											{{ options.delete.realText || '销毁' }}
 										</a-link>
 									</a-popconfirm>
 								</slot>
