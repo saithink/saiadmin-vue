@@ -143,10 +143,8 @@ const crud = reactive({
 	operationColumnWidth: 200,
 	add: { show: true, api: user.save, auth: ['/core/user/save'] },
 	edit: { show: true, api: user.update, auth: ['/core/user/update'] },
-	delete: { show: true, api: user.deletes, auth: ['/core/user/destroy'] },
+	delete: { show: true, api: user.deletes, auth: ['/core/user/destroy'], realApi: user.realDestroy, realAuth: ['/core/user/realDestroy'] },
 	recovery: { show: true, api: user.recoverys, auth: ['/core/user/recovery'] },
-	import: { show: true, url: '/core/user/import', templateUrl: '/core/user/downloadTemplate', auth: ['/core/user/import'] },
-	export: { show: true, url: '/core/user/export', auth: ['/core/user/export'] },
 	formOption: {
 		width: 800,
 		layout: [

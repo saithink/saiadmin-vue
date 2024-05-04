@@ -4,7 +4,7 @@
 		<ma-crud :options="crud" :columns="columns" ref="crudRef">
 			<!-- 状态列 -->
 			<template #status="{ record }">
-				<a-switch :checked-value="1" unchecked-value="2" @change="changeStatus($event, record.id)" :default-checked="record.status == 1" />
+				<a-switch :checked-value="1" :unchecked-value="2" @change="changeStatus($event, record.id)" :default-checked="record.status == 1" />
 			</template>
 		</ma-crud>
 	</div>
@@ -35,7 +35,7 @@ const crud = reactive({
 	operationColumnWidth: 160,
 	add: { show: true, api: api.save, auth: ['/news/article/save'] },
 	edit: { show: true, api: api.update, auth: ['/news/article/update'] },
-	delete: { show: true, api: api.delete, auth: ['/news/article/destroy'] },
+	delete: { show: true, api: api.delete, auth: ['/news/article/destroy'], realApi: api.realDestroy, realAuth: ['/news/article/realDestroy'] },
 	recovery: { show: true, api: api.recovery, auth: ['/news/article/recovery'] },
 	formOption: { width: 800 },
 })
@@ -56,7 +56,7 @@ const columns = reactive([
 		title: '文章分类',
 		dataIndex: 'category_id',
 		width: 180,
-		search: true,
+		search: false,
 		addDisplay: true,
 		editDisplay: true,
 		hide: true,
@@ -80,15 +80,15 @@ const columns = reactive([
 		title: '文章作者',
 		dataIndex: 'author',
 		width: 180,
-		search: false,
+		search: true,
 		addDisplay: true,
 		editDisplay: true,
 		hide: false,
 		formType: 'input',
-		commonRules: [{ required: false, message: '文章作者必填' }],
+		commonRules: [{ required: true, message: '文章作者必填' }],
 	},
 	{
-		title: '文章图片',
+		title: '文章封面',
 		dataIndex: 'image',
 		width: 180,
 		search: false,
@@ -99,7 +99,7 @@ const columns = reactive([
 		type: 'image',
 		returnType: 'url',
 		multiple: false,
-		commonRules: [{ required: false, message: '文章图片必填' }],
+		commonRules: [{ required: false, message: '文章封面必填' }],
 	},
 	{
 		title: '文章简介',
@@ -155,6 +155,8 @@ const columns = reactive([
 		addDefaultValue: 1,
 		editDisplay: true,
 		hide: false,
+		checkedValue: 1,
+		uncheckedValue: 2,
 		formType: 'switch',
 		commonRules: [{ required: false, message: '状态必填' }],
 	},
@@ -172,6 +174,7 @@ const columns = reactive([
 				{ label: '是', value: 1 },
 				{ label: '否', value: 2 },
 			],
+			translation: true,
 		},
 		formType: 'radio',
 		commonRules: [{ required: false, message: '是否外链必填' }],
@@ -201,6 +204,7 @@ const columns = reactive([
 				{ label: '是', value: 1 },
 				{ label: '否', value: 2 },
 			],
+			translation: true,
 		},
 		formType: 'radio',
 		commonRules: [{ required: false, message: '是否热门必填' }],

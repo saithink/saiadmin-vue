@@ -35,7 +35,7 @@ const crud = reactive({
 	operationColumnWidth: 160,
 	add: { show: true, api: api.save, auth: ['/news/category/save'] },
 	edit: { show: true, api: api.update, auth: ['/news/category/update'] },
-	delete: { show: true, api: api.delete, auth: ['/news/category/destroy'] },
+	delete: { show: true, api: api.delete, auth: ['/news/category/destroy'], realApi: api.realDestroy, realAuth: ['/news/category/realDestroy'] },
 	recovery: { show: true, api: api.recovery, auth: ['/news/category/recovery'] },
 	formOption: { width: 800 },
 })

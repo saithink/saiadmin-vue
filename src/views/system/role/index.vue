@@ -71,8 +71,8 @@
     operationColumnWidth: 300,
     add: { show: true, api: role.save, auth: ['/core/role/save'] },
     edit: { show: true, api: role.update, auth: ['/core/role/update'] },
-    delete: { show: true, api: role.deletes, auth: ['/core/role/destroy'] },
-    recovery: { show: true, api: role.recoverys, auth: ['/core/role/recovery']},
+    delete: { show: true, api: role.deletes, auth: ['/core/role/destroy'], realApi: role.realDestroy, realAuth: ['/core/role/realDestroy'] },
+    recovery: { show: true, api: role.recoverys, auth: ['/core/role/recovery'] },
     beforeOpenEdit: (record) => {
       if (record.id === 1) {
         Message.error('超级管理员角色不可编辑')
