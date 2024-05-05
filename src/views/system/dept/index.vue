@@ -7,7 +7,7 @@
 				<a-switch :checked-value="1" unchecked-value="2" @change="changeStatus($event, record.id)" :default-checked="record.status == 1" />
 			</template>
 
-			<template #operationBeforeExtend="{ record }">
+			<template #operationBeforeExtend="{ record }" v-if="!isRecovery">
 				<a-link @click="openLeaderModal(record)"><icon-user /> 领导列表</a-link>
 			</template>
 		</ma-crud>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import dept from '@/api/system/dept'
 import { Message } from '@arco-design/web-vue'
 import LeaderList from './leader.vue'
@@ -27,14 +27,7 @@ const leaderRef = ref()
 
 const changeStatus = async (status, id) => {
 	const response = await dept.changeStatus({ id, status })
-	if (response.success) {
-		Message.success(response.message)
-	}
-}
-
-const changeSort = async (value, id) => {
-	const response = await dept.numberOperation({ id, numberName: 'sort', numberValue: value })
-	if (response.success) {
+	if (response.code === 200) {
 		Message.success(response.message)
 	}
 }
@@ -42,6 +35,8 @@ const changeSort = async (value, id) => {
 const openLeaderModal = (record) => {
 	leaderRef.value.open(record)
 }
+
+let isRecovery = computed(() => (crudRef.value ? crudRef.value.isRecovery : false))
 
 const crud = reactive({
 	api: dept.getList,
