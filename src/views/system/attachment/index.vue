@@ -173,7 +173,7 @@ const crud = reactive({
 	rowSelection: { showCheckedAll: true },
 	operationColumn: true,
 	operationColumnWidth: 140,
-	delete: { show: true, api: api.deletes, auth: ['/core/attachment/destroy'] },
+	delete: { show: true, api: api.deletes, auth: ['/core/attachment/destroy'], realApi: api.realDestroy, realAuth: ['/core/attachment/realDestroy'] },
 	recovery: { show: true, api: api.recoverys, auth: ['/core/attachment/recovery'] },
 	beforeRequest: (params) => {
 		params.orderBy = 'id'
