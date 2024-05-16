@@ -32,8 +32,6 @@
     if (response.code === 200) {
       previewCode.value = response.data
       visible.value = true
-    } else {
-      Message.info(response.message)
     }
   }
 

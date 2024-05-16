@@ -60,12 +60,12 @@
 									label-col-flex="auto"
 									:label-col-style="{ width: '100px' }"
 									:rules="[{ required: true, message: '模板名称必选' }]"
-									extra="默认app,如果在plugin目录下填写plugin\模块名称\app"
+									extra="默认plugin模板,生成文件放plugin目录下，app模板生成文件放app目录下"
 								>
 									<a-select
 										style="width: 100%"
 										v-model="form.template"
-										:options="[{ label: 'saiadmin官方模板', value: 'saiadmin' }]"
+										:options="[{ label: 'webman插件[plugin]', value: 'plugin' }, { label: 'webman应用[app]', value: 'app' } ]"
 										allow-clear
 										allow-search
 										placeholder="请选择生成模板"
@@ -74,12 +74,12 @@
 							</a-col>
 							<a-col :xs="24" :md="8" :xl="8">
 								<a-form-item
-									label="命名空间"
+								label="应用名称"
 									field="namespace"
 									label-col-flex="auto"
 									:label-col-style="{ width: '100px' }"
-									:rules="[{ required: true, message: '命名空间必填' }]"
-									extra="默认app\应用,如果在plugin目录下可能是plugin\应用\app"
+									:rules="[{ required: true, message: '应用名称必填' }]"
+									extra="plugin插件名称, 或者app下应用名称"
 								>
 									<a-input v-model="form.namespace" />
 								</a-form-item>
