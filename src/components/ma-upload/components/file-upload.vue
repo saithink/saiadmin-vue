@@ -98,6 +98,8 @@ const uploadFileHandler = async (options) => {
 			})
 			emit('update:modelValue', files)
 		}
+	}else {
+		currentItem.value = {}
 	}
 }
 
