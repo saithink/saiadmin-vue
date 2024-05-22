@@ -106,6 +106,116 @@ const getConfigData = async (id) => {
 			extra: item.remark,
 			tooltip: item.key,
 		}
+		if (item.key === 'upload_mode') {
+			option = {
+				title: item.name,
+				dataIndex: item.key,
+				formType: item.input_type,
+				dict: {},
+				labelWidth: '120px',
+				extra: item.remark,
+				tooltip: item.key,
+				control: (val) => {
+					if (val == 1) {
+						return {
+							local_root: { display: true },
+							local_domain: { display: true },
+							local_uri: { display: true },
+							oss_accessKeyId: { display: false },
+							oss_accessKeySecret: { display: false },
+							oss_bucket: { display: false },
+							oss_dirname: { display: false },
+							oss_domain: { display: false },
+							oss_endpoint: { display: false },
+							qiniu_accessKey: { display: false },
+							qiniu_secretKey: { display: false },
+							qiniu_bucket: { display: false },
+							qiniu_dirname: { display: false },
+							qiniu_domain: { display: false },
+							cos_secretId: { display: false },
+							cos_secretKey: { display: false },
+							cos_bucket: { display: false },
+							cos_dirname: { display: false },
+							cos_domain: { display: false },
+							cos_region: { display: false },
+							
+						}
+					}
+					if (val == 2) {
+						return {
+							local_root: { display: false },
+							local_domain: { display: false },
+							local_uri: { display: false },
+							oss_accessKeyId: { display: true },
+							oss_accessKeySecret: { display: true },
+							oss_bucket: { display: true },
+							oss_dirname: { display: true },
+							oss_domain: { display: true },
+							oss_endpoint: { display: true },
+							qiniu_accessKey: { display: false },
+							qiniu_secretKey: { display: false },
+							qiniu_bucket: { display: false },
+							qiniu_dirname: { display: false },
+							qiniu_domain: { display: false },
+							cos_secretId: { display: false },
+							cos_secretKey: { display: false },
+							cos_bucket: { display: false },
+							cos_dirname: { display: false },
+							cos_domain: { display: false },
+							cos_region: { display: false },
+						}
+					}
+					if (val == 3) {
+						return {
+							local_root: { display: false },
+							local_domain: { display: false },
+							local_uri: { display: false },
+							oss_accessKeyId: { display: false },
+							oss_accessKeySecret: { display: false },
+							oss_bucket: { display: false },
+							oss_dirname: { display: false },
+							oss_domain: { display: false },
+							oss_endpoint: { display: false },
+							qiniu_accessKey: { display: true },
+							qiniu_secretKey: { display: true },
+							qiniu_bucket: { display: true },
+							qiniu_dirname: { display: true },
+							qiniu_domain: { display: true },
+							cos_secretId: { display: false },
+							cos_secretKey: { display: false },
+							cos_bucket: { display: false },
+							cos_dirname: { display: false },
+							cos_domain: { display: false },
+							cos_region: { display: false },
+						}
+					}
+					if (val == 4) {
+						return {
+							local_root: { display: false },
+							local_domain: { display: false },
+							local_uri: { display: false },
+							oss_accessKeyId: { display: false },
+							oss_accessKeySecret: { display: false },
+							oss_bucket: { display: false },
+							oss_dirname: { display: false },
+							oss_domain: { display: false },
+							oss_endpoint: { display: false },
+							qiniu_accessKey: { display: false },
+							qiniu_secretKey: { display: false },
+							qiniu_bucket: { display: false },
+							qiniu_dirname: { display: false },
+							qiniu_domain: { display: false },
+							cos_secretId: { display: true },
+							cos_secretKey: { display: true },
+							cos_bucket: { display: true },
+							cos_dirname: { display: true },
+							cos_domain: { display: true },
+							cos_region: { display: true },
+						}
+					}
+				}
+			}
+		}
 		const allowDictType = ['select', 'radio', 'checkbox']
 		if (allowDictType.includes(item.input_type)) {
 			option.dict = { data: item.config_select_data }
