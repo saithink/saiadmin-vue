@@ -36,7 +36,7 @@
 
 		<add-group ref="addGroupRef" @success="addGroupSuccess" />
 
-		<manage-config ref="manageConfigRef" @close="getConfigGroupList" />
+		<manage-config ref="manageConfigRef" @close="reloadPage" />
 	</div>
 </template>
 
@@ -74,6 +74,11 @@ const handleChange = (key) => {
 	const params = key.split('-')
 	maFormRef.value[params[0]].init()
 	active.value = key
+}
+
+const reloadPage = () => {
+	getConfigGroupList()
+	active.value = '0-1'
 }
 
 const getConfigGroupList = async () => {
