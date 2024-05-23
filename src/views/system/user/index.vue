@@ -273,7 +273,7 @@ const columns = reactive([
 		dataIndex: 'post_ids',
 		width: 120,
 		formType: 'select',
-		multiple: false,
+		multiple: true,
 		dict: { url: '/core/post/index?saiType=all', props: { label: 'name', value: 'id' } },
 		hide: true,
 		editDefaultValue: async (record) => {
