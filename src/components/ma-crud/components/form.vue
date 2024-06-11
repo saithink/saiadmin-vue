@@ -162,7 +162,14 @@ const init = () => {
   const layout = JSON.parse(JSON.stringify(options?.formOption?.layout ?? []))
 
   columns.map(async item => {
-    await columnItemHandle(item)
+    //存在子表头则优先读取子表头
+    if (item.children && item.children.length > 0){
+      await item.children.map(async (childItem) => {
+        await columnItemHandle(childItem)
+      })
+    }else {
+      await columnItemHandle(item)
+    }
   })
   // 设置表单布局
   settingFormLayout(layout)
