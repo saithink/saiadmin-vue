@@ -305,20 +305,20 @@ const init = async () => {
 	})
 
 	await props.columns.map(async (item) => {
-    //存在子表头则优先读取子表头
-    if (item.children && item.children.length > 0){
-      await item.children.map(async (childItem) => {
-        // 字典,非数据联动并且存在字典翻译
-        if (!cascaders.value.includes(childItem.dataIndex) && childItem.dict) {
-          await loadDict(dicts.value, childItem)
-        }
-      })
-    }else{
-      // 字典,非数据联动并且存在字典翻译
-      if (!cascaders.value.includes(item.dataIndex) && item.dict) {
-        await loadDict(dicts.value, item)
-      }
-    }
+		// 存在子表头则优先读取子表头
+		if (item.children && item.children.length > 0) {
+			await item.children.map(async (childItem) => {
+				// 字典,非数据联动并且存在字典翻译
+				if (!cascaders.value.includes(childItem.dataIndex) && childItem.dict) {
+					await loadDict(dicts.value, childItem)
+				}
+			})
+		} else {
+			// 字典,非数据联动并且存在字典翻译
+			if (!cascaders.value.includes(item.dataIndex) && item.dict) {
+				await loadDict(dicts.value, item)
+			}
+		}
 	})
 	setTimeout(async () => {
 		await tabsHandler()
