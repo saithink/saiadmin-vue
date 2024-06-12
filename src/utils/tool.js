@@ -187,14 +187,18 @@ tool.viewImage = function (path, defaultStorage = 'LOCAL') {
 }
 
 tool.showFile = function (hash, defaultStorage = 'LOCAL') {
-	if (!hash) {
-		return ''
-	}
 	if (hash.indexOf('.') !== -1) {
 		return tool.viewImage(hash, defaultStorage)
 	}
-	let mode = tool.local.get('site_storage_mode') ? tool.local.get('site_storage_mode').toUpperCase() : defaultStorage
-	return uploadConfig.storage[mode] + '/system/showFile/' + hash
+	const baseURL = import.meta.env.VITE_APP_OPEN_PROXY === 'true' ? import.meta.env.VITE_APP_PROXY_PREFIX : import.meta.env.VITE_APP_BASE_URL
+	if (typeof hash === 'object') {
+		return hash.map((item) => {
+			item = baseURL + '/core/system/downloadByHash/' + item
+			return item
+		})
+	} else {
+		return baseURL + '/core/system/downloadByHash/' + hash
+	}
 }
 
 /* 日期格式化 */
