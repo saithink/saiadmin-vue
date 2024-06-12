@@ -173,7 +173,7 @@ const dictColors = inject('dictColors')
 const imageSee = async (row, record, dataIndex) => {
 	if (row.returnType) {
 		if (row.returnType === 'url') {
-			emit('showImage', tool.showFile(record[dataIndex]))
+			emit('showImage', record[dataIndex])
 			return
 		}
 
