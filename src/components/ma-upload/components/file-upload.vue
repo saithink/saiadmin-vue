@@ -27,36 +27,48 @@
 	</div>
 	<!-- 单文件 -->
 	<div class="file-list mt-2" v-if="!config.multiple && currentItem?.url && config.showList">
-		<a-button class="delete" @click="removeSignFile()">
-			<template #icon><icon-delete /></template>
+		<a-tooltip content="点击文件名预览/下载" position="tr">
+			<a :href="currentItem.url" v-if="currentItem?.url && currentItem.percent === 100 && currentItem?.status === 'complete'" class="file-name" target="_blank">{{
+				currentItem.name
+			}}</a>
+		</a-tooltip>
+
+		<a-button type="text" size="small" @click="removeSignFile()" v-if="currentItem.percent === 100">
+			<template #icon>
+				<icon-delete />
+			</template>
 		</a-button>
-		<div class="file-item">
-			{{ currentItem.url }}
-		</div>
 	</div>
 
 	<!-- 多文件 -->
 	<div v-if="config.showList" class="file-list mt-2" v-for="(file, idx) in showFileList" :key="idx">
-		<a-button class="delete" @click="removeFile(idx)">
-			<template #icon><icon-delete /></template>
+		<a-tooltip content="点击文件名预览/下载" position="tr">
+			<a :href="file.url" v-if="file?.url" class="file-name" target="_blank">{{ file.name }}</a>
+		</a-tooltip>
+
+		<a-button type="text" size="small" @click="removeFile(idx)">
+			<template #icon>
+				<icon-delete />
+			</template>
 		</a-button>
-		<div class="file-item">
-			{{ file.url }}
-		</div>
 	</div>
 </template>
 <script setup>
 import { ref, inject, watch } from 'vue'
 import tool from '@/utils/tool'
-import { isArray } from 'lodash'
+import { isArray, throttle } from 'lodash'
 import { getFileUrl, uploadRequest } from '../js/utils'
 import { Message } from '@arco-design/web-vue'
 
 import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n()
 
 const props = defineProps({
-	modelValue: { type: [String, Number, Array], default: () => {} },
+	modelValue: {
+		type: [String, Number, Array],
+		default: () => {},
+	},
 })
 const emit = defineEmits(['update:modelValue'])
 const config = inject('config')
@@ -77,15 +89,10 @@ const uploadFileHandler = async (options) => {
 		return
 	}
 
-	const requestData = {
-		...config.requestData,
-		mode: config.uploadMode,
-	}
-
-	const result = await uploadRequest(file, 'file', 'uploadFile', requestData)
+	const result = await uploadRequest(file, 'file', 'uploadFile', config.requestData)
 
 	if (result) {
-		result.url = tool.attachUrl(result.url, storageMode[result.storage_mode])
+		// result.url = tool.attachUrl(result.url, storageMode[result.storage_mode])
 		if (!config.multiple) {
 			signFile.value = result[config.returnType]
 			emit('update:modelValue', signFile.value)
@@ -98,8 +105,6 @@ const uploadFileHandler = async (options) => {
 			})
 			emit('update:modelValue', files)
 		}
-	} else {
-		currentItem.value = {}
 	}
 }
 
@@ -118,7 +123,7 @@ const removeFile = (idx) => {
 	emit('update:modelValue', files)
 }
 
-const init = async () => {
+const init = throttle(async () => {
 	if (config.multiple) {
 		if (isArray(props.modelValue) && props.modelValue.length > 0) {
 			const result = await props.modelValue.map(async (item) => {
@@ -127,11 +132,15 @@ const init = async () => {
 			const data = await Promise.all(result)
 			if (config.returnType === 'url') {
 				showFileList.value = data.map((url) => {
-					return { url }
+					return { url, name: url.substring(url.lastIndexOf('/') + 1) }
 				})
 			} else {
 				showFileList.value = data.map((item) => {
-					return { url: item.url }
+					return {
+						url: item.url,
+						[config.returnType]: item[config.returnType],
+						name: item.origin_name,
+					}
 				})
 			}
 		} else {
@@ -141,17 +150,19 @@ const init = async () => {
 		if (config.returnType === 'url') {
 			signFile.value = props.modelValue
 			currentItem.value.url = props.modelValue
+			currentItem.value.name = props.modelValue
 		} else {
 			const result = await getFileUrl(config.returnType, props.modelValue, storageMode)
 			signFile.value = result.url
 			currentItem.value.url = result.url
+			currentItem.value.name = result.origin_name
 		}
 		currentItem.value.percent = 100
 		currentItem.value.status = 'complete'
 	} else {
 		removeSignFile()
 	}
-}
+}, 1000)
 
 watch(
 	() => props.modelValue,
@@ -167,25 +178,21 @@ watch(
 
 <style lang="less" scoped>
 .file-list {
-	position: relative;
 	background-color: var(--color-primary-light-1);
 	border-radius: 4px;
 	height: 36px;
-	line-height: 36px;
-	padding: 0 10px;
+	padding: 0 5px;
 	width: 100%;
-	.delete {
-		position: absolute;
-		z-index: 99;
-		right: 2px;
-		top: 2px;
-	}
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 
-	.progress {
-		position: absolute;
-		left: 30px;
-		top: 50%;
-		transform: translateX(-50%) translateY(-50%);
+	.file-name {
+		max-width: 90%;
+		margin: 0 5px;
+		overflow: hidden;
+		color: #165dff;
 	}
 }
 </style>
