@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://saithink.top/logo.png" width="120" />
+  <img src="https://saithink.top/img/logo.png" width="120" />
 </p>
 <p align="center">
   <img src="https://svg.hamm.cn/badge.svg?key=License&value=MIT" />
