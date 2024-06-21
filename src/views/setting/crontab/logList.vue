@@ -50,7 +50,7 @@
     operationColumnWidth: 100,
     delete: {
       show: true,
-      api: crontab.deleteLog, auth: ['/core/crontab/deleteCrontabLog'],
+      api: crontab.deleteLog, auth: ['/core/crontab/deleteLog'],
     },
     beforeRequest: (params) => {
       params.orderBy = 'create_time'

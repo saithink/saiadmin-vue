@@ -18,7 +18,18 @@
 					<a-link><icon-sync /> 同步</a-link>
 				</a-popconfirm>
 				<a-link @click="() => editRef.open(record.id)"><icon-edit /> 编辑</a-link>
-				<a-link @click="generateCode(record.id)"><icon-code /> 生成代码</a-link>
+			</template>
+			<template #operationAfterExtend="{ record }">
+				<a-dropdown
+					trigger="hover"
+					@select="selectOperation($event, record.id)"
+				>
+					<a-link><icon-code /> 生成</a-link>
+					<template #content>
+					<a-doption value="generateCode">压缩包下载</a-doption>
+					<a-doption value="generateFile">生成到模块</a-doption>
+					</template>
+				</a-dropdown>
 			</template>
 		</ma-crud>
 
@@ -34,7 +45,7 @@
 import { ref, reactive, computed } from 'vue'
 import generate from '@/api/setting/generate'
 import { useRouter } from 'vue-router'
-import { Message } from '@arco-design/web-vue'
+import { Message, Modal } from '@arco-design/web-vue'
 import tool from '@/utils/tool'
 
 import LoadTable from './components/loadTable.vue'
@@ -63,15 +74,40 @@ const sync = async (id) => {
 	response.code === 200 && Message.success(response.message)
 }
 
+const selectOperation = (value, id) => {
+    if (value === 'generateCode') {
+		generateCode(id)
+      	return
+    }
+    if (value === 'generateFile') {
+		Modal.info({
+			title: '提示',
+			content: '生成到模块将会覆盖原有文件，确定要生成吗？',
+			simple: false,
+			onBeforeOk: (done) => {
+				generateFile(id)
+				done(true)
+			}
+		})
+     	return
+    }
+}
+
 const generateCode = async (ids) => {
 	Message.info('代码生成下载中，请稍后')
 	const response = await generate.generateCode({ ids: ids.toString().split(',') })
+	console.log(response)
 	if (response) {
 		tool.download(response, 'saiadmin.zip')
 		Message.success('代码生成成功，开始下载')
 	} else {
 		Message.error('文件下载失败')
 	}
+}
+
+const generateFile = async (id) => {
+	const response = await generate.generateFile({id})
+	response.code === 200 && Message.success(response.message)
 }
 
 const batchGenerate = () => {

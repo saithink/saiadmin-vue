@@ -43,9 +43,9 @@
           
             <a-link><icon-double-right /> 更多</a-link>
             <template #content>
-              <a-doption value="updateCache" v-auth="['system:user:cache']">更新缓存</a-doption>
-              <a-doption value="setHomePage" v-auth="['system:user:homePage']">设置首页</a-doption>
-              <a-doption value="resetPassword" v-auth="['system:user:initUserPassword']">重置密码</a-doption>
+              <a-doption value="updateCache" v-auth="['/core/user/cache']">更新缓存</a-doption>
+              <a-doption value="setHomePage" v-auth="['/core/user/setHomePage']">设置首页</a-doption>
+              <a-doption value="resetPassword" v-auth="['/core/user/initUserPassword']">重置密码</a-doption>
             </template>
           </a-dropdown>
         </template>
@@ -170,7 +170,7 @@
       width: 800,
       layout: [
         { formType: 'grid', cols: [ { span: 24, formList: [ { dataIndex: 'avatar' }] }]  },
-        { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'username' }] }, { span: 12, formList: [{ dataIndex: 'dept_ids' }] }]  },
+        { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'username' }] }, { span: 12, formList: [{ dataIndex: 'dept_id' }] }]  },
         { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'password' }] }, { span: 12, formList: [{ dataIndex: 'nickname' }] }]  },
         { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'role_ids' }] }, { span: 12, formList: [{ dataIndex: 'phone' }] }]  },
         { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'post_ids' }] }, { span: 12, formList: [{ dataIndex: 'email' }] }]  },
@@ -206,7 +206,7 @@
       commonRules: [{ required: true, message: '账户必填' }]
     },
     {
-      title: '所属部门', dataIndex: 'dept_ids', hide: true, formType: 'tree-select',
+      title: '所属部门', dataIndex: 'dept_id', hide: true, formType: 'tree-select',
       multiple: false, treeCheckable: false, treeCheckStrictly: true,
       dict: { url: '/core/dept/index?tree=true' }, commonRules: [{ required: true, message: '所属部门必选' }],
       validateTrigger: 'focus',

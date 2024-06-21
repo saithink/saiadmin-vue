@@ -7,7 +7,7 @@ class Message {
 
   timer = null
 
-  interval = 10 * 1000
+  interval = 60 * 1000
 
   constructor() {
     this.ws = new Wsocket(
@@ -28,7 +28,8 @@ class Message {
   }
 
   getMessage() {
-    this.timer = setInterval(() => {
+    this.timer = setTimeout(() => {
+      console.log('发送: get_unread_message')
       this.ws && this.ws.send({ event: 'get_unread_message' })
     }, this.interval)
   }

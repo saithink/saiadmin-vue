@@ -4,7 +4,7 @@
     <ma-crud :options="crud" :columns="columns" ref="crudRef" @selection-change="selectChange">
       <!-- 表格操作按钮扩展 -->
       <template #tableButtons>
-        <a-button @click="operate('optimize')" type="primary" status="success" v-auth="['/core/dataMaintain/detailed']">
+        <a-button @click="operate('optimize')" type="primary" status="success" v-auth="['/core/dataMaintain/optimize']">
           <template #icon><icon-tool /></template>优化表
         </a-button>
 

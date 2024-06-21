@@ -19,7 +19,7 @@
         />
       </template>
       <template #operationBeforeExtend="{ record }" v-if="! isRecovery">
-        <a-link @click="openDictList(record)"><icon-list /> 字典数据</a-link>
+        <a-link v-auth="['/core/dictType/save']" @click="openDictList(record)"><icon-list /> 字典数据</a-link>
       </template>
     </ma-crud>
 
@@ -42,6 +42,7 @@
     const response = await dictType.changeStatus({ id, status })
     if (response.code === 200) {
       Message.success(response.message)
+      crudRef.value.refresh()
     }
   }
 

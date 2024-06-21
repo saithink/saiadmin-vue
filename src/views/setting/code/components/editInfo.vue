@@ -98,6 +98,36 @@
 						</a-row>
 						<a-row :gutter="24">
 							<a-col :xs="24" :md="8" :xl="8">
+								<a-form-item label="生成配置" field="type" label-col-flex="auto" :label-col-style="{ width: '100px' }" extra="ApiDoc会生成ApiDoc注释的接口文档">
+									<a-radio-group v-model="form.stub">
+										<a-radio value="saiadmin">默认</a-radio>
+										<a-radio value="apidoc">ApiDoc文档</a-radio>
+									</a-radio-group>
+								</a-form-item>
+							</a-col>
+							<a-col :xs="24" :md="8" :xl="8">
+								<a-form-item label="生成方式" field="type" label-col-flex="auto" :label-col-style="{ width: '100px' }" extra="生成到模块仅调试模式和单文件生成有效，路由和菜单请自行添加">
+									<a-radio-group v-model="form.generate_type">
+										<a-radio :value="1">压缩包下载</a-radio>
+										<a-radio :value="2">生成到模块</a-radio>
+									</a-radio-group>
+								</a-form-item>
+							</a-col>
+							<a-col :xs="24" :md="8" :xl="8" v-if="form.generate_type == 2">
+								<a-form-item
+									label="生成路径"
+									field="generate_path"
+									label-col-flex="auto"
+									:label-col-style="{ width: '100px' }"
+									:rules="[{ required: true, message: '生成路径必填' }]"
+									extra="前端根目录文件夹名称，必须与后端根目录同级"
+								>
+									<a-input v-model="form.generate_path" />
+								</a-form-item>
+							</a-col>
+						</a-row>
+						<a-row :gutter="24">
+							<a-col :xs="24" :md="8" :xl="8">
 								<a-form-item label="生成类型" field="type" label-col-flex="auto" :label-col-style="{ width: '100px' }" extra="单表须有主键，树表须指定id、parent_id、name等字段">
 									<a-select
 										style="width: 100%"

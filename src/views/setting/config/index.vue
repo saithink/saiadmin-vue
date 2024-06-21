@@ -12,13 +12,13 @@
       <template #extra>
         <a-space>
           <a-tooltip content="添加组">
-            <a-button shape="round" @click="addGroupModal" type="primary" v-auth="['setting:config:save']">
+            <a-button shape="round" @click="addGroupModal" type="primary" v-auth="['/core/config/save']">
               <template #icon><icon-plus /></template>
             </a-button>
           </a-tooltip>
 
           <a-tooltip content="管理该组配置">
-            <a-button shape="round" @click="manageConfigModal" type="primary" v-auth="['setting:config:index']">
+            <a-button shape="round" @click="manageConfigModal" type="primary" v-auth="['/core/config/index']">
               <template #icon><icon-settings /></template>
             </a-button>
           </a-tooltip>
@@ -78,6 +78,10 @@
   const deleteVisible = ref(false)
 
   const openDeleteModal = (data) => {
+    if (! auth('/core/config/destroy')) {
+      Message.info('没有权限删除配置')
+      return
+    }
     const id = data.split('-')[1]
     if (id == 1 || id == 2) {
       Message.info('该配置为系统核心配置，无法删除')
@@ -294,7 +298,7 @@
   }
 
   const submit = async (data) => {
-    if (! auth('setting:config:update')) {
+    if (! auth('/core/config/update')) {
       Message.info('没有权限修改配置')
       return
     }

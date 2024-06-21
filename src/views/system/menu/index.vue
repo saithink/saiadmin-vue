@@ -21,7 +21,7 @@
         <a-link
           @click="openAdd(record.id)"
           v-if=" record.type === 'M' && ! isRecovery "
-          v-auth="['system:menu:save']"
+          v-auth="['/core/menu/save']"
         ><icon-plus /> 新增</a-link>
       </template>
     </ma-crud>

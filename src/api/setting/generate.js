@@ -95,6 +95,18 @@ export default {
 	},
 
 	/**
+	 * 生成到文件
+	 * @returns
+	 */
+	generateFile(data = {}) {
+		return request({
+			url: '/tool/code/generateFile',
+			method: 'post',
+			data,
+		})
+	},
+
+	/**
 	 * 装载数据表
 	 * @returns
 	 */

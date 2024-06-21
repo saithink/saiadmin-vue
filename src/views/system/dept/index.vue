@@ -35,6 +35,7 @@
     const response = await dept.changeStatus({ id, status })
     if (response.code === 200) {
       Message.success(response.message)
+      crudRef.value.refresh()
     }
   }
 

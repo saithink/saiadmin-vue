@@ -52,7 +52,7 @@ const props = defineProps({
 })
 
 const options = {
-  tabSize: 2,
+  tabSize: 4,
   automaticLayout: true,
   scrollBeyondLastLine: false,
   language: props.language,

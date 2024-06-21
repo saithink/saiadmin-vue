@@ -25,6 +25,7 @@ const changeStatus = async (status, id) => {
   const response = await dict.changeStatus({ id, status })
   if (response.code === 200) {
     Message.success(response.message)
+    crudRef.value.refresh()
   }
 }
 
@@ -50,7 +51,6 @@ const crud = reactive({
   add: { show: true, api: dict.saveDictData, auth: ['/core/dictType/save'] },
   edit: { show: true, api: dict.updateDictData, auth: ['/core/dictType/update'] },
   delete: { show: true, api: dict.deletesDictData, auth: ['/core/dictType/destroy'] },
-  recovery: { show: true, api: dict.recoverysDictData, auth: ['system:dict:recovery'] },
   beforeRequest: (params) => params.type_id = currentRow.value.id
 })
 
