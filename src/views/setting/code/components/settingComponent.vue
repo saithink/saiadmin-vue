@@ -1,6 +1,12 @@
-
 <template>
-  <a-modal v-model:visible="visible" :on-before-ok="save" width="600px" draggable top="50px" :align-center="false">
+  <a-modal
+    v-model:visible="visible"
+    :on-before-ok="save"
+    width="600px"
+    draggable
+    top="50px"
+    :align-center="false"
+  >
     <template #title>设置组件 - {{ row?.column_comment }}</template>
     <a-form :model="form">
       <!-- 数字输入框 / 滑块 -->
@@ -11,7 +17,7 @@
           label-col-flex="auto"
           :label-col-style="{ width: '80px' }"
         >
-          <a-input-number v-model="form.min"/>
+          <a-input-number v-model="form.min" />
         </a-form-item>
         <a-form-item
           label="最大值"
@@ -19,7 +25,7 @@
           label-col-flex="auto"
           :label-col-style="{ width: '80px' }"
         >
-          <a-input-number v-model="form.max"/>
+          <a-input-number v-model="form.max" />
         </a-form-item>
         <a-form-item
           label="步长"
@@ -36,7 +42,7 @@
           :label-col-style="{ width: '80px' }"
           v-if="row.view_type != 'slider'"
         >
-          <a-input-number v-model="form.precision" :min="0"  />
+          <a-input-number v-model="form.precision" :min="0" />
         </a-form-item>
         <a-form-item
           label="刻度线"
@@ -59,7 +65,7 @@
           label-col-flex="auto"
           :label-col-style="{ width: '120px' }"
         >
-          <a-input v-model="form.checkedValue"/>
+          <a-input v-model="form.checkedValue" />
         </a-form-item>
         <a-form-item
           label="未选中时的值"
@@ -67,11 +73,15 @@
           label-col-flex="auto"
           :label-col-style="{ width: '120px' }"
         >
-          <a-input v-model="form.uncheckedValue"/>
+          <a-input v-model="form.uncheckedValue" />
         </a-form-item>
       </div>
       <!-- 下拉、复选、单选 -->
-      <div v-if="['select', 'checkbox', 'radio', 'transfer'].includes(row.view_type)">
+      <div
+        v-if="
+          ['select', 'checkbox', 'radio', 'transfer'].includes(row.view_type)
+        "
+      >
         <a-form-item
           label="是否多选"
           field="multiple"
@@ -87,8 +97,17 @@
         <a-divider orientation="left">
           设置数据 <a-link class="ml-2" @click="add"><icon-plus /> 添加</a-link>
         </a-divider>
-        <a-card v-for="(item, idx) in form.collection" :key="idx" class="mt-2 relative">
-          <a-button type="primary" status="danger" @click="del(idx)" class="setdata-button">
+        <a-card
+          v-for="(item, idx) in form.collection"
+          :key="idx"
+          class="mt-2 relative"
+        >
+          <a-button
+            type="primary"
+            status="danger"
+            @click="del(idx)"
+            class="setdata-button"
+          >
             <template #icon><icon-delete /></template>
           </a-button>
           <a-form-item
@@ -110,19 +129,27 @@
         </a-card>
       </div>
       <!-- 树形下拉框、级联选择器 -->
-      <div v-if="['treeSelect', 'cascader'].includes(row.view_type)">
-        该组件涉及多层数据嵌套，请看 <a-tag color="blue">Arco Design</a-tag> 官方文档
-        <a-link class="mt-2">https://arco.design/vue/docs/start</a-link>
+      <div v-if="['treeSelect'].includes(row.view_type)">
+        <a-form-item
+          label="URL地址"
+          field="url"
+          label-col-flex="auto"
+          :label-col-style="{ width: '120px' }"
+        >
+          <a-input v-model="form.url" />
+        </a-form-item>
       </div>
       <!-- 编辑器相关 -->
-      <div v-if="['codeEditor', 'editor','wangEditor'].includes(row.view_type)">
+      <div
+        v-if="['codeEditor', 'editor', 'wangEditor'].includes(row.view_type)"
+      >
         <a-form-item
           label="编辑器高度"
           field="height"
           label-col-flex="auto"
           :label-col-style="{ width: '120px' }"
         >
-          <a-input-number v-model="form.height" :max="1000" :min="100"/>
+          <a-input-number v-model="form.height" :max="1000" :min="100" />
         </a-form-item>
         <a-form-item
           label="双向绑定数据"
@@ -146,7 +173,10 @@
           :label-col-style="{ width: '100px' }"
           :extra="`支持 uploadfile 数据表所有字段，这里仅列常用部分`"
         >
-          <a-select v-model="form.returnType" placeholder="请选择上传返回数据类型">
+          <a-select
+            v-model="form.returnType"
+            placeholder="请选择上传返回数据类型"
+          >
             <a-option value="url">附件URL</a-option>
             <a-option value="id">附件ID</a-option>
             <a-option value="hash">附件HASH</a-option>
@@ -204,7 +234,11 @@
           label-col-flex="auto"
           :label-col-style="{ width: '100px' }"
         >
-          <a-select v-model="form.type" placeholder="默认为下拉框联动" allow-clear>
+          <a-select
+            v-model="form.type"
+            placeholder="默认为下拉框联动"
+            allow-clear
+          >
             <a-option value="select">下拉框联动</a-option>
             <a-option value="cascader">级联选择器</a-option>
           </a-select>
@@ -216,7 +250,11 @@
           label-col-flex="auto"
           :label-col-style="{ width: '100px' }"
         >
-          <a-select v-model="form.mode" placeholder="默认为省市名称" allow-clear>
+          <a-select
+            v-model="form.mode"
+            placeholder="默认为省市名称"
+            allow-clear
+          >
             <a-option value="name">省市名称</a-option>
             <a-option value="code">省市编码</a-option>
           </a-select>
@@ -273,42 +311,45 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const emit = defineEmits(['confrim'])
-const visible = ref(false)
-const row = ref({})
+const emit = defineEmits(["confrim"]);
+const visible = ref(false);
+const row = ref({});
 const form = ref({
-  collection: []
-})
+  collection: [],
+});
 
 const open = (record) => {
-  row.value = record
-  if (record.view_type == 'upload') {
-    form.value = record.options ? record.options : { type: 'image', returnType: 'url', multiple: false }
+  row.value = record;
+  if (record.view_type == "upload") {
+    form.value = record.options
+      ? record.options
+      : { type: "image", returnType: "url", multiple: false };
   } else {
-    form.value = record.options ? record.options : { collection: [] }
+    form.value = record.options ? record.options : { collection: [] };
   }
-  visible.value = true
-}
+  visible.value = true;
+};
 
 const add = () => {
-  form.value.collection.push({ label: '', value: ''})
-}
+  form.value.collection.push({ label: "", value: "" });
+};
 const del = (idx) => {
-  form.value.collection.splice(idx, 1)
-}
+  form.value.collection.splice(idx, 1);
+};
 
 const save = (done) => {
-  emit('confrim', row.value.column_name, form.value)
-  done(true)
-}
+  emit("confrim", row.value.column_name, form.value);
+  done(true);
+};
 
-defineExpose({ open })
+defineExpose({ open });
 </script>
 
 <style scoped>
 .setdata-button {
-  right: 15px; position: absolute;
+  right: 15px;
+  position: absolute;
 }
 </style>
