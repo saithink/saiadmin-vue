@@ -2,8 +2,8 @@
   <component
     :is="getComponentName()"
     v-model="value"
-    :placeholder="props.component.formType === 'range' ? ['请选择开始时间', '请选择结束时间'] : `请选择${props.component.title}`"
-    :time-picker-props="props.component.formType == 'range' ? { defaultValue: ['00:00:00', '23:59:59'] } : {}"
+    :placeholder="(props.component.searchFormType ?? props.component.formType) === 'range' ? ['请选择开始时间', '请选择结束时间'] : `请选择${props.component.title}`"
+    :time-picker-props="(props.component.searchFormType ?? props.component.formType) == 'range' ? { defaultValue: ['00:00:00', '23:59:59'] } : {}"
     :show-time="props.component.showTime"
     :type="props.component.range ? props.component.formType === 'time' ? 'time-range' : 'range' : ''"
     :format="props.component.format || ''"
@@ -24,7 +24,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const getComponentName = () => {
   if (['date', 'month', 'year', 'week', 'quarter', 'range', 'time'].includes(props.component.formType)) {
-    return `a-${props.component.formType}-picker`
+    return `a-${props.component.searchFormType ?? props.component.formType}-picker`
   }
 }
 
