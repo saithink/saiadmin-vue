@@ -11,6 +11,7 @@
 import { ref, computed, nextTick } from 'vue'
 import VCharts from 'vue-echarts'
 import { useAppStore } from '@/store'
+import 'echarts/lib/component/title'
 
 const props = defineProps({
   options: {
