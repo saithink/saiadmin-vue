@@ -51,7 +51,11 @@ const crud = reactive({
   add: { show: true, api: dict.saveDictData, auth: ['/core/dictType/save'] },
   edit: { show: true, api: dict.updateDictData, auth: ['/core/dictType/update'] },
   delete: { show: true, api: dict.deletesDictData, auth: ['/core/dictType/destroy'] },
-  beforeRequest: (params) => params.type_id = currentRow.value.id
+  beforeRequest: (params) => { 
+    params.type_id = currentRow.value.id
+    params.orderBy = 'sort'
+    params.orderType = 'desc'
+  }
 })
 
 const columns = reactive([
