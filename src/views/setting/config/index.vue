@@ -305,7 +305,6 @@
     const response = await config.updateByKeys(data)
     if (response.code === 200) {
       Message.success(response.message)
-      getConfigGroupList()
     }
   }
 
