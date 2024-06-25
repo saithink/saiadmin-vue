@@ -178,7 +178,6 @@
             placeholder="请选择上传返回数据类型"
           >
             <a-option value="url">附件URL</a-option>
-            <a-option value="id">附件ID</a-option>
             <a-option value="hash">附件HASH</a-option>
           </a-select>
         </a-form-item>
