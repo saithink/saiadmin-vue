@@ -105,7 +105,7 @@
       },
       onControl: (value, maFormObject) => {
         const service = maFormObject.getColumnService()
-        const dataIndexList = ['icon', 'route', 'component', 'redirect', 'sort', 'is_hidden', 'restful']
+        const dataIndexList = ['icon', 'route', 'component', 'redirect', 'sort', 'is_hidden']
         if ( value === 'B' ) {
           dataIndexList.map(name => service.get(name).setAttr('display', false))
           return
@@ -140,14 +140,6 @@
       title: '状态', dataIndex: 'status', search: true, formType: 'radio',
       dict: { name: 'data_status', props: { label: 'label', value: 'value' } },
       addDefaultValue: '1', width: 120,
-    },
-    {
-      title: '生成按钮', dataIndex: 'restful', hide: true, formType: 'radio',
-      dict: {
-        data: [ { title: '是', key: '1' }, { title: '否', key: '2' } ],
-        props: { label: 'title', value: 'key' },
-      },
-      addDefaultValue: '2', editDisplay: false
     },
     {
       title: '备注', dataIndex: 'remark', hide: true, formType: 'textarea',
