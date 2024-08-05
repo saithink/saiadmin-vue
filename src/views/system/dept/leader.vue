@@ -58,7 +58,10 @@ const selectedSuccess = async () => {
     return { user_id: item.id, username: item.username }
   })
   const response = await api.addLeader({ id: deptId.value, users: data })
-  response.code === 200 && crudRef.value.refresh()
+  if (response.code === 200) {
+    users.value = []
+    crudRef.value?.refresh()
+  }
 }
 
 const options = reactive({
