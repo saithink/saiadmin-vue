@@ -1,6 +1,6 @@
 <template>
   <div class="ma-content-block">
-    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
+    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm" @selection-change="selectionChange">
       <!-- 搜索表单 start -->
       <template #tableSearch>
         <a-col :span="8">
@@ -76,6 +76,8 @@ const previewRef = ref()
 const designRef = ref()
 const loadTableRef = ref()
 const selections = ref([])
+
+const selectionChange = (row) => (selections.value = row)
 
 const selectOperation = async (value, id) => {
   if (value === 'generateCode') {
