@@ -6,7 +6,7 @@
       <template #tableSearch>
         <a-col :span="8">
           <a-form-item field="title" label="公告标题">
-            <a-input v-model="searchForm.title" placeholder="请输入岗位名称" />
+            <a-input v-model="searchForm.title" placeholder="请输入公告名称" />
           </a-form-item>
         </a-col>
         <a-col :span="8">
