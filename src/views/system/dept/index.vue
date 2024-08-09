@@ -5,8 +5,8 @@
       <!-- 搜索区 tableSearch -->
       <template #tableSearch>
         <a-col :span="8">
-          <a-form-item field="name" label="岗位名称">
-            <a-input v-model="searchForm.name" placeholder="请输入岗位名称" />
+          <a-form-item field="name" label="部门名称">
+            <a-input v-model="searchForm.name" placeholder="请输入部门名称" />
           </a-form-item>
         </a-col>
         <a-col :span="8">
@@ -75,14 +75,14 @@ const options = reactive({
   operationColumnWidth: 220,
   add: {
     show: true,
-    auth: ['/core/post/save'],
+    auth: ['/core/dept/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/core/post/update'],
+    auth: ['/core/dept/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -90,7 +90,7 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/core/post/destroy'],
+    auth: ['/core/dept/destroy'],
     func: async (params) => {
       const resp = await api.delete(params)
       if (resp.code === 200) {
@@ -98,7 +98,7 @@ const options = reactive({
         crudRef.value?.refresh()
       }
     },
-    realAuth: ['/core/menu/realDestroy'],
+    realAuth: ['/core/dept/realDestroy'],
     realFunc: async (params) => {
       const resp = await api.realDestroy(params)
       if (resp.code === 200) {
@@ -109,7 +109,7 @@ const options = reactive({
   },
   recovery: {
     show: true,
-    auth: ['/core/post/recovery'],
+    auth: ['/core/dept/recovery'],
     func: async (params) => {
       const resp = await api.recovery(params)
       if (resp.code === 200) {
