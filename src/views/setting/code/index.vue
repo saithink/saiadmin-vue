@@ -73,7 +73,6 @@ import EditInfo from './components/editInfo.vue'
 const crudRef = ref()
 const editRef = ref()
 const previewRef = ref()
-const designRef = ref()
 const loadTableRef = ref()
 const selections = ref([])
 
