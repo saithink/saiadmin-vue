@@ -44,13 +44,17 @@ const props = defineProps({
   width: { type: Number, default: 1080 },
 })
 
-list.value = props.modelValue
-// onMounted(() =>  )
+watch(
+  () => props.modelValue,
+  (vl) => {
+    list.value = vl
+  },
+  { immediate: true }
+)
 
 watch(
   () => list.value,
   (vl) => {
-    console.log(vl)
     emit('update:modelValue', list.value)
     if (props.multiple) {
       inputValue.value = isArray(list) ? list.value.join(',') : []
@@ -59,7 +63,7 @@ watch(
     }
     visible.value = false
   },
-  { deep: true }
+  { immediate: true, deep: true }
 )
 </script>
 
