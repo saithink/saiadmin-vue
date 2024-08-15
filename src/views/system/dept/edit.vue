@@ -10,7 +10,7 @@
     @before-ok="submit">
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
-      <a-form-item field="code" label="上级部门">
+      <a-form-item field="parent_id" label="上级部门">
         <a-tree-select
           v-model="formData.parent_id"
           :data="deptData"
@@ -75,6 +75,7 @@ const formData = reactive({
 
 // 验证规则
 const rules = {
+  parent_id: [{ required: true, message: '上级部门不能为空' }],
   name: [{ required: true, message: '部门名称不能为空' }],
 }
 
