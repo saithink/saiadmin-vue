@@ -73,7 +73,7 @@
               <a-button v-if="options.export.show" v-auth="options.export.auth || []" @click="exportAction">
                 <template #icon> <icon-download /> </template> {{ options.export.text || '导出' }}
               </a-button>
-              <a-button type="secondary" @click="handlerExpand" v-if="options.isExpand" class="w-full lg:w-auto mt-2 lg:mt-0">
+              <a-button type="secondary" @click="handlerExpand" v-if="options.isExpand">
                 <template #icon>
                   <icon-expand v-if="!expandState" />
                   <icon-shrink v-else />
@@ -84,7 +84,7 @@
             </a-space>
           </a-col>
           <a-col :span="8" style="display: flex; align-items: center; justify-content: end">
-            <a-space class="lg:mt-0 mt-1" v-if="options.showTools">
+            <a-space v-if="options.showTools">
               <slot name="tools"></slot>
               <a-tooltip :content="isRecovery ? '显示正常数据' : '显示回收站数据'" v-if="options.recycleApi && isFunction(options.recycleApi)">
                 <a-button shape="circle" @click="switchDataType"><icon-swap /></a-button>
