@@ -113,10 +113,10 @@ export default {
    * 更新配置组
    * @returns
    */
-  updateConfigGroup(data = {}) {
+  updateConfigGroup(id, data = {}) {
     return request({
-      url: '/core/configGroup/update',
-      method: 'post',
+      url: '/core/configGroup/update/' + id,
+      method: 'put',
       data
     })
   },

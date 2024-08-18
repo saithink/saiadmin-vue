@@ -18,7 +18,7 @@
               {{ item.name }}({{ item.code }})
             </a-button>
             <div class="flex">
-              <a-link v-auth="['/core/config/index']" @click="manageConfigModal(item)">
+              <a-link v-auth="['/core/config/update']" @click="editGroupModal(item)">
                 <template #icon>
                   <icon-edit />
                 </template>
@@ -37,6 +37,11 @@
     <div class="lg:w-9/12 w-full p-4 pl-2">
       <!-- CRUD 组件 -->
       <a-card :title="title" :loading="loading" :header-style="{ height: '45px' }">
+        <template #extra>
+          <a-button type="primary" shape="circle" v-auth="['/core/config/index']" @click="manageConfigModal()">
+            <icon-settings />
+          </a-button>
+        </template>
         <div class="pl-4 pr-4">
           <a-form :model="form" auto-label-width>
             <template v-for="(item, index) in formArray">
@@ -244,11 +249,17 @@ const submit = async (params) => {
   }
 }
 
-const manageConfigModal = (item) => {
-  manageConfigRef.value.open(item.id)
+const manageConfigModal = () => {
+  const group_id = currentNode.value.id
+  manageConfigRef.value.open(group_id)
 }
 
-const addGroupModal = () => addGroupRef.value.open()
+const addGroupModal = () => addGroupRef.value?.open()
+
+const editGroupModal = (item) => {
+  addGroupRef.value?.open('edit')
+  addGroupRef.value?.setFormData(item)
+}
 
 onMounted(() => {
   getConfigGroupList()

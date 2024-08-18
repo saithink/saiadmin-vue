@@ -3,7 +3,7 @@
     is="a-modal"
     v-model:visible="visible"
     :width="800"
-    :title="'参数配置' + (mode.value == 'add' ? '-新增' : '-编辑')"
+    :title="'参数配置' + (mode == 'add' ? '-新增' : '-编辑')"
     :mask-closable="false"
     :ok-loading="loading"
     @cancel="close"

@@ -27,6 +27,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { Message } from '@arco-design/web-vue'
 import api from '@/api/setting/config'
 import EditForm from './edit.vue'
 
@@ -46,11 +47,11 @@ const searchForm = ref({
 
 const handleClose = () => {
   visible.value = false
-  emit('close')
 }
 
 const refresh = async () => {
   crudRef.value?.refresh()
+  emit('close')
 }
 
 const open = (id) => {
@@ -85,7 +86,7 @@ const options = reactive({
       const resp = await api.delete(params)
       if (resp.code === 200) {
         Message.success(`删除成功！`)
-        crudRef.value?.refresh()
+        refresh()
       }
     },
   },
