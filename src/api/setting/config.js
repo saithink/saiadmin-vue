@@ -131,5 +131,17 @@ export default {
       method: 'delete',
       data
     })
+  },
+
+  /**
+   * 邮箱测试
+   * @returns
+   */
+  testEmail(data = {}) {
+    return request({
+      url: '/core/configGroup/email',
+      method: 'post',
+      data
+    })
   }
 }

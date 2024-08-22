@@ -14,7 +14,7 @@
         </template>
         <a-list-item v-for="(item, index) in configGroupData">
           <div class="flex justify-between items-center">
-            <a-button :type="title == item.name ? 'outline' : ''" @click="getConfigData(item.id, item.name)">
+            <a-button :type="title == item.name ? 'outline' : ''" @click="getConfigData(item.id, item.name, item.code)">
               {{ item.name }}({{ item.code }})
             </a-button>
             <div class="flex">
@@ -76,6 +76,10 @@
             <a-form-item v-if="formArray.length > 0">
               <a-button type="primary" @click="submit(formArray)">保存修改</a-button>
             </a-form-item>
+            <a-form-item label="测试邮件" v-if="currentNode.code === 'email_config'">
+              <a-input v-model="email" placeholder="请输入正确的邮箱接收地址" />
+              <a-button type="primary" class="ml-2" @click="sendMail()">发送</a-button>
+            </a-form-item>
           </a-form>
         </div>
       </a-card>
@@ -117,9 +121,10 @@ const name = ref('')
 const deleteGroupData = ref({ name: '' })
 const deleteVisible = ref(false)
 const currentNode = ref({})
+const email = ref('')
 
 const refresh = async () => {
-  getConfigData(currentNode.value.id, currentNode.value.name)
+  getConfigData(currentNode.value.id, currentNode.value.name, currentNode.value.code)
 }
 
 const deleteConfigGroup = async (done) => {
@@ -151,12 +156,13 @@ const getConfigGroupList = async () => {
   const response = await config.getConfigGroupList()
   configGroupData.value = response.data
   const item = configGroupData.value[0]
-  await getConfigData(item.id, item.name)
+  await getConfigData(item.id, item.name, item.code)
 }
 
-const getConfigData = async (id, name) => {
+const getConfigData = async (id, name, code) => {
   currentNode.value.id = id
   currentNode.value.name = name
+  currentNode.value.code = code
   loading.value = true
   const params = {
     group_id: id,
@@ -244,6 +250,18 @@ const submit = async (params) => {
     config: params,
   }
   const response = await config.batchUpdate(data)
+  if (response.code === 200) {
+    Message.success(response.message)
+  }
+}
+
+const sendMail = async () => {
+  const reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
+  if (!reg.test(email.value)) {
+    Message.info('请输入正确的邮箱地址')
+    return
+  }
+  const response = await config.testEmail({ email: email.value })
   if (response.code === 200) {
     Message.success(response.message)
   }
