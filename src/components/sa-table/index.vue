@@ -498,7 +498,7 @@ const init = async () => {
 
 const refresh = async () => {
   await requestData()
-  tableRef.value.selectAll(false)
+  tableRef.value?.selectAll(false)
 }
 
 const requestData = async () => {
