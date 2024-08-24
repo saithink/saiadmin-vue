@@ -45,6 +45,8 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { Message } from '@arco-design/web-vue'
+import { useUserStore } from '@/store'
+import commonApi from '@/api/common'
 import api from '@/api/system/dept'
 
 const emit = defineEmits(['success'])
@@ -54,6 +56,10 @@ const formRef = ref()
 const mode = ref('')
 const visible = ref(false)
 const loading = ref(false)
+const userStore = useUserStore()
+const userInfo = reactive({
+  ...userStore.user,
+})
 const deptData = ref([])
 
 let title = computed(() => {
@@ -63,7 +69,7 @@ let title = computed(() => {
 // 表单信息
 const formData = reactive({
   id: '',
-  parent_id: 0,
+  parent_id: '',
   level: '',
   name: '',
   leader: '',
@@ -81,14 +87,12 @@ const rules = {
 
 // 初始化页面数据
 const initPage = async () => {
-  const resp = await api.tree()
-  deptData.value = [
-    {
-      label: '无上级部门',
-      value: 0,
-      children: resp.data,
-    },
-  ]
+  const resp = await await commonApi.commonGet('/core/dept/index?tree=true&filter=false')
+  if (userInfo.id === 1) {
+    deptData.value = [{ label: '无上级部门', value: 0, children: resp.data }]
+  } else {
+    deptData.value = resp.data
+  }
 }
 
 // 打开弹框

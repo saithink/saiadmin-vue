@@ -22,17 +22,13 @@
       </template>
 
       <!-- Table 自定义渲染 -->
-      <!-- 状态列 -->
-      <template #status="{ record }">
-        <sa-switch v-model="record.status" @change="changeStatus($event, record)"></sa-switch>
-      </template>
       <!-- 操作列 -->
       <template #operationCell="{ record }">
-        <div v-if="record.code === 'superAdmin'"></div>
+        <div v-if="record.disabled"></div>
       </template>
       <!-- 操作前置扩展 -->
       <template #operationBeforeExtend="{ record }">
-        <a-space size="mini" v-if="record.code !== 'superAdmin' && !isRecovery">
+        <a-space size="mini" v-if="record.id > 1 && !record.disabled && !isRecovery">
           <a-link v-auth="['/core/role/menuPermission']" @click="openMenuList(record)"><icon-menu /> 菜单权限</a-link>
           <a-link v-auth="['/core/role/dataPermission']" @click="openDataScopeList(record)"><icon-layers /> 数据权限</a-link>
         </a-space>
@@ -77,22 +73,11 @@ const openDataScopeList = (record) => {
   dpRef.value.open(record)
 }
 
-const changeStatus = async (status, record) => {
-  if (record.code === 'superAdmin') {
-    Message.info('超级管理员角色不能进行状态操作')
-    return
-  }
-  const response = await api.changeStatus({ id: record.id, status })
-  if (response.code === 200) {
-    Message.success(response.message)
-    crudRef.value.refresh()
-  }
-}
-
 const options = reactive({
   api: api.getPageList,
   recycleApi: api.getRecyclePageList,
   rowSelection: { showCheckedAll: true },
+  isExpand: true,
   operationColumnWidth: 300,
   add: {
     show: true,
@@ -152,9 +137,9 @@ const options = reactive({
 const columns = reactive([
   { title: '角色名称', dataIndex: 'name', width: 220 },
   { title: '角色标识', dataIndex: 'code', width: 180 },
-  { title: '排序', dataIndex: 'sort', width: 180 },
+  { title: '数据权限', dataIndex: 'data_scope', dict: 'data_scope', width: 200 },
+  { title: '排序', dataIndex: 'sort', width: 150 },
   { title: '状态', dataIndex: 'status', dict: 'data_status', width: 100 },
-  { title: '创建时间', dataIndex: 'create_time', width: 200 },
 ])
 
 const initPage = async () => {}

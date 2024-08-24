@@ -44,8 +44,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import commonApi from '@/api/common'
 import role from '@/api/system/role'
-import dept from '@/api/system/dept'
 import { Message } from '@arco-design/web-vue'
 
 const visible = ref(false)
@@ -94,7 +94,7 @@ const handlerClick = (value) => {
 
 const setData = async (roleId) => {
   loading.value = true
-  const deptResponse = await dept.tree({ scope: true })
+  const deptResponse = await commonApi.commonGet('/core/dept/index?tree=true&auth=true')
   deptList.value = deptResponse.data
   const roleResponse = await role.getDeptByRole(roleId)
   selectKeys.value = roleResponse.data.depts.map((item) => item.id)

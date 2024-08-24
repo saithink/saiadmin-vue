@@ -50,13 +50,15 @@
       <a-row :gutter="16">
         <a-col :span="12">
           <a-form-item field="role_ids" label="角色">
-            <a-select
+            <a-tree-select
               v-model="formData.role_ids"
-              :options="roleData"
-              :field-names="{ label: 'name', value: 'id' }"
-              multiple
+              :data="roleData"
+              :field-names="{ key: 'value', title: 'label' }"
+              :tree-check-strictly="true"
               allow-clear
-              placeholder="请选择角色" />
+              tree-checkable
+              placeholder="请选择角色">
+            </a-tree-select>
           </a-form-item>
         </a-col>
         <a-col :span="12">
@@ -164,13 +166,13 @@ const open = async (type = 'add', id = '') => {
 
 // 初始化页面数据
 const initPage = async () => {
-  const deptResp = await commonApi.commonGet('/core/dept/index?tree=true')
+  const deptResp = await commonApi.commonGet('/core/dept/accessDept')
   deptData.value = deptResp.data
 
-  const roleResp = await commonApi.commonGet('/core/role/index?saiType=all')
+  const roleResp = await commonApi.commonGet('/core/role/accessRole')
   roleData.value = roleResp.data
 
-  const postResp = await commonApi.commonGet('/core/post/index?saiType=all')
+  const postResp = await commonApi.commonGet('/core/post/accessPost')
   postData.value = postResp.data
 }
 

@@ -86,7 +86,6 @@
 
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue'
-import dept from '@/api/system/dept'
 import api from '@/api/system/user'
 import commonApi from '@/api/common'
 import { Message, Modal } from '@arco-design/web-vue'
@@ -239,7 +238,7 @@ const columns = reactive([
 ])
 
 const initPage = async () => {
-  const resp = await dept.tree()
+  const resp = await commonApi.commonGet('/core/dept/accessDept')
   resp.data.map((item) => {
     depts.value.push(item)
   })

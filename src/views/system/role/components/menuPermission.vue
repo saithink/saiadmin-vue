@@ -80,7 +80,7 @@ const handlerClick = (value) => {
 
 const setData = async (roleId) => {
   loading.value = true
-  const menuResponse = await menu.getList({ tree: true })
+  const menuResponse = await menu.getList({ tree: true, auth: true })
   menuList.value = menuResponse.data
   const roleResponse = await role.getMenuByRole(roleId)
   selectKeys.value = roleResponse.data.menus.map((item) => item.id)
