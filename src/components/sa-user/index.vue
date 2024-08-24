@@ -59,12 +59,13 @@
           </a-col>
           <a-col :span="12">
             <a-form-item field="role_ids" label="角色">
-              <a-select
+              <a-tree-select
                 v-model="searchForm.role_id"
-                :options="roleData"
-                :field-names="{ label: 'name', value: 'id' }"
+                :data="roleData"
+                :field-names="{ key: 'value', title: 'label' }"
                 allow-clear
-                placeholder="请选择角色" />
+                placeholder="请选择角色">
+              </a-tree-select>
             </a-form-item>
           </a-col>
         </template>
@@ -112,7 +113,7 @@ const initPage = async () => {
   const deptResp = await commonApi.commonGet('/core/dept/index?tree=true')
   deptData.value = deptResp.data
 
-  const roleResp = await commonApi.commonGet('/core/role/index?saiType=all')
+  const roleResp = await commonApi.commonGet('/core/role/index?tree=true')
   roleData.value = roleResp.data
 
   const postResp = await commonApi.commonGet('/core/post/index?saiType=all')
