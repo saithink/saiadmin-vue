@@ -222,7 +222,7 @@
                         </a-avatar>
                       </template>
                       <slot v-else :name="row.dataIndex" v-bind="{ record, column, rowIndex }">
-                        <span>{{ record[row.dataIndex] }}</span>
+                        <span>{{ filterColumn(row.dataIndex, record) }}</span>
                       </slot>
                     </template>
                   </a-table-column>
@@ -259,7 +259,7 @@
 
 <script setup>
 import { ref, reactive, watch, provide, nextTick, onMounted, onUnmounted } from 'vue'
-import { isArray, isFunction, isObject, isUndefined, cloneDeep } from 'lodash'
+import { isArray, isFunction, isObject, isUndefined, cloneDeep, get } from 'lodash'
 import defaultOptions from './defaultOptions'
 import tool from '@/utils/tool'
 import { request } from '@/utils/request'
@@ -316,6 +316,10 @@ const tableData = reactive({
 })
 
 provide('options', options.value)
+
+const filterColumn = (index, record) => {
+  return index.indexOf('.') > -1 ? get(record, index) : record[index]
+}
 
 const setSelecteds = (key) => {
   selecteds.value = key
