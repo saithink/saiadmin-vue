@@ -70,7 +70,7 @@
               <a-button v-if="options.import.show" v-auth="options.import.auth || []" @click="importAction">
                 <template #icon> <icon-upload /> </template> {{ options.import.text || '导入' }}
               </a-button>
-              <a-button v-if="options.export.show" v-auth="options.export.auth || []" @click="exportAction">
+              <a-button v-if="options.export.show" :loading="isExport" v-auth="options.export.auth || []" @click="exportAction">
                 <template #icon> <icon-download /> </template> {{ options.export.text || '导出' }}
               </a-button>
               <a-button type="secondary" @click="handlerExpand" v-if="options.isExpand">
@@ -296,6 +296,7 @@ const expandState = ref(false)
 const selecteds = ref([])
 const tableRef = ref()
 const isSort = ref(false)
+const isExport = ref(false)
 
 const imgVisible = ref(false)
 const imgUrl = ref(import.meta.env.VITE_APP_BASE + 'not-image.png')
@@ -617,7 +618,7 @@ const exportAction = () => {
   Message.info('请求服务器下载文件中...')
   const data = requestParams.value
   const download = (url) => request({ url, data, method: 'post', timeout: 60 * 1000, responseType: 'blob' })
-
+  isExport.value = true
   download(options.value.export.url)
     .then((res) => {
       tool.download(res)
@@ -625,6 +626,9 @@ const exportAction = () => {
     })
     .catch(() => {
       Message.error('请求服务器错误，下载失败')
+    })
+    .finally(() => {
+      isExport.value = false
     })
 }
 
