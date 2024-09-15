@@ -140,7 +140,100 @@
               @sorter-change="handlerSort">
               <template #columns>
                 <template v-for="(row, index) in columns" :key="index">
+                  <template v-if="row.children">
+                    <a-table-column :title="row.title">
+                      <template v-for="(rowChild, indexChild) in row.children">
+                        <a-table-column
+                          :title="rowChild.title"
+                          :data-index="rowChild.dataIndex"
+                          :width="rowChild.width"
+                          :ellipsis="rowChild.ellipsis ?? true"
+                          :filterable="rowChild.filterable"
+                          :cell-class="rowChild.cellClass"
+                          :header-cell-class="rowChild.headerCellClass"
+                          :body-cell-class="rowChild.bodyCellClass"
+                          :summary-cell-class="rowChild.summaryCellClass"
+                          :cell-style="rowChild.cellStyle"
+                          :header-cell-style="rowChild.headerCellStyle"
+                          :body-cell-style="rowChild.bodyCellStyle"
+                          :summary-cell-style="rowChild.summaryCellStyle"
+                          :tooltip="rowChild.dataIndex === '__operation' ? false : rowChild.tooltip ?? true"
+                          :align="rowChild.align || options.columnAlign"
+                          :fixed="rowChild.fixed"
+                          :sortable="rowChild.sortable">
+                          <template #cell="{ record, column, rowIndex }">
+                            <template v-if="rowChild.dataIndex === '__index'">
+                              <span>{{ getIndex(rowIndex) }}</span>
+                            </template>
+                            <template v-else-if="rowChild.dataIndex === '__operation'">
+                              <a-scrollbar type="track" style="overflow: auto">
+                                <a-space size="mini">
+                                  <slot name="operationBeforeExtend" v-bind="{ record, column, rowIndex }"></slot>
+                                  <slot name="operationCell" v-bind="{ record, column, rowIndex }">
+                                    <a-link
+                                      v-if="options.edit.show && !isRecovery"
+                                      v-auth="options.edit.auth || []"
+                                      type="primary"
+                                      @click="editAction(record)">
+                                      <icon-edit />{{ options.edit.text || '编辑' }}
+                                    </a-link>
+                                    <a-popconfirm
+                                      v-if="options.recovery.show && isRecovery"
+                                      content="确定要恢复该数据吗?"
+                                      position="bottom"
+                                      @ok="recoveryAction(record)">
+                                      <a-link type="primary" v-auth="options.recovery.auth || []"
+                                        ><icon-undo /> {{ options.recovery.text || '恢复' }}
+                                      </a-link>
+                                    </a-popconfirm>
+                                    <a-popconfirm
+                                      v-if="!isRecovery && options.delete.show"
+                                      content="确定要删除该数据吗?"
+                                      position="bottom"
+                                      @ok="deleteAction(record)">
+                                      <a-link type="primary" v-auth="options.delete.auth || []">
+                                        <icon-delete /> {{ options.delete.text || '删除' }}
+                                      </a-link>
+                                    </a-popconfirm>
+                                    <a-popconfirm
+                                      v-if="isRecovery && options.delete.show"
+                                      content="确定要销毁该数据吗?"
+                                      position="bottom"
+                                      @ok="deleteAction(record)">
+                                      <a-link type="primary" v-auth="options.delete.realAuth || []">
+                                        <icon-delete /> {{ options.delete.realText || '销毁' }}
+                                      </a-link>
+                                    </a-popconfirm>
+                                  </slot>
+                                  <slot name="operationAfterExtend" v-bind="{ record, column, rowIndex }"></slot>
+                                </a-space>
+                              </a-scrollbar>
+                            </template>
+                            <slot v-else-if="rowChild.dict" :name="rowChild.dataIndex" v-bind="{ record, column, rowIndex }">
+                              <a-tag :color="tool.getColor(record[rowChild.dataIndex], dictList[rowChild.dict] ?? [], rowChild.colors || [])">{{
+                                tool.getLabel(record[rowChild.dataIndex], dictList[rowChild.dict] ?? [])
+                              }}</a-tag>
+                            </slot>
+                            <slot v-else-if="rowChild.options" :name="rowChild.dataIndex" v-bind="{ record, column, rowIndex }">
+                              <a-tag :color="tool.getColor(record[rowChild.dataIndex], rowChild.options ?? [], rowChild.colors || [])">{{
+                                tool.getLabel(record[rowChild.dataIndex], rowChild.options ?? [])
+                              }}</a-tag>
+                            </slot>
+                            <template v-else-if="rowChild.type === 'image'">
+                              <a-avatar @click="imageSee(rowChild, record, rowChild.dataIndex)" :size="64" shape="square">
+                                <img :src="imageView(record[rowChild.dataIndex])" style="object-fit: contain; cursor: pointer" />
+                              </a-avatar>
+                            </template>
+                            <slot v-else :name="rowChild.dataIndex" v-bind="{ record, column, rowIndex }">
+                              <span>{{ filterColumn(rowChild.dataIndex, record) }}</span>
+                            </slot>
+                          </template>
+                        </a-table-column>
+                      </template>
+                    </a-table-column>
+                  </template>
                   <a-table-column
+                    v-else
                     :title="row.title"
                     :data-index="row.dataIndex"
                     :width="row.width"
