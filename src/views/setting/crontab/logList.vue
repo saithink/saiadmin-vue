@@ -18,7 +18,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import api from '@/api/setting/crontab'
-import { Modal } from '@arco-design/web-vue'
+import { Modal, Message } from '@arco-design/web-vue'
 
 const crudRef = ref()
 const crontabId = ref()
