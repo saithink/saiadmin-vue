@@ -4,7 +4,9 @@ import loginApi from '@/api/login'
 import { useUserStore } from '@/store'
 import { useRouter, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
+import { useAppStore } from '@/store'
 
+const appStore = useAppStore()
 const router = useRouter()
 const route = useRoute()
 const captcha = ref(null)
@@ -52,7 +54,7 @@ const handleSubmit = async ({ values, errors }) => {
 }
 </script>
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="{ background: appStore.mode === 'dark' ? '#2e2e30e3' : '' }">
     <h3 class="login-logo">
       <img src="/logo.png" alt="logo" />
       <span>{{ $title }}</span>
@@ -69,7 +71,7 @@ const handleSubmit = async ({ values, errors }) => {
       </div>
 
       <div class="md:w-6/12 w-11/12 md:rounded-r mx-auto pl-5 pr-5 pb-10">
-        <h2 class="mt-10 text-3xl pb-0 mb-10">{{ $t('sys.login.title') }}</h2>
+        <h2 class="mt-10 text-3xl pb-0 mb-10 login-title">{{ $t('sys.login.title') }}</h2>
         <a-form :model="form" @submit="handleSubmit">
           <a-form-item field="username" :hide-label="true" :rules="[{ required: true, message: $t('sys.login.usernameNotice') }]">
             <a-input v-model="form.username" class="w-full" size="large" :placeholder="$t('sys.login.username')" allow-clear>
@@ -145,6 +147,7 @@ const handleSubmit = async ({ values, errors }) => {
     display: flex;
     padding: 0 20px;
     align-items: center;
+    color: var(--color-text-1);
 
     img {
       width: 45px;
@@ -155,7 +158,7 @@ const handleSubmit = async ({ values, errors }) => {
 
   .login-width {
     max-width: 950px;
-    background: #fff;
+    background-color: var(--color-bg-3);
     padding: 10px;
     height: 500px;
     position: relative;
@@ -187,6 +190,11 @@ const handleSubmit = async ({ values, errors }) => {
   .slogan {
     font-size: 16px;
     line-height: 50px;
+    color: var(--color-text-1);
+  }
+
+  .login-title {
+    color: var(--color-text-1);
   }
 
   :deep(.arco-input-append) {
