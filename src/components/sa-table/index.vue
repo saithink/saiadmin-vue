@@ -220,7 +220,7 @@
                               }}</a-tag>
                             </slot>
                             <template v-else-if="rowChild.type === 'image'">
-                              <a-avatar @click="imageSee(rowChild, record, rowChild.dataIndex)" :size="64" shape="square">
+                              <a-avatar @click="imageSee(rowChild, record, rowChild.dataIndex)" :size="row.size || 64" shape="square">
                                 <img :src="imageView(record[rowChild.dataIndex])" style="object-fit: contain; cursor: pointer" />
                               </a-avatar>
                             </template>
@@ -310,7 +310,7 @@
                         }}</a-tag>
                       </slot>
                       <template v-else-if="row.type === 'image'">
-                        <a-avatar @click="imageSee(row, record, row.dataIndex)" :size="64" shape="square">
+                        <a-avatar @click="imageSee(row, record, row.dataIndex)" :size="row.size || 64" shape="square">
                           <img :src="imageView(record[row.dataIndex])" style="object-fit: contain; cursor: pointer" />
                         </a-avatar>
                       </template>
