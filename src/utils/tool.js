@@ -429,7 +429,7 @@ tool.getColor = (value, data, colors = []) => {
       'magenta'
     ]
   }
-  return color[index] ?? color[0]
+  return color[index] ?? 'transparent'
 }
 
 tool.getLabel = (value, data) => {
