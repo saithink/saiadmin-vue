@@ -1,11 +1,11 @@
 import axios from 'axios'
-import {Message} from '@arco-design/web-vue'
+import { Message } from '@arco-design/web-vue'
 import tool from '@/utils/tool'
-import {get, isEmpty} from 'lodash'
+import { get, isEmpty } from 'lodash'
 import qs from 'qs'
-import {h} from 'vue'
-import {IconFaceFrownFill} from '@arco-design/web-vue/dist/arco-vue-icon'
-import router from "@/router";
+import { h } from 'vue'
+import { IconFaceFrownFill } from '@arco-design/web-vue/dist/arco-vue-icon'
+import router from '@/router'
 
 function createExternalService() {
   // 创建一个外部网络 axios 实例
@@ -13,38 +13,42 @@ function createExternalService() {
 
   // HTTP request 拦截器
   service.interceptors.request.use(
-    config => config,
-    error => Promise.reject(error)
-  );
+    (config) => config,
+    (error) => Promise.reject(error)
+  )
 
   // HTTP response 拦截器
   service.interceptors.response.use(
-    response => response,
-    error => {
+    (response) => response,
+    (error) => {
       Promise.reject(error.response ?? null)
     }
   )
   return service
 }
 
-function createService () {
+function createService() {
   // 创建一个 axios 实例
   const service = axios.create()
 
   // HTTP request 拦截器
   service.interceptors.request.use(
-    config => config,
-    error => {
+    (config) => config,
+    (error) => {
       console.log(error)
       // 失败
-      return Promise.reject(error);
+      return Promise.reject(error)
     }
-  );
+  )
 
   // HTTP response 拦截器
   service.interceptors.response.use(
-    response => {
-      if ((response.headers['content-disposition'] || ! /^application\/json/.test(response.headers['content-type'])) && response.status === 200) {
+    (response) => {
+      if (
+        (response.headers['content-disposition'] ||
+          !/^application\/json/.test(response.headers['content-type'])) &&
+        response.status === 200
+      ) {
         return response
       } else if (response.data.size) {
         response.data.code = 500
@@ -52,30 +56,31 @@ function createService () {
         response.data.success = false
       } else if (response.data.code && response.data.code !== 200) {
         if (response.data.code === 401) {
-					throttle(() => {
-						Message.error({
-							content: response.data.message || response.data.msg,
-							icon: () => h(IconFaceFrownFill),
-						})
-						tool.local.clear()
-						router.push({ name: 'login' })
-					})()
-				} else {
-					Message.error({
-						content: response.data.message || response.data.msg,
-						icon: () => h(IconFaceFrownFill),
-					})
-				}
+          throttle(() => {
+            Message.error({
+              content: response.data.message || response.data.msg,
+              icon: () => h(IconFaceFrownFill)
+            })
+            tool.local.clear()
+            router.push({ name: 'login' })
+          })()
+        } else {
+          Message.error({
+            content: response.data.message || response.data.msg,
+            icon: () => h(IconFaceFrownFill)
+          })
+        }
       }
-      return response.data;
+      return response.data
     },
-    error => {
+    (error) => {
       const err = (text) => {
         Message.error({
-          content: ( error.response && error.response.data && error.response.data.message )
-          ? error.response.data.message
-          : text,
-          icon: () => h( IconFaceFrownFill )
+          content:
+            error.response && error.response.data && error.response.data.message
+              ? error.response.data.message
+              : text,
+          icon: () => h(IconFaceFrownFill)
         })
       }
       if (error.response && error.response.data) {
@@ -90,7 +95,7 @@ function createService () {
             throttle(() => {
               err('登录状态已过期，需要重新登录')
               tool.local.clear()
-              router.push({name: 'login'})
+              router.push({ name: 'login' })
             })()
             break
           case 403:
@@ -102,9 +107,11 @@ function createService () {
       } else {
         err('请求超时，服务器无响应！')
       }
-      return Promise.reject(error.response && error.response.data ? error.response.data : null)
+      return Promise.resolve({
+        code: error.response.status || 500,
+        message: error.response.statusText || '未知错误'
+      })
     }
-
   )
   return service
 }
@@ -112,17 +119,17 @@ function createService () {
 //节流
 function throttle(fn, wait = 1500) {
   return function () {
-    let context = this;
+    let context = this
     if (!throttle.timer) {
-      fn.apply(context, arguments);
+      fn.apply(context, arguments)
       throttle.timer = setTimeout(function () {
-        throttle.timer = null;
+        throttle.timer = null
       }, wait)
     }
   }
 }
 
-function stringify (data) {
+function stringify(data) {
   return qs.stringify(data, { allowDots: true, encode: false })
 }
 
@@ -131,7 +138,7 @@ function stringify (data) {
  * @param service
  * @param externalService
  */
- function createRequest (service, externalService) {
+function createRequest(service, externalService) {
   return function (config) {
     const env = import.meta.env
     const token = tool.local.get(env.VITE_APP_TOKEN_PREFIX)
@@ -141,7 +148,11 @@ function stringify (data) {
         {
           'Authori-zation': token,
           'Accept-Language': setting?.language || 'zh_CN',
-          'Content-Type': get(config, 'headers.Content-Type', 'application/json;charset=UTF-8')
+          'Content-Type': get(
+            config,
+            'headers.Content-Type',
+            'application/json;charset=UTF-8'
+          )
         },
         config.headers
       ),
@@ -160,8 +171,11 @@ function stringify (data) {
       option.params = {}
     }
 
-    if (! /^(http|https)/g.test(option.url) ) {
-      option.baseURL = env.VITE_APP_OPEN_PROXY === 'true' ? env.VITE_APP_PROXY_PREFIX : env.VITE_APP_BASE_URL
+    if (!/^(http|https)/g.test(option.url)) {
+      option.baseURL =
+        env.VITE_APP_OPEN_PROXY === 'true'
+          ? env.VITE_APP_PROXY_PREFIX
+          : env.VITE_APP_BASE_URL
       return service(option)
     } else {
       return externalService(option)
