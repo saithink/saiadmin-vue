@@ -63,6 +63,7 @@ const props = defineProps({
   icon: { type: String, default: 'icon-plus' },
   size: { type: Number, default: 4 * 1024 * 1024 },
   limit: { type: Number, default: 0 },
+  mode: { type: String, default: 'system' },
   tip: { type: String, default: undefined },
   accept: { type: String, default: '.jpg,jpeg,.gif,.png,.svg,.bpm' },
 })
@@ -98,6 +99,9 @@ const uploadImageHandler = async (options) => {
     dataForm.append('image', file)
     dataForm.append('isChunk', false)
     dataForm.append('hash', hash)
+    if (props.mode === 'local') {
+      dataForm.append('mode', 'local')
+    }
     const resp = await commonApi.uploadImage(dataForm)
     const result = resp.data
     if (result) {
