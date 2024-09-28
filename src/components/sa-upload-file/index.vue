@@ -6,7 +6,7 @@
         :show-file-list="false"
         :multiple="props.multiple"
         :accept="props.accept"
-        :disabled="props.disabled"
+        :disabled="isDisabled"
         :tip="props.tip"
         :draggable="props.draggable">
         <template #upload-button v-if="props.draggable">
@@ -27,16 +27,10 @@
     <!-- 单文件 -->
     <div class="file-list mt-2" v-if="!props.multiple && currentItem?.url && props.showList">
       <a-tooltip content="点击文件名预览/下载" position="tr">
-        <a
-          :href="currentItem.url"
-          v-if="currentItem?.url && currentItem.percent === 100 && currentItem?.status === 'complete'"
-          class="file-name"
-          target="_blank"
-          >{{ currentItem.name }}</a
-        >
+        <a :href="currentItem.url" v-if="currentItem?.url" class="file-name" target="_blank">{{ currentItem.name }}</a>
       </a-tooltip>
 
-      <a-button type="text" size="small" @click="removeSignFile()" v-if="currentItem.percent === 100">
+      <a-button type="text" size="small" @click="removeSignFile()">
         <template #icon>
           <icon-delete />
         </template>
@@ -58,7 +52,7 @@
   </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { isArray } from 'lodash'
 import file2md5 from 'file2md5'
 import commonApi from '@/api/common'
@@ -86,8 +80,20 @@ const showFileList = ref([])
 const signFile = ref()
 const currentItem = ref({})
 
+const isDisabled = computed(() => {
+  if (props.disabled) {
+    return true
+  } else {
+    if (!props.multiple) {
+      if (currentItem.value && currentItem.value.url) {
+        return true
+      }
+    }
+    return false
+  }
+})
+
 const uploadFileHandler = async (options) => {
-  console.log(options)
   if (!options.fileItem) return
   if (!props.multiple) {
     currentItem.value = options.fileItem
@@ -111,7 +117,6 @@ const uploadFileHandler = async (options) => {
     const hash = await file2md5(file)
     const dataForm = new FormData()
     dataForm.append('file', file)
-    dataForm.append('isChunk', false)
     dataForm.append('hash', hash)
     if (props.mode === 'local') {
       dataForm.append('mode', 'local')
@@ -161,9 +166,7 @@ const initData = async () => {
   } else if (props.modelValue) {
     signFile.value = props.modelValue
     currentItem.value.url = props.modelValue
-    currentItem.value.name = props.modelValue
-    currentItem.value.percent = 100
-    currentItem.value.status = 'complete'
+    currentItem.value.name = props.modelValue.substring(props.modelValue.lastIndexOf('/') + 1)
   } else {
     removeSignFile()
   }
