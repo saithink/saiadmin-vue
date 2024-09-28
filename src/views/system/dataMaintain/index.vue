@@ -60,14 +60,17 @@ const operate = async (op) => {
   }
   let response
   if (op === 'optimize') {
-    response = await api.optimize(selecteds.value)
+    response = await api.optimize({ tables: selecteds.value })
   }
 
   if (op === 'clear') {
-    response = await api.fragment(selecteds.value)
+    response = await api.fragment({ tables: selecteds.value })
   }
 
-  response.code === 200 && Message.success(response.message)
+  if (response.code == 200) {
+    Message.success(response.message)
+    crudRef.value?.refresh()
+  }
 }
 
 const tableStruct = (name) => {
