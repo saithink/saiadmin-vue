@@ -714,8 +714,12 @@ const exportAction = () => {
   isExport.value = true
   download(options.value.export.url)
     .then((res) => {
-      tool.download(res)
-      Message.success('请求成功，文件开始下载')
+      if (res && res.status == 200) {
+        tool.download(res)
+        Message.success('请求成功，文件开始下载')
+      } else {
+        Message.error('请前往服务端安装Excel导出库')
+      }
     })
     .catch(() => {
       Message.error('请求服务器错误，下载失败')
