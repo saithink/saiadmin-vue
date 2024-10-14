@@ -25,7 +25,7 @@
       <a-upload
         :custom-request="uploadImageHandler"
         :show-file-list="false"
-        :accept="props.accept ?? '.jpg,jpeg,.gif,.png,.svg,.bpm'"
+        :accept="props.accept ?? '.jpg,.jpeg,.gif,.png,.svg,.bpm'"
         :disabled="props.disabled"
         :tip="props.tip">
         <template #upload-button>
@@ -65,7 +65,7 @@ const props = defineProps({
   limit: { type: Number, default: 0 },
   mode: { type: String, default: 'system' },
   tip: { type: String, default: undefined },
-  accept: { type: String, default: '.jpg,jpeg,.gif,.png,.svg,.bpm' },
+  accept: { type: String, default: '.jpg,.jpeg,.gif,.png,.svg,.bpm' },
 })
 const emit = defineEmits(['update:modelValue'])
 
