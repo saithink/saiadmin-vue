@@ -423,6 +423,10 @@ const getTableData = () => {
   return tableData.data
 }
 
+const getTableTotal = () => {
+  return tableData.total
+}
+
 const __summary = ({ data }) => {
   if (options.value.showSummary && isArray(options.value.summary)) {
     const summary = options.value.summary
@@ -781,6 +785,7 @@ defineExpose({
   tableRef,
   isRecovery,
   getTableData,
+  getTableTotal,
 })
 </script>
 
