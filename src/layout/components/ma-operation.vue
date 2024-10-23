@@ -85,7 +85,7 @@ import MessageNotification from './components/message-notification.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Message } from '@arco-design/web-vue'
-import WsMessage from '@/ws-serve/message'
+import { Push } from '@/utils/push-vue'
 import { info } from '@/utils/common'
 import commonApi from '@/api/common'
 
@@ -133,15 +133,21 @@ const screen = () => {
 }
 
 if (appStore.ws) {
-  const Wsm = new WsMessage()
-  Wsm.connection()
-  Wsm.getMessage()
-
-  Wsm.ws.on('ev_new_message', (msg, data) => {
-    if (data.length > messageStore.messageList.length) {
-      info('新消息提示', '您有新的消息，请注意查收！')
-    }
-    messageStore.messageList = data
+  const env = import.meta.env
+  const baseURL = env.VITE_APP_OPEN_PROXY === 'true' ? env.VITE_APP_PROXY_PREFIX : env.VITE_APP_BASE_URL
+  // 建立连接
+  var connection = new Push({
+    url: 'ws://127.0.0.1:3131', // websocket地址
+    app_key: '231ec75fb0f7e5f26fb0ded56c2bae9d',
+    auth: baseURL + '/plugin/webman/push/auth',
+  })
+  // 创建监听频道
+  var user_channel = connection.subscribe('saiadmin')
+  // 当saiadmin频道有message事件的消息时
+  user_channel.on('message', function (message) {
+    // message是消息内容
+    info('新消息提示', '您有新的消息，请注意查收！')
+    messageStore.messageList = message.data
   })
 }
 </script>
