@@ -43,6 +43,9 @@
       <a-form-item label="是否隐藏" field="is_hidden" v-if="formData.type != 'B'">
         <sa-radio v-model="formData.is_hidden" dict="yes_or_no" placeholder="请选择是否隐藏" />
       </a-form-item>
+      <a-form-item label="继承Layout" field="is_layout" v-if="formData.type != 'B'">
+        <sa-radio v-model="formData.is_layout" dict="yes_or_no" placeholder="请选择是否继承Layout" />
+      </a-form-item>
       <a-form-item label="状态" field="status">
         <sa-radio v-model="formData.status" dict="data_status" placeholder="请选择状态" />
       </a-form-item>
@@ -84,6 +87,7 @@ const formData = reactive({
   component: '',
   sort: 100,
   is_hidden: 2,
+  is_layout: 1,
   status: 1,
   remark: '',
 })
