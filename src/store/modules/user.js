@@ -3,6 +3,7 @@ import loginApi from '@/api/login'
 import tool from '@/utils/tool'
 import router from '@/router'
 import webRouter from '@/router/webRouter'
+import { isUndefined } from 'lodash'
 import { homePage } from '@/router/homePageRoutes'
 import { useAppStore, useTagStore, useDictStore } from '@/store'
 
@@ -44,7 +45,17 @@ const useUserStore = defineStore('user', {
 
     setMenu(data) {
       const routers = flatAsyncRoutes(filterAsyncRouter(data))
-      routers.map((item) => router.addRoute('layout', item))
+      routers.map((item) => {
+        if (isUndefined(item.meta.layout)) {
+          router.addRoute('layout', item)
+        } else {
+          if (item.meta.layout) {
+            router.addRoute('layout', item)
+          } else {
+            router.addRoute(item)
+          }
+        }
+      })
     },
 
     requestUserInfo() {
