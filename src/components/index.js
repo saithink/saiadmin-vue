@@ -15,7 +15,6 @@ import {
   GraphicComponent
 } from 'echarts/components'
 
-import MaEditor from './ma-editor/index.vue'
 import MaWangEditor from './ma-wangEditor/index.vue'
 import MaIcon from './ma-icon/index.vue'
 import MaColorPicker from './ma-colorPicker/index.vue'
@@ -52,7 +51,6 @@ use([
 
 export default {
   install(Vue) {
-    Vue.component('MaEditor', MaEditor)
     Vue.component('MaWangEditor', MaWangEditor)
     Vue.component('MaIcon', MaIcon)
     Vue.component('MaColorPicker', MaColorPicker)
