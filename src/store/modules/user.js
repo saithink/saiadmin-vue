@@ -85,7 +85,7 @@ const useUserStore = defineStore('user', {
         .login(form)
         .then((r) => {
           if (r.code === 200) {
-            this.setToken(r.data.token)
+            this.setToken(r.data.access_token)
             return true
           } else {
             return false
