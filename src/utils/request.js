@@ -133,6 +133,10 @@ function stringify(data) {
   return qs.stringify(data, { allowDots: true, encode: false })
 }
 
+function formatToken(token) {
+  return token ? `Bearer ${token}` : null
+}
+
 /**
  * @description 创建请求方法
  * @param service
@@ -146,7 +150,7 @@ function createRequest(service, externalService) {
     const configDefault = {
       headers: Object.assign(
         {
-          'Authori-zation': token,
+          Authorization: formatToken(token),
           'Accept-Language': setting?.language || 'zh_CN',
           'Content-Type': get(
             config,
