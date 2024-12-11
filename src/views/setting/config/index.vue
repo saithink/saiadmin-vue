@@ -176,7 +176,8 @@ const getConfigData = async (id, name, code) => {
       item.key.indexOf('local_') !== -1 ||
       item.key.indexOf('qiniu_') !== -1 ||
       item.key.indexOf('cos_') !== -1 ||
-      item.key.indexOf('oss_') !== -1
+      item.key.indexOf('oss_') !== -1 ||
+      item.key.indexOf('s3_') !== -1
     ) {
       item.display = false
     } else {
@@ -202,7 +203,12 @@ const handleSelect = async (val, ele) => {
         if (item.key.indexOf('local_') !== -1) {
           item.display = true
         }
-        if (item.key.indexOf('qiniu_') !== -1 || item.key.indexOf('cos_') !== -1 || item.key.indexOf('oss_') !== -1) {
+        if (
+          item.key.indexOf('qiniu_') !== -1 ||
+          item.key.indexOf('cos_') !== -1 ||
+          item.key.indexOf('oss_') !== -1 ||
+          item.key.indexOf('s3_') !== -1
+        ) {
           item.display = false
         }
       })
@@ -212,7 +218,12 @@ const handleSelect = async (val, ele) => {
         if (item.key.indexOf('oss_') !== -1) {
           item.display = true
         }
-        if (item.key.indexOf('qiniu_') !== -1 || item.key.indexOf('cos_') !== -1 || item.key.indexOf('local_') !== -1) {
+        if (
+          item.key.indexOf('qiniu_') !== -1 ||
+          item.key.indexOf('cos_') !== -1 ||
+          item.key.indexOf('local_') !== -1 ||
+          item.key.indexOf('s3_') !== -1
+        ) {
           item.display = false
         }
       })
@@ -222,7 +233,12 @@ const handleSelect = async (val, ele) => {
         if (item.key.indexOf('qiniu_') !== -1) {
           item.display = true
         }
-        if (item.key.indexOf('local_') !== -1 || item.key.indexOf('cos_') !== -1 || item.key.indexOf('oss_') !== -1) {
+        if (
+          item.key.indexOf('local_') !== -1 ||
+          item.key.indexOf('cos_') !== -1 ||
+          item.key.indexOf('oss_') !== -1 ||
+          item.key.indexOf('s3_') !== -1
+        ) {
           item.display = false
         }
       })
@@ -232,7 +248,27 @@ const handleSelect = async (val, ele) => {
         if (item.key.indexOf('cos_') !== -1) {
           item.display = true
         }
-        if (item.key.indexOf('qiniu_') !== -1 || item.key.indexOf('local_') !== -1 || item.key.indexOf('oss_') !== -1) {
+        if (
+          item.key.indexOf('qiniu_') !== -1 ||
+          item.key.indexOf('local_') !== -1 ||
+          item.key.indexOf('oss_') !== -1 ||
+          item.key.indexOf('s3_') !== -1
+        ) {
+          item.display = false
+        }
+      })
+    }
+    if (val == 5) {
+      formArray.value.map((item) => {
+        if (item.key.indexOf('s3_') !== -1) {
+          item.display = true
+        }
+        if (
+          item.key.indexOf('qiniu_') !== -1 ||
+          item.key.indexOf('cos_') !== -1 ||
+          item.key.indexOf('local_') !== -1 ||
+          item.key.indexOf('oss_') !== -1
+        ) {
           item.display = false
         }
       })
