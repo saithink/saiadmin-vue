@@ -24,8 +24,8 @@ const refreshCaptcha = () => {
   form.uuid = ''
   loginApi.getCaptch().then((res) => {
     if (res.code === 200) {
-      captcha.value = 'data:image/jpeg;base64,' + res.img
-      form.uuid = res.uuid
+      captcha.value = res.data.image
+      form.uuid = res.data.uuid
     }
   })
 }
