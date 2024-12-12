@@ -5,7 +5,7 @@
         <sa-upload-image v-model="userInfo.avatar" rounded />
       </div>
       <div>
-        <a-tag size="large" class="mt-3 rounded-full" color="#165dff">
+        <a-tag size="large" class="mt-3 rounded-full tag-primary">
           {{ (userStore.user && userStore.user.nickname) || (userStore.user && userStore.user.username) }}
         </a-tag>
       </div>

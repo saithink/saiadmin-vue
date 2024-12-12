@@ -8,7 +8,7 @@
         <div class="pl-3 mt-2">
           <div class="content-block-title">{{ userStore.user.nickname || userStore.user.username }}，欢迎回来！</div>
           <div class="leading-5 mt-2">
-            <a-tag color="blue" bordered>免费开源、可商用</a-tag>
+            <a-tag class="tag-primary">免费开源、可商用</a-tag>
             欢迎使用SaiAdmin后台权限管理系统。前端版本V3.0 喜欢的请去点个 ⭐Star。
           </div>
         </div>
