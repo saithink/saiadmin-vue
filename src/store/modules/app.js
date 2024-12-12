@@ -11,6 +11,8 @@ let defaultSetting = {
   color: '#165dff',
   settingOpen: false,
   searchOpen: false,
+  waterMark: true,
+  waterContent: 'saiadmin',
   ws: true,
   registerWangEditorButtonFlag: false
 }
@@ -54,6 +56,18 @@ const useAppStore = defineStore('app', {
     toggleMenu(status) {
       this.menuCollapse = status
       defaultSetting.menuCollapse = this.menuCollapse
+      tool.local.set('setting', defaultSetting)
+    },
+
+    toggleWater(status) {
+      this.waterMark = status
+      defaultSetting.waterMark = this.waterMark
+      tool.local.set('setting', defaultSetting)
+    },
+
+    changeWaterContent(val) {
+      this.waterContent = val.target.value
+      defaultSetting.waterContent = this.waterContent
       tool.local.set('setting', defaultSetting)
     },
 

@@ -61,6 +61,12 @@
       <a-form-item :label="$t('sys.dark')" :help="$t('sys.darkHelp')" v-if="currentSkin === 'Mine'">
         <a-switch v-model="form.mode" @change="handleSettingMode" />
       </a-form-item>
+      <a-form-item :label="$t('sys.water')" :help="$t('sys.waterHelp')">
+        <a-switch v-model="form.waterMark" @change="handleSettingWater" />
+      </a-form-item>
+      <a-form-item :label="$t('sys.waterContent')">
+        <a-input v-model="form.waterContent" @blur="handleSettingWaterContent" />
+      </a-form-item>
       <a-form-item :label="$t('sys.tag')" :help="$t('sys.tagHelp')">
         <a-switch v-model="form.tag" @change="handleSettingTag" />
       </a-form-item>
@@ -104,13 +110,29 @@ const form = reactive({
   language: appStore.language,
   animation: appStore.animation,
   i18n: appStore.i18n,
+  waterMark: appStore.waterMark,
+  waterContent: appStore.waterContent,
   ws: appStore.ws,
 })
 
 const defaultColorList = reactive([
-  '#165DFF', '#F53F3F', '#F77234', '#F7BA1E', '#00B42A', '#14C9C9', '#3491FA',
-  '#722ED1', '#F5319D', '#D91AD9', '#34C759', '#43a047', '#7cb342', '#c0ca33',
-  '#86909c', '#6d4c41',
+  '#165DFF',
+  '#7166f0',
+  '#e84a6c',
+  '#efbd48',
+  '#0bd092',
+  '#bb1b1b',
+  '#0d9496',
+  '#18181b',
+
+  '#0960be',
+  '#4e69fd',
+  '#f5319d',
+  '#c1420b',
+  '#43a047',
+  '#f53f3f',
+  '#344256',
+  '#3f3f46',
 ])
 const changeColor = (color) => {
   appStore.changeColor(color.hex)
@@ -135,6 +157,8 @@ const handleWs = (val) => appStore.toggleWs(val)
 const handleLanguage = (val) => appStore.changeLanguage(val)
 const handleAnimation = (val) => appStore.changeAnimation(val)
 const handleSettingMode = (val) => appStore.toggleMode(val ? 'dark' : 'light')
+const handleSettingWater = (val) => appStore.toggleWater(val)
+const handleSettingWaterContent = (val) => appStore.changeWaterContent(val)
 const handleSettingTag = (val) => appStore.toggleTag(val)
 const handleMenuCollapse = (val) => appStore.toggleMenu(val)
 const handleMenuWidth = (val) => appStore.changeMenuWidth(val)
@@ -153,6 +177,8 @@ const save = async (done) => {
     language: appStore.language,
     animation: appStore.animation,
     color: appStore.color,
+    waterMark: appStore.waterMark,
+    waterContent: appStore.waterContent,
     ws: appStore.ws,
   }
 
