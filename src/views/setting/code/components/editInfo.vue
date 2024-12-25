@@ -179,7 +179,7 @@
 			  <a-col :xs="24" :md="8" :xl="8">
                 <a-form-item
                   label="边界条件"
-                  field="scope"
+                  field="generate_scope"
                   label-col-flex="auto"
                   :label-col-style="{ width: '100px' }"
                   extra="根据不同选择生成不同的边界条件">
