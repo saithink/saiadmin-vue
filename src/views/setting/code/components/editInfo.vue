@@ -176,6 +176,19 @@
                   </a-radio-group>
                 </a-form-item>
               </a-col>
+			  <a-col :xs="24" :md="8" :xl="8">
+                <a-form-item
+                  label="边界条件"
+                  field="scope"
+                  label-col-flex="auto"
+                  :label-col-style="{ width: '100px' }"
+                  extra="根据不同选择生成不同的边界条件">
+                  <a-radio-group v-model="form.generate_scope">
+                    <a-radio :value="1">是</a-radio>
+                    <a-radio :value="2">否</a-radio>
+                  </a-radio-group>
+                </a-form-item>
+              </a-col>
             </a-row>
             <a-row :gutter="24">
               <a-col :xs="24" :md="8" :xl="8">
