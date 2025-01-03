@@ -118,31 +118,30 @@ html, body {
   .tags {
     border-bottom:1px solid var(--color-border-1);
     background-color: var(--color-bg-2);
-    height: 35px; position: relative;
-    padding: 1px 5px 0 1px; display: flex;
+    height: 44px; position: relative;
+    display: flex; align-items: center;
     overflow: hidden; width: 100%;
-    a {
-      background: var(--color-fill-3); color: var(--color-text-2); font-size:13px;
-      margin-top: 3px; position: relative; flex-shrink: 0;
-      height: 27px; line-height: 27px; padding: 0 8px; border-radius: 4px;
-      cursor: pointer; transition: all 0.2s; margin-right: 4px;
+    div {
+      color: var(--color-text-2);
+      position: relative; flex-shrink: 0;
+      padding: 4px 12px; border-radius: 4px;
+      border: 1px solid var(--color-border-2);
+      cursor: pointer; transition: all 0.2s; margin-left: 10px;
+      display: inline-flex; justify-content: center; align-items: center;
 
-      .tag-icon { transition: all 0.2s; color: var(--color-text-2); }
+      .tag-icon { margin-left: 5px; font-size:18px; padding:2px; border-radius: 10px;}
 
-      .tag-icon:hover {
-        color: rgb(var(--primary-4)); background-color: var(--color-bg-2);
-        border-radius: 4px;
-      }
+      .tag-icon:hover { color: var(--color-white); background-color: rgb(var(--primary-6));}
     }
 
-    a:hover {
-      background: rgb(var(--primary-1));
+    div:hover {
+      border: 1px solid rgb(var(--primary-3)); color: rgb(var(--primary-6));
     }
 
-    a.active{
-      background: rgb(var(--primary-6)); color: var(--color-white);
-      .tag-icon { color: var(--color-white);}
-      .tag-icon:hover { color: rgb(var(--primary-4)); background-color: var(--color-bg-2);}
+    div.active{
+      background-color: rgb(var(--primary-1)); color: rgb(var(--primary-6));border: 1px solid rgb(var(--primary-3));
+      .tag-icon { color: var(--primary-6);}
+      .tag-icon:hover { color: var(--color-white); background-color: rgb(var(--primary-6));}
     }
   }
 

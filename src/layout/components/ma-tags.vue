@@ -2,12 +2,14 @@
   <div class="flex justify-between tags-container" ref="containerDom" v-if="appStore.tag">
     <div class="menu-tags-wrapper" ref="scrollbarDom" :class="{ 'tag-pn': tagShowPrevNext }">
       <div class="tags" ref="tags">
-        <a v-for="tag in tagStore.tags" :key="tag.path" @contextmenu.prevent="openContextMenu($event, tag)"
+        <div v-for="tag in tagStore.tags" :key="tag.path" @contextmenu.prevent="openContextMenu($event, tag)"
           :class="route.fullPath == tag.path ? 'active' : ''"
           @click="tagJump(tag)">
-          {{ tag.customTitle ? tag.customTitle : appStore.i18n ? ($t('menus.' + tag.name).indexOf('.') > 0 ? tag.title : $t('menus.' + tag.name)) : tag.title }}
+          <span>
+            {{ tag.customTitle ? tag.customTitle : appStore.i18n ? ($t('menus.' + tag.name).indexOf('.') > 0 ? tag.title : $t('menus.' + tag.name)) : tag.title }}
+          </span>
           <icon-close class="tag-icon" v-if="!tag.affix" @click.stop="closeTag(tag)" />
-        </a>
+        </div>
       </div>
       <span class="ma-tag-prev" v-if="tagShowPrevNext">
         <IconLeft :size="20" class="tag-scroll-icon" @click="handleScroll(-500)" />
@@ -360,7 +362,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       position: absolute;
-      height: 34px;
+      height: 44px;
 
       .tag-scroll-icon {
         cursor: pointer;
@@ -381,10 +383,6 @@ onMounted(() => {
       right: -4px;
     }
 
-    .tags a {
-      margin-left: 4px;
-      margin-right: 0;
-    }
   }
 
   .ma-tags-more {
