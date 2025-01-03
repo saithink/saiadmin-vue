@@ -65,6 +65,10 @@ export default {
   },
   i18n: 'open multi-language',
   i18nHelp: 'Whether to enable the multi-language feature',
+  ws: 'open websocket',
+  wsHelp: 'Whether to enable the websocket feature',
+  round: 'opend round',
+  roundHelp: 'Whether to enable the round feature',
   animation: 'Animation',
   animationHelp: 'Page transition animation effect',
   animate: {

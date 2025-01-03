@@ -11,6 +11,7 @@ let defaultSetting = {
   color: '#165dff',
   settingOpen: false,
   searchOpen: false,
+  roundOpen: true,
   waterMark: true,
   waterContent: 'saiadmin',
   ws: true,
@@ -56,6 +57,19 @@ const useAppStore = defineStore('app', {
     toggleMenu(status) {
       this.menuCollapse = status
       defaultSetting.menuCollapse = this.menuCollapse
+      tool.local.set('setting', defaultSetting)
+    },
+
+    toggleRound(status) {
+      this.roundOpen = status
+      if (this.roundOpen) {
+        document.body.style.setProperty(`--border-radius-small`, '4px')
+        document.body.style.setProperty(`--border-radius-medium`, '6px')
+      } else {
+        document.body.style.setProperty(`--border-radius-small`, '2px')
+        document.body.style.setProperty(`--border-radius-medium`, '4px')
+      }
+      defaultSetting.roundOpen = this.roundOpen
       tool.local.set('setting', defaultSetting)
     },
 

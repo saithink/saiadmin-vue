@@ -115,6 +115,7 @@ const useUserStore = defineStore('user', {
       appStore.toggleMode(setting?.mode ?? appStore.mode)
       appStore.toggleMenu(setting?.menuCollapse ?? appStore.menuCollapse)
       appStore.toggleTag(setting?.tag ?? appStore.tag)
+      appStore.toggleRound(setting?.round ?? appStore.round)
       appStore.changeMenuWidth(setting?.menuWidth ?? appStore.menuWidth)
       appStore.changeLayout(setting?.layout ?? appStore.layout)
       appStore.useSkin(setting?.skin ?? appStore.skin)

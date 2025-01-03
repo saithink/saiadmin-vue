@@ -4,6 +4,10 @@ export default [
     thumb: 'skins-thumb/mine/thumb.jpg',
   },
   {
+    name: 'classics',
+    thumb: 'skins-thumb/classics/thumb.jpg',
+  },
+  {
     name: 'businessGray',
     thumb: 'skins-thumb/businessGray/thumb.jpg',
   },

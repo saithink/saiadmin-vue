@@ -25,7 +25,7 @@
       <a-divider orientation="center"><span class="title">{{ $t('sys.personalizedConfig') }}</span></a-divider>
       <a-form-item :label="$t('sys.skin')" :help="$t('sys.skinHelp')">
         {{ currentSkin }} 
-        <a-button type="primary" status="success" size="mini" class="ml-2" @click="skin.open()">
+        <a-button type="primary" size="mini" class="ml-2" @click="skin.open()">
           {{ $t('sys.changeSkin')}}
         </a-button>
       </a-form-item>
@@ -33,9 +33,12 @@
         <a-select v-model="form.layout" @change="handleLayout">
           <a-option value="classic">{{ $t('sys.layout.classic') }}</a-option>
           <a-option value="columns">{{ $t('sys.layout.columns') }}</a-option>
-          <a-option value="banner">{{ $t('sys.layout.banner') }}</a-option>
-          <a-option value="mixed">{{ $t('sys.layout.mixed') }}</a-option>
+          <a-option v-if="appStore.skin !== 'classics'" value="banner">{{ $t('sys.layout.banner') }}</a-option>
+          <a-option v-if="appStore.skin !== 'classics'" value="mixed">{{ $t('sys.layout.mixed') }}</a-option>
         </a-select>
+      </a-form-item>
+      <a-form-item :label="$t('sys.round')" :help="$t('sys.roundHelp')">
+        <a-switch v-model="form.round" @change="handleRound" />
       </a-form-item>
       <a-form-item :label="$t('sys.ws')" :help="$t('sys.wsHelp')">
         <a-switch v-model="form.ws" @change="handleWs" />
@@ -64,7 +67,7 @@
       <a-form-item :label="$t('sys.water')" :help="$t('sys.waterHelp')">
         <a-switch v-model="form.waterMark" @change="handleSettingWater" />
       </a-form-item>
-      <a-form-item :label="$t('sys.waterContent')">
+      <a-form-item :label="$t('sys.waterContent')" v-if="form.waterMark">
         <a-input v-model="form.waterContent" @blur="handleSettingWaterContent" />
       </a-form-item>
       <a-form-item :label="$t('sys.tag')" :help="$t('sys.tagHelp')">
@@ -113,6 +116,7 @@ const form = reactive({
   waterMark: appStore.waterMark,
   waterContent: appStore.waterContent,
   ws: appStore.ws,
+  round: appStore.roundOpen
 })
 
 const defaultColorList = reactive([
@@ -154,6 +158,7 @@ const close = () => visible.value = false
 const handleLayout = (val) => appStore.changeLayout(val)
 const handleI18n = (val) => appStore.toggleI18n(val)
 const handleWs = (val) => appStore.toggleWs(val)
+const handleRound = (val) => appStore.toggleRound(val)
 const handleLanguage = (val) => appStore.changeLanguage(val)
 const handleAnimation = (val) => appStore.changeAnimation(val)
 const handleSettingMode = (val) => appStore.toggleMode(val ? 'dark' : 'light')
@@ -180,6 +185,7 @@ const save = async (done) => {
     waterMark: appStore.waterMark,
     waterContent: appStore.waterContent,
     ws: appStore.ws,
+    round: appStore.roundOpen
   }
 
   user.updateInfo({ id: userStore.user.id, backend_setting: data }).then(res => {
