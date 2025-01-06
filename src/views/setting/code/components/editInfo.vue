@@ -316,8 +316,8 @@
           <a-tab-pane title="字段配置" key="field_config">
             <a-alert title="提示">
               使用数组形式字段的组件，请在模型设置
-              <a-tag color="#168cff">获取器</a-tag>
-              和 <a-tag color="#168cff">修改器</a-tag>
+              <a-tag class="tag-primary">获取器</a-tag>
+              和 <a-tag class="tag-primary">修改器</a-tag>
             </a-alert>
             <a-table :data="form.columns" :pagination="false" class="mt-3">
               <template #columns>
@@ -397,7 +397,7 @@
           </a-tab-pane>
           <a-tab-pane title="菜单配置" key="menu_config">
             <a-alert title="提示">
-              默认接口根据模型类型为<a-tag color="red">软删除</a-tag>或者<a-tag color="red">非软删除</a-tag>自动判断，可选接口根据是否选中进行生成
+              默认接口根据模型类型为<a-tag class="tag-primary">软删除</a-tag>或者<a-tag class="tag-primary">非软删除</a-tag>自动判断，可选接口根据是否选中进行生成
             </a-alert>
             <a-checkbox-group direction="vertical" v-model="form.generate_menus" class="mt-3" :default-value="form.generate_menus">
               <a-checkbox :value="menu.value" v-for="(menu, index) in vars.menuList" :key="index">
