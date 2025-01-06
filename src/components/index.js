@@ -16,7 +16,6 @@ import {
 } from 'echarts/components'
 
 import MaWangEditor from './ma-wangEditor/index.vue'
-import MaIcon from './ma-icon/index.vue'
 import MaColorPicker from './ma-colorPicker/index.vue'
 import MaCodeEditor from './ma-codeEditor/index.vue'
 import MaCityLinkage from './ma-cityLinkage/index.vue'
@@ -54,7 +53,6 @@ use([
 export default {
   install(Vue) {
     Vue.component('MaWangEditor', MaWangEditor)
-    Vue.component('MaIcon', MaIcon)
     Vue.component('MaColorPicker', MaColorPicker)
     Vue.component('MaCodeEditor', MaCodeEditor)
     Vue.component('MaCityLinkage', MaCityLinkage)
