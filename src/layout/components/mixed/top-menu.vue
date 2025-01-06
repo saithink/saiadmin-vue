@@ -5,7 +5,7 @@
         <template v-if="!menu.meta.hidden">
         <a-menu-item :key="menu.name" @click="routerPush(menu)">
           <template #icon v-if="menu.meta.icon">
-            <component :is="menu.meta.icon" :class="menu.meta.icon.indexOf('ma') > 0 ? 'icon' : ''" />
+            <sa-icon :icon="menu.meta.icon" :size="18" />
           </template>
           {{ appStore.i18n ? ( $t(`menus.${menu.name}`).indexOf('.') > 0 ? menu.meta.title : $t(`menus.${menu.name}`) ) : menu.meta.title }}
         </a-menu-item>

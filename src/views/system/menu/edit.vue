@@ -26,7 +26,7 @@
         <sa-radio v-model="formData.type" dict="menu_type" placeholder="请选择菜单类型" />
       </a-form-item>
       <a-form-item label="图标" field="icon" v-if="formData.type != 'B'">
-        <ma-icon v-model="formData.icon" placeholder="请选择图标" />
+        <sa-icon-picker v-model="formData.icon" placeholder="请选择图标" />
       </a-form-item>
       <a-form-item label="菜单标识" field="code">
         <a-input v-model="formData.code" placeholder="请输入菜单标识" />

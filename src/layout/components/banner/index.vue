@@ -53,10 +53,10 @@
   overflow-y: hidden;
 }
 :deep(.sys-menus .arco-menu-icon svg) {
-  display: inline; vertical-align: none;
-  margin-bottom: 1px;
+  display: inline;
+  margin-bottom: -1px;
 }
-:deep(.sys-menus .arco-menu-icon .icon) {
-  padding-bottom: 1px;
+:deep(.sys-menus .arco-menu-icon .iconify-icon) {
+  margin-bottom: 2px;
 }
 </style>

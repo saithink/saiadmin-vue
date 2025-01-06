@@ -24,7 +24,7 @@
       <!-- Table 自定义渲染 -->
       <!-- 图标列 -->
       <template #icon="{ record }">
-        <component :is="record.icon" v-if="record.icon" />
+        <sa-icon :icon="record.icon" />
       </template>
       <!-- 状态列 -->
       <template #status="{ record }">

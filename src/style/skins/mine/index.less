@@ -1,7 +1,9 @@
 [mine-skin="mine"] {
 
+  .arco-menu-light .arco-menu-has-icon .arco-icon,
+  .arco-menu-light .arco-menu-has-icon .iconify-icon,
   .arco-menu-light .arco-menu-item .arco-icon,
-  .arco-menu-inline-header .arco-icon {
+  .arco-menu-light .arco-menu-item .iconify-icon {
     color: var(--color-text-1);
   }
 
@@ -10,7 +12,13 @@
     fill: var(--color-text-2);
   }
 
-  .arco-menu-light .arco-menu-item.arco-menu-selected .arco-icon {
+  .arco-menu-light .arco-menu-item.arco-menu-selected .arco-icon,
+  .arco-menu-light .arco-menu-item.arco-menu-selected .iconify-icon {
+    color: rgb(var(--primary-6));
+  }
+
+  .arco-menu-light .arco-menu-inline-header.arco-menu-selected .arco-menu-icon .arco-icon,
+  .arco-menu-light .arco-menu-inline-header.arco-menu-selected .arco-menu-icon .iconify-icon {
     color: rgb(var(--primary-6));
   }
 

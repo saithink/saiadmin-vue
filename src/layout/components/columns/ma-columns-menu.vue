@@ -11,7 +11,7 @@
           :class="`${classStyle}`"
           @click="loadMenu(bigMenu, index)"
         >
-          <component v-if="bigMenu.meta.icon" :is="bigMenu.meta.icon" class="text-xl mt-1" />
+          <sa-icon v-if="bigMenu.meta.icon" :icon="bigMenu.meta.icon" class="mt-1" />
           <span
             class="mt-0.5"
             :style="appStore.language === 'en' ? 'font-size: 10px' : ''"
