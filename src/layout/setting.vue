@@ -4,7 +4,7 @@
     class="backend-setting"
     v-model:visible="visible"
     :on-before-ok="save"
-    width="350px"
+    width="450px"
     :ok-text="$t('sys.saveToBackend')"
     @cancel="close"
     unmountOnClose

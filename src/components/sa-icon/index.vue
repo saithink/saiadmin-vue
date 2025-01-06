@@ -3,7 +3,7 @@
     <component :is="value" :size="props.size"></component>
   </template>
   <template v-else>
-    <Icon :icon="value" class="iconify-icon" :style="{ fontSize: props.size + 'px', padding: '1px' }" />
+    <Icon :icon="value" class="iconify-icon" :style="{ fontSize: props.size + 'px' }" />
   </template>
 </template>
   
