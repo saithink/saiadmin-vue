@@ -4,39 +4,39 @@
       <a-grid-item class="panel-col" :span="6">
         <a-space>
           <a-avatar :size="54" class="col-avatar" style="padding: 10px">
-            <img alt="avatar" src="@/assets/image/login.svg" />
+            <img alt="avatar" src="@/assets/image/user.svg" />
           </a-avatar>
-          <a-statistic title="用户统计" :value="250" :value-from="0" animation show-group-separator>
+          <a-statistic title="用户统计" :value="data.user" :value-from="0" animation show-group-separator>
             <template #suffix><span class="unit">个</span> </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
       <a-grid-item class="panel-col" :span="6">
         <a-space>
-          <a-avatar :size="54" class="col-avatar">
+          <a-avatar :size="54" class="col-avatar" style="padding: 10px">
             <img alt="avatar" src="@/assets/image/attach.svg" />
           </a-avatar>
-          <a-statistic title="附件统计" :value="373" :value-from="0" animation show-group-separator>
+          <a-statistic title="附件统计" :value="data.attach" :value-from="0" animation show-group-separator>
             <template #suffix><span class="unit">个</span> </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
       <a-grid-item class="panel-col" :span="6">
         <a-space>
-          <a-avatar :size="54" class="col-avatar">
-            <img alt="avatar" src="@/assets/image/rise.svg" />
+          <a-avatar :size="54" class="col-avatar" style="padding: 10px">
+            <img alt="avatar" src="@/assets/image/login.svg" />
           </a-avatar>
-          <a-statistic title="登录统计" :value="2015" :value-from="0" animation show-group-separator>
+          <a-statistic title="登录统计" :value="data.login" :value-from="0" animation show-group-separator>
             <template #suffix><span class="unit">次</span> </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
       <a-grid-item class="panel-col" :span="6">
         <a-space>
-          <a-avatar :size="54" class="col-avatar">
-            <img alt="avatar" src="@/assets/image/file.svg" />
+          <a-avatar :size="54" class="col-avatar" style="padding: 10px">
+            <img alt="avatar" src="@/assets/image/action.svg" />
           </a-avatar>
-          <a-statistic title="操作统计" :value="2142" :value-from="0" animation show-group-separator>
+          <a-statistic title="操作统计" :value="data.operate" :value-from="0" animation show-group-separator>
             <template #suffix><span class="unit">次</span> </template>
           </a-statistic>
         </a-space>
@@ -44,6 +44,25 @@
     </a-grid>
   </div>
 </template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+import api from '@/api/common'
+
+const data = ref({
+  user: 0,
+  attach: 0,
+  login: 0,
+  operate: 0
+})
+
+const getData = async () => {
+  const res = await api.getStatistics()
+  data.value = res.data
+}
+
+getData()
+</script>
 
 <style scoped lang="less">
 .arco-grid.panel {

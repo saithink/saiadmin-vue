@@ -38,6 +38,30 @@ export default {
   },
 
   /**
+   * 获取基础统计
+   * @returns
+   */
+  getStatistics(params = {}) {
+    return request({
+      url: '/core/system/statistics',
+      method: 'get',
+      params
+    })
+  },
+
+  /**
+   * 获取登录图表统计
+   * @returns
+   */
+  loginChart(params = {}) {
+    return request({
+      url: '/core/system/loginChart',
+      method: 'get',
+      params
+    })
+  },
+
+  /**
    * 清除所有缓存
    * @returns
    */
