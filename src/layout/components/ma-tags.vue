@@ -362,7 +362,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       position: absolute;
-      height: 44px;
+      height: 40px;
 
       .tag-scroll-icon {
         cursor: pointer;
