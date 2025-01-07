@@ -135,10 +135,12 @@ const screen = () => {
 if (appStore.ws) {
   const env = import.meta.env
   const baseURL = env.VITE_APP_OPEN_PROXY === 'true' ? env.VITE_APP_PROXY_PREFIX : env.VITE_APP_BASE_URL
+  const wsURL = env.VITE_APP_WS_URL ? env.VITE_APP_WS_URL : ''
+  const appKey = env.VITE_APP_WS_APPKEY ? env.VITE_APP_WS_APPKEY : ''
   // 建立连接
   var connection = new Push({
-    url: 'ws://127.0.0.1:3131', // websocket地址
-    app_key: '231ec75fb0f7e5f26fb0ded56c2bae9d',
+    url: wsURL, // websocket地址
+    app_key: appKey, // appkey
     auth: baseURL + '/plugin/webman/push/auth',
   })
   // 创建监听频道
