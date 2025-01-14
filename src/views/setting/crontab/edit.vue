@@ -16,8 +16,20 @@
       <a-form-item label="任务类型" field="type">
         <a-select v-model="formData.type" :options="types" placeholder="请选择任务类型" />
       </a-form-item>
-      <a-form-item label="定时规则" field="rule" extra="例如：30 */5 * * * *，代表每隔5分钟的第30秒执行任务">
-        <a-input v-model="formData.rule" placeholder="请输入定时规则" />
+      <a-form-item
+        label="定时规则"
+        field="rule"
+        extra="类似Linux定时规则，例如：30 */5 * * * *，代表每隔5分钟的第30秒执行任务">
+        <a-input-search
+          v-model="formData.rule"
+          placeholder="请输入定时规则"
+          button-text="生成表达式"
+          search-button
+          @search="openRule">
+          <template #button-icon>
+            <icon-clock-circle />
+          </template>
+        </a-input-search>
       </a-form-item>
       <a-form-item label="调用目标" field="target">
         <a-textarea v-model="formData.target" placeholder="请输入调用目标" />
@@ -34,17 +46,21 @@
     </a-form>
     <!-- 表单信息 end -->
   </component>
+
+  <CronPanel ref="cronRef" @success="changeRule"></CronPanel>
 </template>
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import api from '@/api/setting/crontab'
+import CronPanel from './components/cron-panel.vue'
 
 const emit = defineEmits(['success'])
 
 // 引用定义
 const formRef = ref()
+const cronRef = ref()
 const mode = ref('')
 const visible = ref(false)
 const loading = ref(false)
@@ -77,6 +93,16 @@ const rules = {
   type: [{ required: true, message: '任务类型不能为空' }],
   rule: [{ required: true, message: '定时规则不能为空' }],
   target: [{ required: true, message: '调用目标不能为空' }],
+}
+
+// 打开定时规则表达式
+const openRule = () => {
+  cronRef.value.open(formData.rule)
+}
+
+// 规则内容变更
+const changeRule = (rule) => {
+  formData.rule = rule
 }
 
 // 打开弹框
