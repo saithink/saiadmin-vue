@@ -18,6 +18,12 @@
       <!-- 搜索区 end -->
 
       <!-- Table 自定义渲染 -->
+      <template #leader="{ record }">
+        <div v-if="record.leader.length > 0">
+          <a-tag v-for="item in record.leader" :key="item.id">{{ item.username }}</a-tag>
+        </div>
+        <div v-else></div>
+      </template>
       <!-- 操作列 -->
       <template #operationCell="{ record }">
         <div v-if="record.disabled"></div>
@@ -117,9 +123,8 @@ const options = reactive({
 // SaTable 列配置
 const columns = reactive([
   { title: '部门名称', dataIndex: 'name', width: 150 },
-  { title: '负责人', dataIndex: 'leader', width: 120 },
-  { title: '手机', dataIndex: 'phone', width: 150 },
-  { title: '排序', dataIndex: 'sort', width: 180 },
+  { title: '领导列表', dataIndex: 'leader' },
+  { title: '排序', dataIndex: 'sort', width: 100 },
   { title: '状态', dataIndex: 'status', dict: 'data_status', width: 120 },
   { title: '创建时间', dataIndex: 'create_time', width: 180 },
 ])

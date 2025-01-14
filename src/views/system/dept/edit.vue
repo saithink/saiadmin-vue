@@ -22,12 +22,6 @@
       <a-form-item label="部门名称" field="name">
         <a-input v-model="formData.name" placeholder="请输入部门名称" />
       </a-form-item>
-      <a-form-item label="负责人" field="leader">
-        <a-input v-model="formData.leader" placeholder="请输入负责人" />
-      </a-form-item>
-      <a-form-item label="手机" field="phone">
-        <a-input v-model="formData.phone" placeholder="请输入手机" />
-      </a-form-item>
       <a-form-item label="排序数字" field="sort">
         <a-input-number v-model="formData.sort" placeholder="请输入排序数字" />
       </a-form-item>
@@ -72,8 +66,6 @@ const formData = reactive({
   parent_id: '',
   level: '',
   name: '',
-  leader: '',
-  phone: '',
   status: 1,
   sort: 100,
   remark: '',
