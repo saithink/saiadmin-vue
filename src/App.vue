@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <a-config-provider :locale="lang">
+  <a-config-provider :locale="lang" :update-at-scroll="true">
     <router-view />
   </a-config-provider>
 </template>
