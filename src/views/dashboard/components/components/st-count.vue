@@ -1,6 +1,6 @@
 <template>
   <div class="w-full mx-auto">
-    <a-grid :cols="24" :row-gap="16" class="panel ma-content-block mt-3 p-4">
+    <a-grid :cols="{ xs: 1, sm: 12, md: 24 }" :row-gap="16" class="panel ma-content-block mt-3 p-4">
       <a-grid-item class="panel-col" :span="6">
         <a-space>
           <a-avatar :size="54" class="col-avatar" style="padding: 10px">
