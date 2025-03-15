@@ -59,7 +59,7 @@
                   <div class="mb-2 image-content">
                     <a-checkbox :value="record.id" class="checkbox">
                       <template #checkbox="{ checked }">
-                        <a-tag :checked="checked" color="blue" checkable><icon-check /> 选择</a-tag>
+                        <a-tag :checked="checked" color="arcoblue" checkable><icon-check /> 选择</a-tag>
                       </template>
                     </a-checkbox>
                     <a-image
