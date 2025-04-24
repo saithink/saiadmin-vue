@@ -436,7 +436,7 @@ const __summary = ({ data }) => {
     let length = data.length || 0
     summary.map((item) => {
       if (item.action && item.action === 'text') {
-        summaryData[item.dataIndex] = item.content
+        summaryData[item.dataIndex] = item.text
       } else {
         summaryData[item.dataIndex] = 0
         summaryPrefixText[item.dataIndex] = item?.prefixText ?? ''
