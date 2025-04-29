@@ -415,6 +415,10 @@ const filterColumn = (index, record) => {
   return index.indexOf('.') > -1 ? get(record, index) : record[index]
 }
 
+const clearSelected = () => {
+  tableRef.value?.selectAll(false)
+}
+
 const setSelecteds = (key) => {
   selecteds.value = key
 }
@@ -600,7 +604,7 @@ const init = async () => {
 
 const refresh = async () => {
   await requestData()
-  tableRef.value?.selectAll(false)
+  // tableRef.value?.selectAll(false)
 }
 
 const requestData = async () => {
@@ -677,6 +681,7 @@ const deletesMultipleAction = async () => {
       // 销毁
       if (options.value.delete.realFunc && isFunction(options.value.delete.realFunc)) {
         options.value.delete.realFunc(params)
+        tableRef.value?.selectAll(false)
       } else {
         console.error(`sa-table error：crud.delete.realFunc is not Function.`)
       }
@@ -684,6 +689,7 @@ const deletesMultipleAction = async () => {
       // 删除
       if (options.value.delete.func && isFunction(options.value.delete.func)) {
         options.value.delete.func(params)
+        tableRef.value?.selectAll(false)
       } else {
         console.error(`sa-table error：crud.delete.func is not Function.`)
       }
@@ -699,6 +705,7 @@ const recoverysMultipleAction = async () => {
   if (selecteds.value && selecteds.value.length > 0) {
     if (options.value.recovery.func && isFunction(options.value.recovery.func)) {
       options.value.recovery.func(params)
+      tableRef.value?.selectAll(false)
     } else {
       console.error(`sa-table error：crud.recovery.func is not Function.`)
     }
@@ -782,6 +789,7 @@ defineExpose({
   requestData,
   refresh,
   setSelecteds,
+  clearSelected,
   tableRef,
   isRecovery,
   getTableData,
