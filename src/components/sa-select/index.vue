@@ -48,7 +48,8 @@ watch(
   }
 )
 
-const handleChangeEvent = async (value) => {
-  emit('change', value)
+const handleChangeEvent = async (val) => {
+  emit('update:modelValue', val)
+  emit('change', val)
 }
 </script>
