@@ -1,0 +1,54 @@
+{
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "none",
+    "prettier.semi": false
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.bracketSameLine": true,
+    "prettier.printWidth": 120,
+    "prettier.bracketSpacing": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.options": {
+    "extensions": [".js", ".vue", ".ts", ".tsx"]
+  },
+  "eslint.validate": [
+    "vue",
+    "html",
+    "javascript",
+    "graphql",
+    "javascriptreact",
+    "json",
+    "typescript",
+    "typescriptreact",
+    "vue-html"
+  ],
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
+}
