@@ -6,7 +6,7 @@
     </span>
     <!-- 渲染 tag -->
     <a-tag
-      v-if="props.render === 'tag' && value != ''"
+      v-if="props.render === 'tag' && value !== ''"
       :color="
         tool.getColor(value, props.options.length > 0 ? props.options : dictList[props.dict], props.colors || [])
       ">
