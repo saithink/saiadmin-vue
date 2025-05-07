@@ -24,6 +24,12 @@ git clone https://github.com/saithink/saiadmin-vue.git
 git clone https://gitee.com/appsai/saiadmin-vue.git
 ```
 
+或
+
+```
+git clone https://gitcode.com/saigroup/saiadmin-vue.git
+```
+
 - 安装依赖
 
 ```
