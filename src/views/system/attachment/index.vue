@@ -188,7 +188,7 @@ const options = reactive({
     show: true,
     auth: ['/core/attachment/destroy'],
     func: async (params) => {
-      const resp = await api.deletes(params)
+      const resp = await api.destroy(params)
       if (resp.code === 200) {
         Message.success(`删除成功！`)
         crudRef.value?.refresh()
