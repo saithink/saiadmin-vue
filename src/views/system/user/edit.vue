@@ -131,6 +131,7 @@ const initialFormData = {
   id: '',
   avatar: '',
   username: '',
+  nickname: '',
   dept_id: '',
   password: '',
   role_ids: [],
@@ -161,10 +162,12 @@ const open = async (type = 'add', id = '') => {
   await initPage()
   if (type == 'edit') {
     const { data } = await api.read(id)
-    const post = data.postList.map((item) => item.id)
+    if (data.postList) {
+      const post = data.postList.map((item) => item.id)
+      data.post_ids = post
+    }
     const role = data.roleList.map((item) => item.id)
     data.role_ids = role
-    data.post_ids = post
     data.password = ''
     setFormData(data)
   }
