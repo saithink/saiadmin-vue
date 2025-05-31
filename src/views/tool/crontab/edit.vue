@@ -141,6 +141,12 @@ const open = async (type = 'add') => {
   await initPage()
 }
 
+// 提取数字
+const extractNumber = (str) => {
+  const match = str.match(/\d+/)
+  return match ? Number.parseInt(match[0]) : 0
+}
+
 // 初始化页面数据
 const initPage = async () => {}
 
@@ -152,13 +158,12 @@ const setFormData = async (data) => {
     }
   }
   const words = formData['rule'].split(' ')
-  formData['second'] = Number.parseInt(words[0])
-  formData['minute'] = Number.parseInt(words[1])
-  formData['hour'] = Number.parseInt(words[2])
-  formData['day'] = Number.parseInt(words[3])
-  formData['month'] = Number.parseInt(words[4])
-  formData['week'] = Number.parseInt(words[5])
-  console.log(formData)
+  formData['second'] = extractNumber(words[0])
+  formData['minute'] = extractNumber(words[1])
+  formData['hour'] = extractNumber(words[2])
+  formData['day'] = extractNumber(words[3])
+  formData['month'] = extractNumber(words[4])
+  formData['week'] = extractNumber(words[5])
 }
 
 // 数据保存
