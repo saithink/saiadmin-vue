@@ -121,6 +121,10 @@ const useUserStore = defineStore('user', {
       appStore.changeLayout(setting?.layout ?? appStore.layout)
       appStore.useSkin(setting?.skin ?? appStore.skin)
       appStore.changeColor(setting?.color ?? appStore.color)
+      appStore.toggleWater(setting?.waterMark ?? appStore.waterMark)
+      appStore.changeWaterContent(
+        setting?.waterContent ?? appStore.waterContent
+      )
     }
   }
 })

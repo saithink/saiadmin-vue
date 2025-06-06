@@ -80,7 +80,7 @@ const useAppStore = defineStore('app', {
     },
 
     changeWaterContent(val) {
-      this.waterContent = val.target.value
+      this.waterContent = val.target ? val.target.value : val
       defaultSetting.waterContent = this.waterContent
       tool.local.set('setting', defaultSetting)
     },
