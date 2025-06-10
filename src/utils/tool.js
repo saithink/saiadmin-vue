@@ -475,28 +475,15 @@ tool.toUnixTime = (date) => {
  */
 tool.getColor = (value, data, colors = []) => {
   if (!data) {
-    return 'gray'
+    return ''
   }
-  const index = data.findIndex((item) => item.value == value)
-  let color = []
   if (colors && colors.length > 0) {
-    color = colors
+    const index = data.findIndex((item) => item.value == value)
+    return colors[index] ?? ''
   } else {
-    color = [
-      'green',
-      'red',
-      'orange',
-      'blue',
-      'cyan',
-      'purple',
-      'pinkpurple',
-      'gold',
-      'lime',
-      'arcoblue',
-      'magenta'
-    ]
+    const item = data.find((item) => item.value == value)
+    return item?.color ?? ''
   }
-  return color[index] ?? 'transparent'
 }
 
 /**
