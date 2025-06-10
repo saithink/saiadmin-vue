@@ -9,14 +9,14 @@
           :sucker-hide="true"
           :colors-default="defaultColorList"
           @changeColor="selectColor"
-          style="width: 218px;"
-        />
+          style="width: 218px" />
       </template>
     </a-trigger>
-    <a-input v-model="val" :style="`color: ${val}`" readonly :placeholder="props.placeholder">
-    </a-input>
+    <a-input v-model="val" :style="`color: ${val}`" :placeholder="props.placeholder"> </a-input>
     <a-tooltip content="复制">
-      <a-button @click="copyColor"><template #icon><icon-copy class="cursor-pointer" /></template></a-button>
+      <a-button @click="copyColor"
+        ><template #icon><icon-copy class="cursor-pointer" /></template
+      ></a-button>
     </a-tooltip>
   </a-input-group>
 </template>
@@ -35,14 +35,13 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const val = computed({
-    get() {
-      return props.modelValue
-    },
-    set(newVal) {
-      emit('update:modelValue', newVal)
-    }
-  }
-)
+  get() {
+    return props.modelValue
+  },
+  set(newVal) {
+    emit('update:modelValue', newVal)
+  },
+})
 
 const selectColor = (color) => {
   val.value = color.hex
@@ -50,17 +49,29 @@ const selectColor = (color) => {
 
 const copyColor = async () => {
   try {
-      await useClipboard().toClipboard(val.value)
-      Message.success('复制成功')
-    } catch(e) {
-      Message.error('复制失败')
-    }
+    await useClipboard().toClipboard(val.value)
+    Message.success('复制成功')
+  } catch (e) {
+    Message.error('复制失败')
+  }
 }
 
 const defaultColorList = reactive([
-  '#165DFF', '#F53F3F', '#F77234', '#F7BA1E', '#00B42A', '#14C9C9', '#3491FA',
-  '#722ED1', '#F5319D', '#D91AD9', '#34C759', '#43a047', '#7cb342', '#c0ca33',
-  '#86909c', '#6d4c41',
+  '#165DFF',
+  '#F53F3F',
+  '#F77234',
+  '#F7BA1E',
+  '#00B42A',
+  '#14C9C9',
+  '#3491FA',
+  '#722ED1',
+  '#F5319D',
+  '#D91AD9',
+  '#34C759',
+  '#43a047',
+  '#7cb342',
+  '#c0ca33',
+  '#86909c',
+  '#6d4c41',
 ])
-
 </script>
