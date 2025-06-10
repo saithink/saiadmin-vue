@@ -16,6 +16,9 @@
       <a-form-item label="字典键值" field="value">
         <a-input v-model="formData.value" placeholder="请输入字典键值" />
       </a-form-item>
+      <a-form-item label="颜色" field="color">
+        <ma-color-picker v-model="formData.color" />
+      </a-form-item>
       <a-form-item label="排序" field="sort">
         <a-input-number v-model="formData.sort" placeholder="请输入排序" />
       </a-form-item>

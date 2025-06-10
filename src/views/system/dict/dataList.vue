@@ -112,6 +112,7 @@ const options = reactive({
 const columns = reactive([
   { title: '字典标签', dataIndex: 'label', width: 220 },
   { title: '字典键值', dataIndex: 'value', width: 220 },
+  { title: '颜色', dataIndex: 'color', width: 120 },
   { title: '排序', dataIndex: 'sort', width: 180 },
   { title: '状态', dataIndex: 'status', width: 180 },
   { title: '创建时间', dataIndex: 'create_time', width: 180 },
