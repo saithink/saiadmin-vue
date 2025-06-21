@@ -58,6 +58,7 @@ const initialFormData = {
   code: '',
   label: '',
   value: '',
+  color: '',
   status: 1,
   sort: 100,
   remark: '',
