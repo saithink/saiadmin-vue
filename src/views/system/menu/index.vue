@@ -98,7 +98,7 @@ const options = reactive({
 // SaTable 列配置
 const columns = reactive([
   { title: '菜单名称', dataIndex: 'name', width: 180 },
-  { title: '菜单类型', dataIndex: 'type', dict: 'menu_type', width: 100 },
+  { title: '菜单类型', dataIndex: 'type', type: 'dict', dict: 'menu_type', width: 100 },
   { title: '图标', dataIndex: 'icon', width: 80 },
   { title: '菜单标识', dataIndex: 'code', width: 150 },
   { title: '路由地址', dataIndex: 'route', width: 150 },
