@@ -50,6 +50,7 @@ watch(
 )
 
 const handleChangeEvent = async (value) => {
+  emit('update:modelValue', value)
   emit('change', value)
 }
 </script>
