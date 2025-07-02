@@ -23,6 +23,9 @@
           </a-col>
         </template>
         <!-- Table 自定义渲染 -->
+        <template #color="{ record }">
+          <a-tag :color="record.color">{{ record.color }}</a-tag>
+        </template>
         <template #status="{ record }">
           <sa-switch v-model="record.status" @change="changeStatus($event, record.id)"></sa-switch>
         </template>
