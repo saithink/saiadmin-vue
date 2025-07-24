@@ -27,7 +27,7 @@
         <div class="version-value" :class="[version.saiadmin_version?.notes == '正常' ? '' : 'text-red-500']">
           {{ version?.saiadmin_version?.notes }}
         </div>
-        <div class="version-title">saithink安装器</div>
+        <div class="version-title">saipackage安装器</div>
         <div class="version-value">{{ version?.saithink_version?.describe }}</div>
         <div class="version-title">说明</div>
         <div class="version-value" :class="[version.saithink_version?.notes == '正常' ? '' : 'text-red-500']">
@@ -95,7 +95,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Message } from '@arco-design/web-vue'
-import saithink from '@/api/tool/saithink'
+import saipackage from '@/api/tool/saipackage'
 import InstallForm from './install-box.vue'
 import TerminalBox from './terminal.vue'
 
@@ -110,17 +110,17 @@ const handleUpload = async () => {
 }
 
 const handleInstall = async (record) => {
-  saithink.installApp({ appName: record.app }).then((resp) => {
+  saipackage.installApp({ appName: record.app }).then((resp) => {
     if (resp.code == 200) {
       Message.success('安装成功')
       getList()
-      saithink.reloadBackend()
+      saipackage.reloadBackend()
     }
   })
 }
 
 const handleUninstall = async (record) => {
-  await saithink.uninstallApp({ appName: record.app })
+  await saipackage.uninstallApp({ appName: record.app })
   getList()
 }
 
@@ -158,7 +158,7 @@ const columns = [
 
 const getList = async () => {
   loading.value = true
-  const resp = await saithink.getAppList()
+  const resp = await saipackage.getAppList()
   installList.value = resp.data.data
   version.value = resp.data.version
   loading.value = false
