@@ -12,7 +12,10 @@
       </div>
       <!-- 多图显示 -->
       <template v-else-if="props.multiple">
-        <div :class="'image-list ' + (props.rounded ? 'rounded-full' : '')" v-for="(image, idx) in showImgList" :key="idx">
+        <div
+          :class="'image-list ' + (props.rounded ? 'rounded-full' : '')"
+          v-for="(image, idx) in showImgList"
+          :key="idx">
           <a-button class="delete" @click="removeImage(idx)">
             <template #icon>
               <icon-delete />
@@ -30,7 +33,19 @@
         :tip="props.tip">
         <template #upload-button>
           <slot name="customer">
-            <div :class="'upload-skin ' + (props.rounded ? 'rounded-full' : 'rounded-sm')" v-if="!props.modelValue || props.multiple">
+            <div
+              :class="'upload-skin ' + (props.rounded ? 'rounded-full' : 'rounded-sm')"
+              v-if="props.multiple && showImgList.length < props.limit">
+              <div class="icon text-3xl">
+                <component :is="props.icon" />
+              </div>
+              <div class="title">
+                {{ props.title }}
+              </div>
+            </div>
+            <div
+              :class="'upload-skin ' + (props.rounded ? 'rounded-full' : 'rounded-sm')"
+              v-if="!props.modelValue && !props.multiple">
               <div class="icon text-3xl">
                 <component :is="props.icon" />
               </div>
@@ -45,7 +60,7 @@
   </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import { isArray } from 'lodash'
 import file2md5 from 'file2md5'
 import commonApi from '@/api/common'
@@ -53,7 +68,7 @@ import { Message } from '@arco-design/web-vue'
 
 const props = defineProps({
   modelValue: {
-    type: [String, Number, Array],
+    type: [String, Array],
     default: () => {},
   },
   rounded: { type: Boolean, default: false },
@@ -144,13 +159,11 @@ const initData = async () => {
     } else {
       showImgList.value = []
     }
-  } else if (props.modelValue) {
+  } else if (typeof props.modelValue === 'string') {
     signImage.value = props.modelValue
     currentItem.value.url = props.modelValue
     currentItem.value.percent = 100
     currentItem.value.status = 'complete'
-  } else {
-    removeSignImage()
   }
 }
 
