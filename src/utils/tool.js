@@ -239,9 +239,34 @@ tool.generateId = function () {
 }
 
 /**
+ * 生成全球唯一标识
+ * @returns uuid
+ */
+tool.uuid = () => {
+  const hexList = []
+  for (let i = 0; i <= 15; i++) {
+    hexList[i] = i.toString(16)
+  }
+  let uuid = ''
+  for (let i = 1; i <= 36; i++) {
+    if (i === 9 || i === 14 || i === 19 || i === 24) {
+      uuid += '-'
+    } else if (i === 15) {
+      uuid += 4
+    } else if (i === 20) {
+      uuid += hexList[(Math.random() * 4) | 8]
+    } else {
+      uuid += hexList[(Math.random() * 16) | 0]
+    }
+  }
+  return uuid
+}
+
+/**
  * 日期格式化
  */
 tool.dateFormat = (date, fmt = 'yyyy-MM-dd hh:mm:ss', isDefault = '-') => {
+  if (!date) date = Number(new Date())
   if (date.toString().length == 10) {
     date = date * 1000
   }
