@@ -7,6 +7,7 @@ import useIframeStore from './modules/iframe'
 import useConfigStore from './modules/config'
 import useMessageStore from './modules/message'
 import useDictStore from './modules/dict'
+import useTerminalStore from './modules/terminal'
 
 const pinia = createPinia()
 
@@ -18,6 +19,7 @@ export {
   useIframeStore,
   useConfigStore,
   useMessageStore,
-  useDictStore
+  useDictStore,
+  useTerminalStore
 }
 export default pinia
