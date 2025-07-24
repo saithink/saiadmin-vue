@@ -6,7 +6,7 @@ const buildTerminalUrl = (commandKey, uuid, extend) => {
   const env = import.meta.env
   const baseURL = env.VITE_APP_BASE_URL
   const token = tool.local.get(env.VITE_APP_TOKEN_PREFIX)
-  const terminalUrl = '/app/saithink/index/terminal'
+  const terminalUrl = '/app/saipackage/index/terminal'
   return (
     baseURL +
     terminalUrl +
