@@ -11,7 +11,9 @@
         :draggable="props.draggable">
         <template #upload-button v-if="props.draggable">
           <slot name="customer">
-            <div style="background-color: var(--color-fill-2); border: 1px dashed var(--color-fill-4)" class="rounded text-center p-7 w-full">
+            <div
+              style="background-color: var(--color-fill-2); border: 1px dashed var(--color-fill-4)"
+              class="rounded text-center p-7 w-full">
               <div>
                 <icon-upload class="text-5xl text-gray-400" />
                 <div class="text-red-600 font-bold">
@@ -163,12 +165,10 @@ const initData = async () => {
     } else {
       showFileList.value = []
     }
-  } else if (props.modelValue) {
+  } else if (typeof props.modelValue === 'string') {
     signFile.value = props.modelValue
     currentItem.value.url = props.modelValue
     currentItem.value.name = props.modelValue.substring(props.modelValue.lastIndexOf('/') + 1)
-  } else {
-    removeSignFile()
   }
 }
 
