@@ -385,6 +385,7 @@
                         v-model="form.columns[rowIndex].view_type"
                         :style="{ width: '140px' }"
                         :options="vars.viewComponent"
+                        @change="changeViewType(form.columns[rowIndex])"
                         allow-clear></a-select>
                       <a-link
                         v-if="notNeedSettingComponents.includes(record.view_type)"
@@ -584,6 +585,20 @@ const confrimSetting = (name, value) => {
     }
   })
   Message.success('组件设置成功')
+}
+
+const changeViewType = (record) => {
+  if (record.view_type == 'uploadImage' || record.view_type == 'uploadFile') {
+    record.options = { multiple: false }
+  } else if (record.view_type == 'codeEditor' || record.view_type == 'editor' || record.view_type == 'wangEditor') {
+    record.options = { height: 400 }
+  } else if (record.view_type == 'date') {
+    record.options = { mode: 'date', showTime: false }
+  } else if (record.view_type == 'cityLinkage') {
+    record.options = { type: 'cascader', mode: 'code' }
+  } else {
+    record.options = {}
+  }
 }
 
 const save = async (done) => {
