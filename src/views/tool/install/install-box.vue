@@ -49,7 +49,7 @@ import { ref, reactive, computed } from 'vue'
 import file2md5 from 'file2md5'
 import { Message, Modal } from '@arco-design/web-vue'
 import commonApi from '@/api/common'
-import saithink from '@/api/tool/saithink'
+import saipackage from '@/api/tool/saipackage'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -86,7 +86,7 @@ const uploadFileHandler = async (options) => {
     dataForm.append('mode', 'local')
     const resp = await commonApi.uploadFile(dataForm)
     if (resp.code == 200) {
-      const res = await saithink.uploadApp({
+      const res = await saipackage.uploadApp({
         file: resp.data.storage_path,
       })
       if (res.code == 200) {
@@ -96,12 +96,6 @@ const uploadFileHandler = async (options) => {
       }
     }
   }
-}
-
-// 验证规则
-const rules = {
-  banner_type: [{ required: true, message: '类型必需填写' }],
-  title: [{ required: true, message: '标题必需填写' }],
 }
 
 // 打开弹框

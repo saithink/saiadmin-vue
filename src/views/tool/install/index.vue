@@ -28,10 +28,10 @@
           {{ version?.saiadmin_version?.notes }}
         </div>
         <div class="version-title">saipackage安装器</div>
-        <div class="version-value">{{ version?.saithink_version?.describe }}</div>
+        <div class="version-value">{{ version?.saipackage_version?.describe }}</div>
         <div class="version-title">说明</div>
-        <div class="version-value" :class="[version.saithink_version?.notes == '正常' ? '' : 'text-red-500']">
-          {{ version?.saithink_version?.notes }}
+        <div class="version-value" :class="[version.saipackage_version?.notes == '正常' ? '' : 'text-red-500']">
+          {{ version?.saipackage_version?.notes }}
         </div>
       </div>
     </a-space>
