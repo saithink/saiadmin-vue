@@ -37,7 +37,11 @@
       <a-trigger trigger="click">
         <a-button :shape="'circle'">
           <template #icon>
-            <a-badge :count="5" dot :dotStyle="{ width: '5px', height: '5px' }" v-if="messageStore.messageList.length > 0">
+            <a-badge
+              :count="5"
+              dot
+              :dotStyle="{ width: '5px', height: '5px' }"
+              v-if="messageStore.messageList.length > 0">
               <icon-notification />
             </a-badge>
             <icon-notification v-else />
@@ -59,7 +63,7 @@
     </a-space>
     <a-dropdown @select="handleSelect" trigger="hover">
       <a-avatar class="bg-blue-500 text-3xl avatar" style="top: -1px">
-        <img :src="userStore.user && userStore.user.avatar ? $tool.showFile(userStore.user.avatar) : $url + 'avatar.jpg'" />
+        <img :src="userStore.user && userStore.user.avatar ? userStore.user.avatar : avatar" />
       </a-avatar>
 
       <template #content>
@@ -88,6 +92,8 @@ import { Message } from '@arco-design/web-vue'
 import { Push } from '@/utils/push-vue'
 import { info } from '@/utils/common'
 import commonApi from '@/api/common'
+
+import avatar from '@/assets/avatar.jpg'
 
 const { t } = useI18n()
 const messageStore = useMessageStore()

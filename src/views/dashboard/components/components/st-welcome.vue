@@ -3,10 +3,7 @@
     <div class="ma-content-block rounded-sm flex justify-between w-full p-3">
       <div class="pl-0 flex inline-block">
         <a-avatar :size="75" class="hidden lg:inline-block">
-          <img
-            :src="
-              userStore.user && userStore.user.avatar ? $tool.showFile(userStore.user.avatar) : $url + 'avatar.jpg'
-            " />
+          <img :src="userStore.user && userStore.user.avatar ? userStore.user.avatar : avatar" />
         </a-avatar>
         <div class="pl-3 mt-2">
           <div class="content-block-title">{{ userStore.user.nickname || userStore.user.username }}，欢迎回来！</div>
@@ -28,6 +25,7 @@
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store'
 import dayjs from 'dayjs'
+import avatar from '@/assets/avatar.jpg'
 
 const userStore = useUserStore()
 const visible = ref(false)

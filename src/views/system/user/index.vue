@@ -47,7 +47,7 @@
         <!-- 头像列 -->
         <template #avatar="{ record }">
           <a-avatar>
-            <img :src="record.avatar ? $tool.showFile(record.avatar) : $url + 'avatar.jpg'" style="object-fit: cover" />
+            <img :src="record.avatar ? record.avatar : avatar" style="object-fit: cover" />
           </a-avatar>
         </template>
         <!-- 操作列 -->
@@ -89,6 +89,7 @@ import api from '@/api/system/user'
 import commonApi from '@/api/common'
 import { Message, Modal } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
+import avatar from '@/assets/avatar.jpg'
 
 const depts = ref([{ label: '所有部门', value: 0 }])
 const crudRef = ref()
