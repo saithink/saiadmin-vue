@@ -1,8 +1,9 @@
-
 <template>
   <a-layout-header class="layout-header flex flex-col operation-area">
-    <div class="flex justify-between" style="height: 50px;">
-      <a-avatar class="mt-1 ml-2 inline lg:hidden" style="width:45px;" :size="40"><img :src="`${$url}logo.png`" class="bg-white" /></a-avatar>
+    <div class="flex justify-between" style="height: 50px">
+      <a-avatar class="mt-1 ml-2 inline lg:hidden" style="width: 45px" :size="40">
+        <img src="../../../assets/logo.png" class="bg-white" />
+      </a-avatar>
       <ma-breadcrumb />
       <ma-operation />
     </div>
@@ -11,7 +12,7 @@
 </template>
 
 <script setup>
-  import MaBreadcrumb from '../ma-breadcrumb.vue'
-  import MaOperation from '../ma-operation.vue'
-  import MaTags from '../ma-tags.vue'
+import MaBreadcrumb from '../ma-breadcrumb.vue'
+import MaOperation from '../ma-operation.vue'
+import MaTags from '../ma-tags.vue'
 </script>

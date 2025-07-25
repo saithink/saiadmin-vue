@@ -8,24 +8,25 @@
             :count="5"
             dot
             :dotStyle="{ width: '5px', height: '5px', top: '-8px' }"
-            v-if="messageStore.messageList.length > 0"
-          > </a-badge>
+            v-if="messageStore.messageList.length > 0">
+          </a-badge>
         </template>
         <a-list :max-height="230" class="h-full" v-if="messageStore.messageList.length > 0">
           <a-list-item
-            v-for="item in messageStore.messageList" :key="item.id" class="cursor-pointer"
-            @click="viewMessage(item)"
-          >
+            v-for="item in messageStore.messageList"
+            :key="item.id"
+            class="cursor-pointer"
+            @click="viewMessage(item)">
             <a-list-item-meta :title="item.title">
               <template #description>
-                <div class="flex justify-between" style="font-size: 13px;">
-                  <span>发送人：{{item.send_user.nickname}}</span>
-                  <span>时间：{{item.create_time.substr(0, 10)}}</span>
+                <div class="flex justify-between" style="font-size: 13px">
+                  <span>发送人：{{ item.send_user.nickname }}</span>
+                  <span>时间：{{ item.create_time.substr(0, 10) }}</span>
                 </div>
               </template>
               <template #avatar>
                 <a-avatar shape="square">
-                  <img alt="avatar" :src="`${item.send_user.avatar ? item.send_user.avatar : $url + 'avatar.jpg'}`" />
+                  <img alt="avatar" :src="`${item.send_user.avatar}` || avatar" />
                 </a-avatar>
               </template>
             </a-list-item-meta>
@@ -52,7 +53,7 @@
         </a-space>
       </a-typography-paragraph>
       <a-typography-paragraph>
-        <div v-html="row?.content" ></div>
+        <div v-html="row?.content"></div>
       </a-typography-paragraph>
     </a-typography>
   </a-modal>
@@ -61,6 +62,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useMessageStore } from '@/store'
+import avatar from '@/assets/avatar.jpg'
+
 const messageStore = useMessageStore()
 
 const row = ref({})
@@ -70,7 +73,6 @@ const viewMessage = async (record) => {
   row.value = record
   detailVisible.value = true
 }
-
 </script>
 
 <style scoped lang="less">
@@ -83,8 +85,7 @@ const viewMessage = async (record) => {
   margin-top: 9px;
   position: relative;
 }
-:deep(.arco-list-item-meta-content)
-{
+:deep(.arco-list-item-meta-content) {
   width: 100%;
 }
 </style>
