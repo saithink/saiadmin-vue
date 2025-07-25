@@ -341,7 +341,7 @@
       :srcList="imgUrl"
       v-model:visible="imgVisible"
       v-if="typeof imgUrl === 'object' && imgUrl !== null" />
-    <a-image-preview :src="imgUrl" v-model:visible="imgVisible" v-else />
+    <a-image-preview :src="imgUrl ? imgUrl : NotImage" v-model:visible="imgVisible" v-else />
   </a-layout-content>
 </template>
 
@@ -355,6 +355,8 @@ import { request } from '@/utils/request'
 import { Message } from '@arco-design/web-vue'
 import { useDictStore } from '@/store'
 import SaImport from './import.vue'
+
+import NotImage from '@/assets/not-image.png'
 
 const props = defineProps({
   // 表格数据
@@ -385,7 +387,7 @@ const isSort = ref(false)
 const isExport = ref(false)
 
 const imgVisible = ref(false)
-const imgUrl = ref(import.meta.env.VITE_APP_BASE + 'not-image.png')
+const imgUrl = ref('../../assets/not-image.png')
 
 const options = ref(Object.assign(JSON.parse(JSON.stringify(defaultOptions)), props.options))
 
@@ -711,7 +713,7 @@ const imageView = (url) => {
     if (url !== null) {
       return url[0]
     } else {
-      return import.meta.env.VITE_APP_BASE + 'not-image.png'
+      return NotImage
     }
   }
 }

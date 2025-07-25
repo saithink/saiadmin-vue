@@ -70,7 +70,7 @@
                       show-loader
                       :title="record.origin_name"
                       :description="`大小：${record.size_info}`"
-                      :src="/image/g.test(record.mime_type) ? tool.attachUrl(record.url) : $url + 'not-image.png'">
+                      :src="/image/g.test(record.mime_type) ? record.url : NotImage">
                       <template #extra>
                         <div class="actions">
                           <a-tooltip content="下载此文件">
@@ -120,6 +120,8 @@ import commonApi from '@/api/common'
 import { Message, Modal } from '@arco-design/web-vue'
 import tool from '@/utils/tool'
 import { useDictStore } from '@/store'
+
+import NotImage from '@/assets/not-image.png'
 
 const dictList = useDictStore().data
 
