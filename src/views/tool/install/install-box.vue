@@ -48,7 +48,6 @@
 import { ref, reactive, computed } from 'vue'
 import file2md5 from 'file2md5'
 import { Message, Modal } from '@arco-design/web-vue'
-import commonApi from '@/api/common'
 import saipackage from '@/api/tool/saipackage'
 
 const emit = defineEmits(['success'])
@@ -83,17 +82,11 @@ const uploadFileHandler = async (options) => {
     const dataForm = new FormData()
     dataForm.append('file', file)
     dataForm.append('hash', hash)
-    dataForm.append('mode', 'local')
-    const resp = await commonApi.uploadFile(dataForm)
-    if (resp.code == 200) {
-      const res = await saipackage.uploadApp({
-        file: resp.data.storage_path,
-      })
-      if (res.code == 200) {
-        Object.assign(appInfo, res.data)
-        Message.success('上传成功')
-        emit('success')
-      }
+    const res = await saipackage.uploadApp(dataForm)
+    if (res.code == 200) {
+      Object.assign(appInfo, res.data)
+      Message.success('上传成功')
+      emit('success')
     }
   }
 }
