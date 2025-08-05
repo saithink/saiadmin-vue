@@ -194,7 +194,7 @@
                                     </a-link>
                                     <a-popconfirm
                                       v-if="options.delete.show"
-                                      content="确定要删除该数据吗?"
+                                      :content="options.delete.confirmText || '确定要删除该数据吗?'"
                                       position="bottom"
                                       @ok="deleteAction(record)">
                                       <a-link type="primary" v-auth="options.delete.auth || []">
@@ -280,7 +280,7 @@
                               </a-link>
                               <a-popconfirm
                                 v-if="options.delete.show"
-                                content="确定要删除该数据吗?"
+                                :content="options.delete.confirmText || '确定要删除该数据吗?'"
                                 position="bottom"
                                 @ok="deleteAction(record)">
                                 <a-link type="primary" v-auth="options.delete.auth || []">

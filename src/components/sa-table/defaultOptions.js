@@ -79,6 +79,8 @@ export default {
     auth: [],
     // 按钮文案
     text: '删除',
+    // 删除确认弹窗文案
+    confirmText: '确定要删除该数据吗？',
     // 是否显示
     show: false,
     // 是否显示批量处理按钮
