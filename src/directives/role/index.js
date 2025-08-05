@@ -6,14 +6,15 @@ const checkRole = (el, binding) => {
   if (Array.isArray(value)) {
     if (value.length > 0) {
       let isHas = false
-      value.map(item => {
-        if(!isHas) {
+      value.map((item) => {
+        if (!isHas) {
           isHas = role(item)
         }
       })
 
       if (!isHas && el.parentNode) {
-        el.parentNode.remove()
+        // el.parentNode.remove()
+        el.remove()
       }
     }
   } else {
@@ -27,5 +28,5 @@ export default {
   },
   updated(el, binding) {
     checkRole(el, binding)
-  },
-};
+  }
+}
