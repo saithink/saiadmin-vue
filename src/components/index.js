@@ -34,6 +34,7 @@ import SaUploadImage from './sa-upload-image/index.vue'
 import SaUploadFile from './sa-upload-file/index.vue'
 import SaIcon from './sa-icon/index.vue'
 import SaIconPicker from './sa-icon-picker/index.vue'
+import SaPickImage from './sa-pick-image/index.vue'
 
 use([
   CanvasRenderer,
@@ -70,5 +71,6 @@ export default {
     Vue.component('SaUploadFile', SaUploadFile)
     Vue.component('SaIcon', SaIcon)
     Vue.component('SaIconPicker', SaIconPicker)
+    Vue.component('SaPickImage', SaPickImage)
   }
 }
