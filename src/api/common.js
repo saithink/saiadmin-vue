@@ -101,6 +101,20 @@ export default {
   },
 
   /**
+   * 切片上传接口
+   * @returns
+   */
+  chunkUpload(data = {}) {
+    return request({
+      url: '/core/system/chunkUpload',
+      method: 'post',
+      timeout: 30000,
+      // headers: { 'Content-Type': 'multipart/form-data' },
+      data
+    })
+  },
+
+  /**
    * 保存网络图片
    * @returns
    */
