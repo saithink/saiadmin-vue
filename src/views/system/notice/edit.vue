@@ -11,7 +11,7 @@
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
       <a-form-item label="公告标题" field="title">
-        <a-input v-model="formData.title" placeholder="请输入岗位名称" />
+        <a-input v-model="formData.title" placeholder="请输入公告标题" />
       </a-form-item>
       <a-form-item label="公告类型" field="type">
         <sa-select v-model="formData.type" dict="backend_notice_type" placeholder="请选择公告类型" />
