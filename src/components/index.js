@@ -32,6 +32,7 @@ import SaDict from './sa-dict/index.vue'
 import SaUser from './sa-user/index.vue'
 import SaUploadImage from './sa-upload-image/index.vue'
 import SaUploadFile from './sa-upload-file/index.vue'
+import SaUploadChunk from './sa-upload-chunk/index.vue'
 import SaIcon from './sa-icon/index.vue'
 import SaIconPicker from './sa-icon-picker/index.vue'
 import SaPickImage from './sa-pick-image/index.vue'
@@ -69,6 +70,7 @@ export default {
     Vue.component('SaUser', SaUser)
     Vue.component('SaUploadImage', SaUploadImage)
     Vue.component('SaUploadFile', SaUploadFile)
+    Vue.component('SaUploadChunk', SaUploadChunk)
     Vue.component('SaIcon', SaIcon)
     Vue.component('SaIconPicker', SaIconPicker)
     Vue.component('SaPickImage', SaPickImage)
