@@ -2,41 +2,53 @@
   <div class="upload-image flex">
     <!-- 单图 -->
     <a-space wrap>
-      <div class="image-list" v-if="!props.multiple && inputValue">
+      <div
+        class="image-list"
+        :style="{ width: props.small ? '60px' : '100px', height: props.small ? '60px' : '100px' }"
+        v-if="!props.multiple && inputValue">
         <a-button class="delete" @click="removeSignImage()">
           <template #icon>
             <icon-delete />
           </template>
         </a-button>
-        <a-image width="130" height="130" :src="inputValue" />
+        <a-image :width="props.small ? 60 : 100" :height="props.small ? 60 : 100" :src="inputValue" />
       </div>
       <!-- 多图显示 -->
       <template v-else-if="props.multiple">
-        <div class="image-list" v-for="(image, idx) in imageList" :key="idx">
+        <div
+          class="image-list"
+          :style="{ width: props.small ? '60px' : '100px', height: props.small ? '60px' : '100px' }"
+          v-for="(image, idx) in imageList"
+          :key="idx">
           <a-button class="delete" @click="removeImage(idx)">
             <template #icon>
               <icon-delete />
             </template>
           </a-button>
-          <a-image width="130" height="130" :src="image" />
+          <a-image :width="props.small ? 60 : 100" :height="props.small ? 45 : 100" :src="image" />
         </div>
       </template>
 
       <div>
         <div
           class="upload-skin cursor-pointer"
+          :style="{ width: props.small ? '60px' : '100px', height: props.small ? '60px' : '100px' }"
           v-if="props.multiple && imageList.length < props.limit"
           @click="openResourceSelector">
           <div class="icon text-3xl">
             <icon-image />
           </div>
-          <div class="title">选择图片</div>
+          <div v-if="!props.small" class="title">选择图片</div>
         </div>
-        <div class="upload-skin cursor-pointer" v-if="!inputValue && !props.multiple" @click="openResourceSelector">
+        <div
+          class="upload-skin cursor-pointer"
+          :style="{ width: props.small ? '60px' : '100px', height: props.small ? '60px' : '100px' }"
+          v-if="!inputValue && !props.multiple"
+          @click="openResourceSelector">
           <div class="icon text-3xl">
             <icon-image />
           </div>
-          <div class="title">选择图片</div>
+          <div v-if="!props.small" class="title">选择图片</div>
         </div>
       </div>
     </a-space>
@@ -45,7 +57,12 @@
       <div class="w-full h-144 flex flex-col">
         <div class="lg:flex lg:justify-between">
           <div class="flex">
-            <sa-upload-file :modelValue="fileValue" @update:modelValue="handleUpdate" multiple :show-list="false" />
+            <sa-upload-file
+              :modelValue="fileValue"
+              @update:modelValue="handleUpdate"
+              :size="20 * 1024 * 1024"
+              multiple
+              :show-list="false" />
             <a-button class="ml-3" @click="openNetworkModal = true"> <icon-image /> 保存网络图片 </a-button>
             <a-radio-group type="button" v-model="defaultKey" @change="handlerClick" class="ml-4">
               <a-radio v-for="(item, index) in sliderData" :key="index" :value="item.value">{{ item.label }}</a-radio>
@@ -119,6 +136,7 @@ const props = defineProps({
   multiple: { type: Boolean, default: false },
   limit: { type: Number, default: 3 },
   returnType: { type: String, default: 'url' },
+  small: { type: Boolean, default: false },
 })
 const emit = defineEmits(['update:modelValue', 'change'])
 
@@ -298,8 +316,6 @@ watch(
 .upload-skin {
   background-color: var(--color-fill-2);
   border: 1px dashed var(--color-fill-4);
-  width: 130px;
-  height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -315,8 +331,6 @@ watch(
   cursor: pointer;
   position: relative;
   background-color: var(--color-fill-2);
-  width: 130px;
-  height: 130px;
 
   .delete {
     position: absolute;
