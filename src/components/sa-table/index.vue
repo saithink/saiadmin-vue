@@ -1,61 +1,59 @@
 <template>
   <a-layout-content class="flex flex-col lg:h-full relative w-full">
     <a-card :bordered="false">
-      <div ref="crudHeaderRef">
-        <template v-if="showSearch">
-          <a-row v-if="tool.getDevice() === 'mobile'">
-            <a-col :xs="24" :sm="8">
-              <a-form :model="searchForm" ref="searchFormRef" :auto-label-width="true">
-                <a-row :gutter="10">
-                  <slot name="tableSearch"></slot>
-                </a-row>
-              </a-form>
-            </a-col>
-            <a-col :xs="24" :sm="8" :style="{ textAlign: 'right', marginBottom: '15px' }">
-              <a-space direction="horizontal" :size="20">
-                <a-button type="primary" @click="search">
-                  <template #icon>
-                    <icon-search />
-                  </template>
-                  {{ options.searchText || '搜索' }}
-                </a-button>
-                <a-button @click="resetSearch">
-                  <template #icon>
-                    <icon-refresh />
-                  </template>
-                  {{ options.resetText || '重置' }}
-                </a-button>
-              </a-space>
-            </a-col>
-          </a-row>
-          <a-row v-else>
-            <a-col :flex="1">
-              <a-form :model="searchForm" ref="searchFormRef" :auto-label-width="true">
-                <a-row :gutter="10">
-                  <slot name="tableSearch"></slot>
-                </a-row>
-              </a-form>
-            </a-col>
-            <a-divider v-if="!singleLine" style="height: 84px" direction="vertical" />
-            <a-col :flex="singleLine ? '185px' : '80px'" :style="{ textAlign: 'right' }">
-              <a-space :direction="!singleLine ? 'vertical' : 'horizontal'" :size="singleLine ? 10 : 20">
-                <a-button type="primary" @click="search">
-                  <template #icon>
-                    <icon-search />
-                  </template>
-                  {{ options.searchText || '搜索' }}
-                </a-button>
-                <a-button @click="resetSearch">
-                  <template #icon>
-                    <icon-refresh />
-                  </template>
-                  {{ options.resetText || '重置' }}
-                </a-button>
-              </a-space>
-            </a-col>
-          </a-row>
-          <a-divider style="margin-top: 0; margin-bottom: 15px" />
-        </template>
+      <div ref="crudHeaderRef" v-show="showSearch">
+        <a-row v-if="tool.getDevice() === 'mobile'">
+          <a-col :xs="24" :sm="8">
+            <a-form :model="searchForm" ref="searchFormRef" :auto-label-width="true">
+              <a-row :gutter="10">
+                <slot name="tableSearch"></slot>
+              </a-row>
+            </a-form>
+          </a-col>
+          <a-col :xs="24" :sm="8" :style="{ textAlign: 'right', marginBottom: '15px' }">
+            <a-space direction="horizontal" :size="20">
+              <a-button type="primary" @click="search">
+                <template #icon>
+                  <icon-search />
+                </template>
+                {{ options.searchText || '搜索' }}
+              </a-button>
+              <a-button @click="resetSearch">
+                <template #icon>
+                  <icon-refresh />
+                </template>
+                {{ options.resetText || '重置' }}
+              </a-button>
+            </a-space>
+          </a-col>
+        </a-row>
+        <a-row v-else>
+          <a-col :flex="1">
+            <a-form :model="searchForm" ref="searchFormRef" :auto-label-width="true">
+              <a-row :gutter="10">
+                <slot name="tableSearch"></slot>
+              </a-row>
+            </a-form>
+          </a-col>
+          <a-divider v-if="!singleLine" style="height: 84px" direction="vertical" />
+          <a-col :flex="singleLine ? '185px' : '80px'" :style="{ textAlign: 'right' }">
+            <a-space :direction="!singleLine ? 'vertical' : 'horizontal'" :size="singleLine ? 10 : 20">
+              <a-button type="primary" @click="search">
+                <template #icon>
+                  <icon-search />
+                </template>
+                {{ options.searchText || '搜索' }}
+              </a-button>
+              <a-button @click="resetSearch">
+                <template #icon>
+                  <icon-refresh />
+                </template>
+                {{ options.resetText || '重置' }}
+              </a-button>
+            </a-space>
+          </a-col>
+        </a-row>
+        <a-divider style="margin-top: 0; margin-bottom: 15px" />
       </div>
       <div class="_crud-content">
         <a-row style="margin-bottom: 10px" v-if="!options.pageSimple">
@@ -114,7 +112,10 @@
                   <a-button shape="circle"><icon-sort /></a-button>
                   <template #content>
                     <div id="tableSetting">
-                      <div v-for="(item, index) in columns" :key="item.dataIndex" class="setting">
+                      <div
+                        v-for="(item, index) in columns.filter((item) => item.dataIndex !== '__operation')"
+                        :key="item.dataIndex"
+                        class="setting">
                         <div style="margin-right: 4px">
                           <icon-sort-ascending />
                         </div>
@@ -496,6 +497,7 @@ const search = async () => {
 
 // 重置
 const resetSearch = async () => {
+  requestParams.value['page'] = 1
   searchFormRef.value?.resetFields()
   emit('resetSearch')
   await refresh()
