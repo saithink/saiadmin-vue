@@ -305,7 +305,7 @@
                       </slot>
                       <template v-else-if="row.type === 'image'">
                         <a-avatar
-                          v-if="row[row.dataIndex]"
+                          v-if="record[row.dataIndex]"
                           @click="imageSee(row, record, row.dataIndex)"
                           :size="row.size || 64"
                           shape="square">
