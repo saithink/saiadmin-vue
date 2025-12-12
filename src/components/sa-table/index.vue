@@ -67,7 +67,7 @@
                 content="确定要删除数据吗?"
                 position="bottom"
                 @ok="deletesMultipleAction"
-                v-if="options.delete.show && options.rowSelection">
+                v-if="options.delete.batch && options.rowSelection">
                 <a-button type="primary" status="danger" v-auth="options.delete.auth || []">
                   <template #icon> <icon-delete /> </template> {{ options.delete.text || '删除' }}
                 </a-button>
