@@ -3,6 +3,9 @@
     <a-alert>
       仅支持上传由插件市场下载的zip压缩包进行安装，请您务必确认插件包文件来自官方渠道或经由官方认证的插件作者！
     </a-alert>
+    <a-alert>
+      插件安装完成后请在右上角,个人头像下拉框清理缓存！
+    </a-alert>
     <a-space class="ma-content-block py-3 px-2">
       <a-button type="outline" @click="getList">
         <template #icon>
