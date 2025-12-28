@@ -1,9 +1,17 @@
 import useClipboard from 'vue-clipboard3'
 import { Message } from '@arco-design/web-vue'
 
+const handlerMap = new WeakMap()
+
 const copy = (el, binding) => {
   const { value } = binding
-  el.addEventListener('click', async () => {
+  
+  const oldHandler = handlerMap.get(el)
+  if (oldHandler) {
+    el.removeEventListener('click', oldHandler)
+  }
+  
+  const newHandler = async () => {
     if (value && value !== '') {
       try {
         await useClipboard().toClipboard(value)
@@ -14,7 +22,11 @@ const copy = (el, binding) => {
     } else {
       throw new Error(`need for copy content! Like v-copy="Hello World"`)
     }
-  })
+  }
+  
+  el.addEventListener('click', newHandler)
+
+  handlerMap.set(el, newHandler)
 }
 
 export default {
@@ -24,4 +36,11 @@ export default {
   updated(el, binding) {
     copy(el, binding)
   },
-};
+  unmounted(el) {
+    const handler = handlerMap.get(el)
+    if (handler) {
+      el.removeEventListener('click', handler)
+      handlerMap.delete(el)
+    }
+  }
+}
