@@ -136,7 +136,7 @@ const columns = reactive([
   { title: '任务类型', dataIndex: 'type', type: 'dict', options: types, width: 140 },
   { title: '定时规则', dataIndex: 'rule', width: 260 },
   { title: '调用目标', dataIndex: 'target', width: 260 },
-  { title: '状态', dataIndex: 'status', dict: 'data_status', width: 120 },
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'data_status', width: 120 },
   { title: '创建时间', dataIndex: 'create_time', width: 180 },
 ])
 
