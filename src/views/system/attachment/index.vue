@@ -204,7 +204,7 @@ const columns = reactive([
   { title: '预览', dataIndex: 'url', width: 80 },
   { title: '存储名称', dataIndex: 'object_name', width: 220 },
   { title: '原文件名', dataIndex: 'origin_name', width: 150 },
-  { title: '存储模式', dataIndex: 'storage_mode', type: 'dict', dict: 'upload_mode', type: 'dict', width: 110 },
+  { title: '存储模式', dataIndex: 'storage_mode', dict: 'upload_mode', type: 'dict', width: 110 },
   { title: '资源类型', dataIndex: 'mime_type', width: 130 },
   { title: '存储目录', dataIndex: 'storage_path', width: 130 },
   { title: '文件大小', dataIndex: 'size_info', width: 130 },
