@@ -536,7 +536,17 @@ const searchChange = async () => {
 
 // 打印表格
 const printTable = () => {
-  new Print(crudContentRef.value)
+  const originalHeight = crudContentRef.value.style.height
+  crudContentRef.value.style.height = 'auto'
+  crudContentRef.value.style.overflow = 'visible'
+  
+  nextTick(() => {
+    new Print(crudContentRef.value)
+    setTimeout(() => {
+      crudContentRef.value.style.height = originalHeight
+      crudContentRef.value.style.overflow = ''
+    }, 500)
+  })
 }
 
 // 排序
