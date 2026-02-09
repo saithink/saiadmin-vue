@@ -40,13 +40,13 @@ watch(
       value.value = vl
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 watch(
   () => value.value,
   (v) => {
     emit('update:modelValue', value.value)
-  }
+  },
 )
 
 const handleChangeEvent = async (value) => {
