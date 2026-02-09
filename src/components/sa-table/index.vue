@@ -493,6 +493,7 @@ const pageSizeChangeHandler = async (pageSize) => {
 
 // 搜索
 const search = async () => {
+  requestParams.value['page'] = 1
   await refresh()
 }
 
