@@ -4,8 +4,8 @@
       <a-watermark :content="appStore.waterMark ? appStore.waterContent : ''">
         <router-view v-slot="{ Component }">
           <transition :name="appStore.animation" mode="out-in">
-            <keep-alive :include="keepStore.keepAlives">
-              <component :is="Component" :key="$route.fullPath" v-if="keepStore.show" />
+            <keep-alive :max="20">
+              <component :is="Component" :key="$route.path" />
             </keep-alive>
           </transition>
         </router-view>
@@ -16,8 +16,7 @@
 </template>
 
 <script setup>
-import { useAppStore, useKeepAliveStore } from '@/store'
+import { useAppStore } from '@/store'
 import IframeView from './components/iframe-view.vue'
 const appStore = useAppStore()
-const keepStore = useKeepAliveStore()
 </script>
