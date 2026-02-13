@@ -34,7 +34,7 @@ export const closeTag = (tag) => {
   const keepStore = useKeepAliveStore()
   const t = tagStore.removeTag(tag)
   keepStore.removeKeepAlive(tag)
-  router.push(t.path)
+  router.push({ path: t.path, query: tool.getRequestParams(t.path) })
 }
 
 export const success = (title, content) => {

@@ -353,17 +353,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, provide, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, watch, provide, nextTick, onMounted, onUnmounted, onActivated } from 'vue'
 import { isArray, isFunction, isObject, isUndefined, cloneDeep, get } from 'lodash'
 import defaultOptions from './defaultOptions'
 import tool from '@/utils/tool'
 import Print from '@/utils/print'
 import { request } from '@/utils/request'
 import { Message } from '@arco-design/web-vue'
-import { useDictStore } from '@/store'
+import { useDictStore, useTagStore } from '@/store'
+import { useRoute } from 'vue-router'
 import SaImport from './import.vue'
 
 import NotImage from '@/assets/not-image.png'
+
+const route = useRoute()
+const tagStore = useTagStore()
 
 const props = defineProps({
   // 表格数据
@@ -374,6 +378,8 @@ const props = defineProps({
   columns: { type: Array, default: [] },
   // 搜索表单
   searchForm: { type: Object, default: () => {} },
+  // 页面状态
+  keepPageState: { type: Boolean, default: true },
 })
 
 const emit = defineEmits(['resetSearch'])
@@ -481,6 +487,7 @@ const getIndex = (rowIndex) => {
 // 页码变化
 const pageChangeHandler = async (currentPage) => {
   requestParams.value['page'] = currentPage
+  savePageState()
   await refresh()
 }
 
@@ -488,12 +495,46 @@ const pageChangeHandler = async (currentPage) => {
 const pageSizeChangeHandler = async (pageSize) => {
   requestParams.value['page'] = 1
   requestParams.value['limit'] = pageSize
+  savePageState()
   await refresh()
+}
+
+// 保存页面状态
+const savePageState = () => {
+  if (!props.keepPageState) return
+  const currentPath = route.fullPath
+  const state = {
+    page: requestParams.value['page'],
+    limit: requestParams.value['limit'],
+    searchForm: cloneDeep(searchForm.value)
+  }
+  tagStore.setPageState(currentPath, state)
+}
+
+// 恢复页面状态
+const restorePageState = () => {
+  if (!props.keepPageState) return false
+  const currentPath = route.fullPath
+  const savedState = tagStore.getPageState(currentPath)
+  if (savedState) {
+    requestParams.value['page'] = savedState.page || 1
+    requestParams.value['limit'] = savedState.limit || options.value.pageSize
+    if (savedState.searchForm) {
+      Object.keys(savedState.searchForm).forEach(key => {
+        if (searchForm.value.hasOwnProperty(key)) {
+          searchForm.value[key] = savedState.searchForm[key]
+        }
+      })
+    }
+    return true
+  }
+  return false
 }
 
 // 搜索
 const search = async () => {
   requestParams.value['page'] = 1
+  savePageState()
   await refresh()
 }
 
@@ -502,6 +543,7 @@ const resetSearch = async () => {
   requestParams.value['page'] = 1
   searchFormRef.value?.resetFields()
   emit('resetSearch')
+  savePageState()
   await refresh()
 }
 
@@ -750,10 +792,19 @@ const settingFixedPage = () => {
 
 onMounted(async () => {
   showSearch.value = options.value.showSearch ?? true
+  restorePageState()
   if (options.value.pageLayout === 'fixed') {
     await nextTick(() => {
       window.addEventListener('resize', resizeHandler, false)
       headerHeight.value = crudHeaderRef.value.offsetHeight
+      settingFixedPage()
+    })
+  }
+})
+
+onActivated(() => {
+  if (options.value.pageLayout === 'fixed') {
+    nextTick(() => {
       settingFixedPage()
     })
   }

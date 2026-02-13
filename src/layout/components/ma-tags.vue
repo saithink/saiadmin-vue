@@ -3,7 +3,7 @@
     <div class="menu-tags-wrapper" ref="scrollbarDom" :class="{ 'tag-pn': tagShowPrevNext }">
       <div class="tags" ref="tags">
         <div v-for="tag in tagStore.tags" :key="tag.path" @contextmenu.prevent="openContextMenu($event, tag)"
-          :class="route.path == tag.path ? 'active' : ''"
+          :class="route.fullPath == tag.path ? 'active' : ''"
           @click="tagJump(tag)">
           <span>
             {{ tag.customTitle ? tag.customTitle : appStore.i18n ? ($t('menus.' + tag.name).indexOf('.') > 0 ? tag.title : $t('menus.' + tag.name)) : tag.title }}
@@ -117,14 +117,14 @@ watch(
   { deep: true }
 )
 watch(
-  () => route.name,
-  name => {
-    if (!notAddTagList.includes(name)) {
+  () => route,
+  r => {
+    if (!notAddTagList.includes(r.name)) {
       addTag({
-        name: route.name,
-        path: route.path,
-        affix: route.meta.affix,
-        title: route.meta.title
+        name: r.name,
+        path: r.fullPath,
+        affix: r.meta.affix,
+        title: r.meta.title
       })
     }
 
@@ -134,7 +134,7 @@ watch(
         tags.value.querySelector('.active').scrollIntoView()
       }
     })
-  }
+  }, { deep: true }
 )
 
 watch(
@@ -155,7 +155,7 @@ watch(
 )
 
 const tagJump = tag => {
-  router.push(tag.path)
+  router.push({ path: tag.path, query: tool.getRequestParams(tag.path) })
 }
 
 const openContextMenu = (e, tag) => {
@@ -181,8 +181,8 @@ const closeContextMenu = () => {
 const contextMenuMaxSizeTag = () => {
   const tag = contextMenuItem.value
   contextMenuVisible.value = false
-  if (route.path != tag.path) {
-    router.push(tag.path)
+  if (route.fullPath != tag.fullPath) {
+    router.push({ path: tag.path, query: tool.getRequestParams(tag.path) })
   }
   document.getElementById('app').classList.add('max-size')
 }
@@ -190,8 +190,8 @@ const contextMenuMaxSizeTag = () => {
 const contextMenuRefreshTag = () => {
   const tag = contextMenuItem.value
   contextMenuVisible.value = false
-  if (route.path != tag.path) {
-    router.push(tag.path)
+  if (route.fullPath != tag.fullPath) {
+    router.push({ path: tag.path, query: tool.getRequestParams(tag.path) })
   }
   refreshTag()
 }

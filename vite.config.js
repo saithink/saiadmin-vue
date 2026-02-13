@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { visualizer } from 'rollup-plugin-visualizer'
+import vueComponentNamePlugin from './vite-plugin-vue-component-name'
+
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd())
   const proxyPrefix = env.VITE_APP_PROXY_PREFIX
@@ -12,6 +14,7 @@ export default ({ mode }) => {
     plugins: [
       vue(),
       vueJsx(),
+      vueComponentNamePlugin(),
       visualizer({
         emitFile: false,
         file: 'stats.html', //分析图生成的文件名
