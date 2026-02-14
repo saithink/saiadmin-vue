@@ -368,6 +368,7 @@ import NotImage from '@/assets/not-image.png'
 
 const route = useRoute()
 const tagStore = useTagStore()
+const instance = getCurrentInstance()
 
 const props = defineProps({
   // 表格数据
@@ -380,6 +381,8 @@ const props = defineProps({
   searchForm: { type: Object, default: () => {} },
   // 页面状态
   keepPageState: { type: Boolean, default: true },
+  // 状态存储 key（用于 drawer 中的表格，避免状态冲突）
+  stateKey: { type: String, default: '' },
 })
 
 const emit = defineEmits(['resetSearch'])
@@ -416,6 +419,38 @@ const tableData = reactive({
   total: 0,
   data: [],
 })
+
+let autoStateKey = null
+let inDrawer = false
+
+const isInDrawer = () => {
+  let parent = instance?.parent
+  while (parent) {
+    if (parent.type?.name === 'Drawer' || 
+        parent.type?.__name === 'Drawer' ||
+        parent.vnode?.type?.name === 'Drawer' ||
+        parent.vnode?.type?.__name === 'Drawer' ||
+        (parent.props && ('visible' in parent.props || 'open' in parent.props))) {
+      return true
+    }
+    parent = parent.parent
+  }
+  return false
+}
+
+const getAutoStateKey = () => {
+  if (autoStateKey) return autoStateKey
+  if (props.stateKey) {
+    autoStateKey = props.stateKey
+    return autoStateKey
+  }
+  inDrawer = isInDrawer()
+  if (inDrawer) {
+    return null
+  }
+  autoStateKey = route.fullPath
+  return autoStateKey
+}
 
 provide('options', options.value)
 
@@ -502,20 +537,22 @@ const pageSizeChangeHandler = async (pageSize) => {
 // 保存页面状态
 const savePageState = () => {
   if (!props.keepPageState) return
-  const currentPath = route.fullPath
+  const stateKey = getAutoStateKey()
+  if (!stateKey) return
   const state = {
     page: requestParams.value['page'],
     limit: requestParams.value['limit'],
     searchForm: cloneDeep(searchForm.value)
   }
-  tagStore.setPageState(currentPath, state)
+  tagStore.setPageState(stateKey, state)
 }
 
 // 恢复页面状态
 const restorePageState = () => {
   if (!props.keepPageState) return false
-  const currentPath = route.fullPath
-  const savedState = tagStore.getPageState(currentPath)
+  const stateKey = getAutoStateKey()
+  if (!stateKey) return false
+  const savedState = tagStore.getPageState(stateKey)
   if (savedState) {
     requestParams.value['page'] = savedState.page || 1
     requestParams.value['limit'] = savedState.limit || options.value.pageSize
