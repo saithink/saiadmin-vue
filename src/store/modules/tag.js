@@ -4,7 +4,8 @@ import tool from '@/utils/tool'
 const defaultTag = [ { name: 'dashboard', title: '仪表盘', path: '/dashboard', affix: true } ]
 const useTagStore = defineStore('tag', {
   state: () => ({
-    tags: (! tool.local.get('tags') || tool.local.get('tags').length === 0 ) ? defaultTag : tool.local.get('tags')
+    tags: (! tool.local.get('tags') || tool.local.get('tags').length === 0 ) ? defaultTag : tool.local.get('tags'),
+    pageStates: tool.local.get('pageStates') || {}
   }),
 
   getters: {
@@ -33,6 +34,7 @@ const useTagStore = defineStore('tag', {
             index = idx - 1
           }
           this.tags.splice(idx, 1)
+          this.removePageState(tag.path)
         }
       })
       this.updateTagsToLocal()
@@ -64,6 +66,26 @@ const useTagStore = defineStore('tag', {
     clearTags() {
       this.tags = defaultTag
       tool.local.set('tags', defaultTag)
+    },
+
+    setPageState(path, state) {
+      this.pageStates[path] = state
+      this.updatePageStatesToLocal()
+    },
+
+    getPageState(path) {
+      return this.pageStates[path] || null
+    },
+
+    removePageState(path) {
+      if (this.pageStates[path]) {
+        delete this.pageStates[path]
+        this.updatePageStatesToLocal()
+      }
+    },
+
+    updatePageStatesToLocal() {
+      tool.local.set('pageStates', this.pageStates)
     },
   },
 })

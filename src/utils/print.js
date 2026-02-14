@@ -45,6 +45,10 @@ class Print
     }
     str += '<style>' + (this.options.noPrint ? this.options.noPrint : '.no-print') + '{ display: none; }</style>'
     str += '<style>html, body{ background-color: #fff; }</style>'
+    str += '<style>.arco-table-body{ overflow: visible !important; height: auto !important; }</style>'
+    str += '<style>.arco-scrollbar{ overflow: visible !important; }</style>'
+    str += '<style>.arco-table-container{ overflow: visible !important; height: auto !important; max-height: none !important; }</style>'
+    str += '<style>.arco-table-element{ max-height: none !important; overflow: visible !important; }</style>'
     return str
   }
 
@@ -88,7 +92,29 @@ class Print
       }
     }
 
-    return this.dom.outerHTML
+   const tempDiv = this.dom.cloneNode(true)
+   
+   const tableContainers = tempDiv.querySelectorAll('.arco-table-container')
+   tableContainers.forEach((container) => {
+     container.style.cssText = 'overflow: visible; height: auto; max-height: none;'
+   })
+   
+   const tableScrollBodys = tempDiv.querySelectorAll('.arco-table-body')
+   tableScrollBodys.forEach((body) => {
+     body.style.cssText = 'overflow: visible; height: auto;'
+   })
+   
+   const scrollWraps = tempDiv.querySelectorAll('.arco-scrollbar')
+   scrollWraps.forEach((wrap) => {
+     wrap.style.cssText = 'overflow: visible;'
+   })
+   
+   const tableElements = tempDiv.querySelectorAll('.arco-table-element')
+   tableElements.forEach((el) => {
+     el.style.cssText = 'overflow: visible; max-height: none;'
+   })
+   
+    return tempDiv.outerHTML
   }
 
   writeIframe (content) {

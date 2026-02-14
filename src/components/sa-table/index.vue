@@ -353,17 +353,22 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, provide, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, watch, provide, nextTick, onMounted, onUnmounted, onActivated } from 'vue'
 import { isArray, isFunction, isObject, isUndefined, cloneDeep, get } from 'lodash'
 import defaultOptions from './defaultOptions'
 import tool from '@/utils/tool'
 import Print from '@/utils/print'
 import { request } from '@/utils/request'
 import { Message } from '@arco-design/web-vue'
-import { useDictStore } from '@/store'
+import { useDictStore, useTagStore } from '@/store'
+import { useRoute } from 'vue-router'
 import SaImport from './import.vue'
 
 import NotImage from '@/assets/not-image.png'
+
+const route = useRoute()
+const tagStore = useTagStore()
+const instance = getCurrentInstance()
 
 const props = defineProps({
   // 表格数据
@@ -374,6 +379,10 @@ const props = defineProps({
   columns: { type: Array, default: [] },
   // 搜索表单
   searchForm: { type: Object, default: () => {} },
+  // 页面状态
+  keepPageState: { type: Boolean, default: true },
+  // 状态存储 key（用于 drawer 中的表格，避免状态冲突）
+  stateKey: { type: String, default: '' },
 })
 
 const emit = defineEmits(['resetSearch'])
@@ -410,6 +419,38 @@ const tableData = reactive({
   total: 0,
   data: [],
 })
+
+let autoStateKey = null
+let inDrawer = false
+
+const isInDrawer = () => {
+  let parent = instance?.parent
+  while (parent) {
+    if (parent.type?.name === 'Drawer' || 
+        parent.type?.__name === 'Drawer' ||
+        parent.vnode?.type?.name === 'Drawer' ||
+        parent.vnode?.type?.__name === 'Drawer' ||
+        (parent.props && ('visible' in parent.props || 'open' in parent.props))) {
+      return true
+    }
+    parent = parent.parent
+  }
+  return false
+}
+
+const getAutoStateKey = () => {
+  if (autoStateKey) return autoStateKey
+  if (props.stateKey) {
+    autoStateKey = props.stateKey
+    return autoStateKey
+  }
+  inDrawer = isInDrawer()
+  if (inDrawer) {
+    return null
+  }
+  autoStateKey = route.fullPath
+  return autoStateKey
+}
 
 provide('options', options.value)
 
@@ -481,6 +522,7 @@ const getIndex = (rowIndex) => {
 // 页码变化
 const pageChangeHandler = async (currentPage) => {
   requestParams.value['page'] = currentPage
+  savePageState()
   await refresh()
 }
 
@@ -488,12 +530,48 @@ const pageChangeHandler = async (currentPage) => {
 const pageSizeChangeHandler = async (pageSize) => {
   requestParams.value['page'] = 1
   requestParams.value['limit'] = pageSize
+  savePageState()
   await refresh()
+}
+
+// 保存页面状态
+const savePageState = () => {
+  if (!props.keepPageState) return
+  const stateKey = getAutoStateKey()
+  if (!stateKey) return
+  const state = {
+    page: requestParams.value['page'],
+    limit: requestParams.value['limit'],
+    searchForm: cloneDeep(searchForm.value)
+  }
+  tagStore.setPageState(stateKey, state)
+}
+
+// 恢复页面状态
+const restorePageState = () => {
+  if (!props.keepPageState) return false
+  const stateKey = getAutoStateKey()
+  if (!stateKey) return false
+  const savedState = tagStore.getPageState(stateKey)
+  if (savedState) {
+    requestParams.value['page'] = savedState.page || 1
+    requestParams.value['limit'] = savedState.limit || options.value.pageSize
+    if (savedState.searchForm) {
+      Object.keys(savedState.searchForm).forEach(key => {
+        if (searchForm.value.hasOwnProperty(key)) {
+          searchForm.value[key] = savedState.searchForm[key]
+        }
+      })
+    }
+    return true
+  }
+  return false
 }
 
 // 搜索
 const search = async () => {
   requestParams.value['page'] = 1
+  savePageState()
   await refresh()
 }
 
@@ -502,6 +580,7 @@ const resetSearch = async () => {
   requestParams.value['page'] = 1
   searchFormRef.value?.resetFields()
   emit('resetSearch')
+  savePageState()
   await refresh()
 }
 
@@ -536,7 +615,17 @@ const searchChange = async () => {
 
 // 打印表格
 const printTable = () => {
-  new Print(crudContentRef.value)
+  const originalHeight = crudContentRef.value.style.height
+  crudContentRef.value.style.height = 'auto'
+  crudContentRef.value.style.overflow = 'visible'
+  
+  nextTick(() => {
+    new Print(crudContentRef.value)
+    setTimeout(() => {
+      crudContentRef.value.style.height = originalHeight
+      crudContentRef.value.style.overflow = ''
+    }, 500)
+  })
 }
 
 // 排序
@@ -740,10 +829,19 @@ const settingFixedPage = () => {
 
 onMounted(async () => {
   showSearch.value = options.value.showSearch ?? true
+  restorePageState()
   if (options.value.pageLayout === 'fixed') {
     await nextTick(() => {
       window.addEventListener('resize', resizeHandler, false)
       headerHeight.value = crudHeaderRef.value.offsetHeight
+      settingFixedPage()
+    })
+  }
+})
+
+onActivated(() => {
+  if (options.value.pageLayout === 'fixed') {
+    nextTick(() => {
       settingFixedPage()
     })
   }
